@@ -1,7 +1,15 @@
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
+/**
+ * SectionHeader Component
+ * Standardized header for all major landing sections.
+ *
+ * @param {Object} props
+ * @param {string} props.label - Small uppercase label (e.g., "CONTACT")
+ * @param {string} props.title - Main heading title
+ * @param {string} [props.subtitle] - Optional descriptive text
+ */
 export default function SectionHeader({ label, title, subtitle }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
@@ -21,7 +29,7 @@ export default function SectionHeader({ label, title, subtitle }) {
         {title}
       </h2>
       {subtitle && (
-        <p className="max-w-xl mx-auto text-gray-500 dark:text-gray-400 text-base sm:text-lg">
+        <p className="max-w-xl mx-auto text-gray-500 dark:text-gray-400 text-base sm:text-lg lg:text-xl leading-relaxed">
           {subtitle}
         </p>
       )}

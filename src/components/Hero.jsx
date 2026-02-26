@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { SiLaravel, SiSymfony, SiVuedotjs, SiNextdotjs } from "react-icons/si";
 import {
   FiArrowDown,
   FiGithub,
@@ -7,6 +8,8 @@ import {
   FiMail,
   FiDownload,
   FiLoader,
+  FiGlobe,
+  FiDatabase,
 } from "react-icons/fi";
 import { personal } from "../data/portfolio";
 
@@ -15,6 +18,29 @@ const fadeUp = (delay = 0) => ({
   animate: { opacity: 1, y: 0 },
   transition: { duration: 0.7, delay, ease: [0.25, 0.46, 0.45, 0.94] },
 });
+
+const getTechIcon = (tech) => {
+  switch (tech) {
+    case "Laravel":
+      return <SiLaravel size={14} className="text-[#FF2D20]" />;
+    case "Symfony":
+      return (
+        <SiSymfony size={14} className="text-gray-900 dark:text-gray-100" />
+      );
+    case "Vue.js":
+      return <SiVuedotjs size={14} className="text-[#4FC08D]" />;
+    case "Next.js":
+      return (
+        <SiNextdotjs size={14} className="text-gray-900 dark:text-gray-100" />
+      );
+    case "SaaS":
+      return <FiGlobe size={14} className="text-blue-500" />;
+    case "REST APIs":
+      return <FiDatabase size={14} className="text-amber-500" />;
+    default:
+      return null;
+  }
+};
 
 export default function Hero() {
   const [isDownloading, setIsDownloading] = useState(false);
@@ -85,12 +111,24 @@ export default function Hero() {
           {personal.role}
         </motion.p>
 
-        <motion.p
+        <motion.div
           {...fadeUp(0.45)}
-          className="font-mono text-xs sm:text-base text-brand-500 dark:text-brand-400 mb-6 tracking-wide"
+          className="flex flex-wrap justify-center items-center gap-x-4 gap-y-3 mb-10 max-w-4xl mx-auto"
         >
-          {personal.tagline}
-        </motion.p>
+          {personal.tagline.map((tech, index) => (
+            <div key={tech} className="flex items-center gap-2 group">
+              <span className="p-1.5 rounded-lg bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-700/50 group-hover:border-brand-500/30 transition-colors shadow-sm">
+                {getTechIcon(tech)}
+              </span>
+              <span className="font-mono text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400 tracking-wide">
+                {tech}
+              </span>
+              {index < personal.tagline.length - 1 && (
+                <span className="ml-2 w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-700 hidden sm:block" />
+              )}
+            </div>
+          ))}
+        </motion.div>
 
         <motion.p
           {...fadeUp(0.55)}

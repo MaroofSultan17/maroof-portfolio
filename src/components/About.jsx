@@ -3,17 +3,21 @@ import { motion, useInView } from "framer-motion";
 import { skills, personal } from "../data/portfolio";
 import SectionHeader from "./SectionHeader";
 
+/**
+ * SkillBar Component
+ * Renders a horizontal progress bar for a specific technical skill.
+ */
 function SkillBar({ name, level, index }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-50px" });
 
   return (
-    <div ref={ref} className="mb-5">
+    <div ref={ref} className="mb-5" aria-label={`${name} skill level ${level}%`}>
       <div className="flex justify-between items-center mb-2">
         <span className="text-sm font-semibold text-gray-800 dark:text-gray-200">{name}</span>
         <span className="text-sm font-mono text-brand-500 dark:text-brand-400">{level}%</span>
       </div>
-      <div className="h-2 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+      <div className="h-2 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden" role="progressbar" aria-valuenow={level} aria-valuemin="0" aria-valuemax="100">
         <motion.div
           initial={{ width: 0 }}
           animate={inView ? { width: `${level}%` } : {}}
@@ -25,6 +29,10 @@ function SkillBar({ name, level, index }) {
   );
 }
 
+/**
+ * About Section
+ * Highlights professional biography and core competencies.
+ */
 export default function About() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
@@ -109,13 +117,15 @@ export default function About() {
             </h4>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               {skills.supporting.map((s) => (
-                <div
+                <motion.div
                   key={s}
-                  className="px-4 py-3 text-sm font-medium rounded-xl bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 text-gray-700 dark:text-gray-300 shadow-sm hover:shadow-md hover:border-brand-500/30 dark:hover:border-brand-400/30 transition-all flex items-center gap-2 group"
+                  whileHover={{ scale: 1.02, y: -2 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="px-4 py-3 text-sm font-medium rounded-xl bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 text-gray-700 dark:text-gray-300 shadow-sm hover:shadow-md hover:border-brand-500/30 dark:hover:border-brand-400/30 transition-all flex items-center gap-2 group cursor-default"
                 >
-                  <div className="w-1.5 h-1.5 rounded-full bg-brand-500/40 group-hover:bg-brand-500 transition-colors" />
+                  <div className="w-1.5 h-1.5 rounded-full bg-brand-500/40 group-hover:bg-brand-500 group-hover:shadow-[0_0_8px_rgba(14,165,233,0.6)] transition-all" aria-hidden="true" />
                   {s}
-                </div>
+                </motion.div>
               ))}
             </div>
           </motion.div>

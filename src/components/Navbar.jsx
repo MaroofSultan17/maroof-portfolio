@@ -10,16 +10,24 @@ const links = [
   { label: "Contact", href: "#contact" },
 ];
 
+/**
+ * Navbar Component
+ * Handles sticky logic, theme toggling, and smooth navigation.
+ */
 export default function Navbar({ toggle, isDark }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("home");
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", onScroll);
+    const onScroll = () => {
+      const isScrolled = window.scrollY > 50;
+      if (scrolled !== isScrolled) setScrolled(isScrolled);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [scrolled]);
 
   useEffect(() => {
     const sections = links.map((l) => l.href.replace("#", ""));

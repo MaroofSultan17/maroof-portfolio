@@ -4,6 +4,14 @@ import { experiences } from "../data/portfolio";
 import SectionHeader from "./SectionHeader";
 import { FiBriefcase, FiCalendar } from "react-icons/fi";
 
+/**
+ * ExperienceCard Component
+ * Displays a professional history record with timeline visualization.
+ * 
+ * @param {Object} props
+ * @param {Object} props.exp - Experience entry data
+ * @param {number} props.index - Index for staggering animations
+ */
 function ExperienceCard({ exp, index }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
@@ -15,6 +23,8 @@ function ExperienceCard({ exp, index }) {
       animate={inView ? { opacity: 1, x: 0 } : {}}
       transition={{ duration: 0.7, delay: index * 0.15, ease: "easeOut" }}
       className="relative"
+      role="article"
+      aria-label={`Experience at ${exp.company} as ${exp.role}`}
     >
       {/* Timeline dot */}
       <div className="absolute -left-[41px] top-6 hidden md:flex items-center justify-center w-5 h-5 rounded-full bg-brand-500 ring-4 ring-white dark:ring-gray-950 z-10">
@@ -60,6 +70,10 @@ function ExperienceCard({ exp, index }) {
   );
 }
 
+/**
+ * Experience Section
+ * Chronicles professional growth and key industry contributions.
+ */
 export default function Experience() {
   return (
     <section id="experience" className="section-pad">

@@ -1,10 +1,18 @@
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import useEmblaCarousel from "embla-carousel-react";
 import { projects, categories } from "../data/portfolio";
 import SectionHeader from "./SectionHeader";
 import { FiGithub, FiExternalLink, FiLock, FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
+/**
+ * ProjectCard Component
+ * Renders a single project item with high-performance animations.
+ * 
+ * @param {Object} props
+ * @param {Object} props.project - The project data
+ * @param {number} props.index - Staggering index
+ */
 function ProjectCard({ project, index }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-50px" });
@@ -19,11 +27,9 @@ function ProjectCard({ project, index }) {
       layout
       className="card group flex flex-col h-full overflow-hidden"
     >
-      {/* Gradient header */}
-      <div className={`h-2 bg-gradient-to-r ${project.color}`} />
+      <div className={`h-2 bg-gradient-to-r ${project.color}`} aria-hidden="true" />
 
       <div className="p-6 flex flex-col flex-1">
-        {/* Status badge */}
         <div className="flex items-center justify-between mb-4">
           <span
             className={`text-xs font-semibold px-2.5 py-1 rounded-full ${
@@ -34,22 +40,21 @@ function ProjectCard({ project, index }) {
           >
             {project.status}
           </span>
-          <span className="text-xs text-gray-400 dark:text-gray-600 font-medium">
+          <span className="text-xs text-gray-400 dark:text-gray-600 font-semibold tracking-wide uppercase">
             {project.category}
           </span>
         </div>
 
-        <h3 className="font-display font-bold text-xl text-gray-900 dark:text-white group-hover:text-brand-500 dark:group-hover:text-brand-400 transition-colors mb-1">
+        <h3 className="font-display font-bold text-xl text-gray-900 dark:text-white group-hover:text-brand-500 transition-colors mb-1">
           {project.title}
         </h3>
         <p className="text-sm text-brand-500 dark:text-brand-400 font-medium mb-3">
           {project.subtitle}
         </p>
-        <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed flex-1 mb-5">
+        <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed flex-1 mb-6">
           {project.description}
         </p>
 
-        {/* Tech tags */}
         <div className="flex flex-wrap gap-2 mb-6">
           {project.tech.map((t) => (
             <span
@@ -61,7 +66,6 @@ function ProjectCard({ project, index }) {
           ))}
         </div>
 
-        {/* Links */}
         <div className="flex gap-3 pt-4 border-t border-gray-100 dark:border-gray-800">
           {project.github ? (
             <motion.a
@@ -73,12 +77,12 @@ function ProjectCard({ project, index }) {
               className="flex items-center gap-1.5 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
             >
               <FiGithub size={15} />
-              <span>Code</span>
+              <span>Repository</span>
             </motion.a>
           ) : (
-            <span className="flex items-center gap-1.5 text-sm text-gray-400 dark:text-gray-600">
+            <span className="flex items-center gap-1.5 text-sm text-gray-400 dark:text-gray-600 italic">
               <FiLock size={14} />
-              <span>Private</span>
+              <span>Proprietary</span>
             </span>
           )}
 
@@ -89,10 +93,10 @@ function ProjectCard({ project, index }) {
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="flex items-center gap-1.5 text-sm text-brand-500 dark:text-brand-400 hover:text-brand-600 dark:hover:text-brand-300 font-medium transition-colors ml-auto"
+              className="flex items-center gap-1.5 text-sm text-brand-500 dark:text-brand-400 hover:text-brand-600 font-bold transition-colors ml-auto"
             >
               <FiExternalLink size={15} />
-              <span>Live Demo</span>
+              <span>Launch</span>
             </motion.a>
           )}
         </div>
@@ -101,9 +105,19 @@ function ProjectCard({ project, index }) {
   );
 }
 
+/**
+ * Projects Component
+ * Orchestrates the project showcase with an interactive, optimized carousel.
+ */
 export default function Projects() {
   const [active, setActive] = useState("All");
   const [selectedIndex, setSelectedIndex] = useState(0);
+
+  // Performance Optimization: Memoize filtered projects to prevent expensive re-renders
+  const filtered = useMemo(() => {
+    return active === "All" ? projects : projects.filter((p) => p.category === active);
+  }, [active]);
+
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: "start",
     skipSnaps: false,
@@ -120,15 +134,17 @@ export default function Projects() {
     onSelect();
     emblaApi.on("select", onSelect);
     emblaApi.on("reInit", onSelect);
+    
+    return () => {
+      emblaApi.off("select", onSelect);
+      emblaApi.off("reInit", onSelect);
+    };
   }, [emblaApi, onSelect]);
 
-  const scrollPrev = useCallback(() => emblaApi && emblaApi.scrollPrev(), [emblaApi]);
-  const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
+  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
+  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
 
-  const filtered =
-    active === "All" ? projects : projects.filter((p) => p.category === active);
-
-  // Re-initialize carousel when filtered projects change
+  // Synchronize carousel when filter state or data changes
   useEffect(() => {
     if (emblaApi) {
       emblaApi.reInit();
@@ -140,64 +156,62 @@ export default function Projects() {
     <section id="projects" className="section-pad bg-gray-50/50 dark:bg-gray-900/50">
       <div className="max-w-6xl mx-auto">
         <SectionHeader
-          label="Projects"
-          title="What I've Built"
-          subtitle="From SaaS platforms to enterprise eCommerce — real products, real impact."
+          label="Showcase"
+          title="Featured Projects"
+          subtitle="A selection of high-impact solutions, from enterprise systems to scalable SaaS products."
         />
 
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mt-10 mb-12">
-          {/* Filter tabs - with horizontal scroll on mobile */}
-          <div className="flex-1 overflow-x-auto pb-4 sm:pb-0 no-scrollbar">
-            <div className="flex justify-start gap-2">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mt-12 mb-12">
+          {/* Elite filter controls with active indicator */}
+          <div className="flex-1 overflow-x-auto pb-2 sm:pb-0 no-scrollbar">
+            <div className="flex justify-start gap-3">
               {categories.map((cat) => (
                 <motion.button
                   key={cat}
                   onClick={() => setActive(cat)}
-                  whileHover={{ scale: 1.04 }}
-                  whileTap={{ scale: 0.97 }}
-                  className={`relative px-5 py-2 rounded-xl text-sm font-semibold transition-colors whitespace-nowrap ${
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className={`relative px-6 py-2 rounded-xl text-sm font-bold transition-all whitespace-nowrap ${
                     active === cat
-                      ? "text-white"
-                      : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700"
+                      ? "text-white shadow-lg shadow-brand-500/25"
+                      : "text-gray-500 dark:text-gray-400 hover:text-gray-950 dark:hover:text-white bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800"
                   }`}
                 >
                   {active === cat && (
                     <motion.span
-                      layoutId="filter-pill"
+                      layoutId="filter-bg"
                       className="absolute inset-0 rounded-xl bg-gradient-to-r from-brand-500 to-brand-600"
-                      transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                      transition={{ type: "spring", stiffness: 350, damping: 25 }}
                     />
                   )}
-                  <span className="relative">{cat}</span>
+                  <span className="relative z-10">{cat}</span>
                 </motion.button>
               ))}
             </div>
           </div>
 
-          {/* Navigation Buttons - Top Position for Modern UI */}
-          <div className="hidden sm:flex items-center gap-2">
+          <div className="hidden sm:flex items-center gap-3">
             <button
               onClick={scrollPrev}
-              className="w-10 h-10 rounded-xl glass flex items-center justify-center text-gray-600 dark:text-gray-400 hover:bg-brand-500 hover:text-white dark:hover:bg-brand-500 transition-all border border-gray-200 dark:border-gray-700"
-              aria-label="Previous project"
+              className="w-11 h-11 rounded-xl glass flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-brand-500 dark:hover:text-brand-400 transition-all border border-gray-200/50 dark:border-gray-700/50 active:scale-90"
+              aria-label="Previous slide"
             >
-              <FiChevronLeft size={20} />
+              <FiChevronLeft size={22} />
             </button>
             <button
               onClick={scrollNext}
-              className="w-10 h-10 rounded-xl glass flex items-center justify-center text-gray-600 dark:text-gray-400 hover:bg-brand-500 hover:text-white dark:hover:bg-brand-500 transition-all border border-gray-200 dark:border-gray-700"
-              aria-label="Next project"
+              className="w-11 h-11 rounded-xl glass flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-brand-500 dark:hover:text-brand-400 transition-all border border-gray-200/50 dark:border-gray-700/50 active:scale-90"
+              aria-label="Next slide"
             >
-              <FiChevronRight size={20} />
+              <FiChevronRight size={22} />
             </button>
           </div>
         </div>
 
-        {/* Carousel Container */}
-        <div className="relative group">
+        <div className="relative overflow-visible">
           <div className="overflow-hidden cursor-grab active:cursor-grabbing" ref={emblaRef}>
             <div className="flex items-stretch gap-6 px-1 py-4">
-              <AnimatePresence mode="popLayout">
+              <AnimatePresence mode="popLayout" initial={false}>
                 {filtered.map((project, i) => (
                   <div key={project.title} className="flex-[0_0_100%] sm:flex-[0_0_calc(50%-12px)] lg:flex-[0_0_calc(50%-12px)] min-w-0">
                     <ProjectCard project={project} index={i} />
@@ -208,18 +222,17 @@ export default function Projects() {
           </div>
         </div>
 
-        {/* Pagination Dots */}
-        <div className="flex justify-center gap-2.5 mt-8">
+        <div className="flex justify-center gap-3 mt-10">
           {filtered.map((_, index) => (
             <button
               key={index}
-              onClick={() => emblaApi && emblaApi.scrollTo(index)}
-              className={`h-1.5 rounded-full transition-all duration-500 ${
+              onClick={() => emblaApi?.scrollTo(index)}
+              className={`h-1.5 rounded-full transition-all duration-500 ease-in-out ${
                 selectedIndex === index 
-                  ? "w-10 bg-brand-500 shadow-[0_0_12px_rgba(14,165,233,0.4)]" 
-                  : "w-2 bg-gray-300 dark:bg-gray-800 hover:bg-brand-500/40"
+                  ? "w-10 bg-brand-500 shadow-[0_0_15px_rgba(14,165,233,0.3)]" 
+                  : "w-2 bg-gray-300 dark:bg-gray-800 hover:bg-brand-500/30"
               }`}
-              aria-label={`Go to slide ${index + 1}`}
+              aria-label={`Jump to project ${index + 1}`}
             />
           ))}
         </div>

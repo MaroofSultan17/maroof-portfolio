@@ -20,10 +20,14 @@ export default function Footer() {
 
           <div className="flex items-center gap-4">
             {[
-              { icon: FiGithub, href: personal.github },
-              { icon: FiLinkedin, href: personal.linkedin },
-              { icon: FiMail, href: `mailto:${personal.email}` },
-            ].map(({ icon: Icon, href }) => (
+              { icon: FiGithub, href: personal.github, label: "GitHub" },
+              { icon: FiLinkedin, href: personal.linkedin, label: "LinkedIn" },
+              {
+                icon: FiMail,
+                href: `mailto:${personal.email}`,
+                label: "Email",
+              },
+            ].map(({ icon: Icon, href, label }) => (
               <motion.a
                 key={href}
                 href={href}
@@ -31,6 +35,7 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 whileHover={{ y: -2 }}
                 className="p-2 text-gray-500 dark:text-gray-400 hover:text-brand-500 dark:hover:text-brand-400 transition-colors"
+                aria-label={label}
               >
                 <Icon size={18} />
               </motion.a>

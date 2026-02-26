@@ -1,8 +1,9 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
+import useEmblaCarousel from "embla-carousel-react";
 import { projects, categories } from "../data/portfolio";
 import SectionHeader from "./SectionHeader";
-import { FiGithub, FiExternalLink, FiLock } from "react-icons/fi";
+import { FiGithub, FiExternalLink, FiLock, FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
 function ProjectCard({ project, index }) {
   const ref = useRef(null);
@@ -16,7 +17,7 @@ function ProjectCard({ project, index }) {
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.6, delay: index * 0.08, ease: "easeOut" }}
       layout
-      className="card group flex flex-col overflow-hidden"
+      className="card group flex flex-col h-full overflow-hidden"
     >
       {/* Gradient header */}
       <div className={`h-2 bg-gradient-to-r ${project.color}`} />
@@ -102,9 +103,38 @@ function ProjectCard({ project, index }) {
 
 export default function Projects() {
   const [active, setActive] = useState("All");
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    align: "start",
+    skipSnaps: false,
+    containScroll: "trimSnaps"
+  });
+
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return;
+    setSelectedIndex(emblaApi.selectedScrollSnap());
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    onSelect();
+    emblaApi.on("select", onSelect);
+    emblaApi.on("reInit", onSelect);
+  }, [emblaApi, onSelect]);
+
+  const scrollPrev = useCallback(() => emblaApi && emblaApi.scrollPrev(), [emblaApi]);
+  const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
 
   const filtered =
     active === "All" ? projects : projects.filter((p) => p.category === active);
+
+  // Re-initialize carousel when filtered projects change
+  useEffect(() => {
+    if (emblaApi) {
+      emblaApi.reInit();
+      setSelectedIndex(0);
+    }
+  }, [emblaApi, filtered]);
 
   return (
     <section id="projects" className="section-pad bg-gray-50/50 dark:bg-gray-900/50">
@@ -115,39 +145,84 @@ export default function Projects() {
           subtitle="From SaaS platforms to enterprise eCommerce — real products, real impact."
         />
 
-        {/* Filter tabs */}
-        <div className="flex flex-wrap justify-center gap-2 mt-10 mb-12">
-          {categories.map((cat) => (
-            <motion.button
-              key={cat}
-              onClick={() => setActive(cat)}
-              whileHover={{ scale: 1.04 }}
-              whileTap={{ scale: 0.97 }}
-              className={`relative px-5 py-2 rounded-xl text-sm font-semibold transition-colors ${
-                active === cat
-                  ? "text-white"
-                  : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700"
-              }`}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mt-10 mb-12">
+          {/* Filter tabs - with horizontal scroll on mobile */}
+          <div className="flex-1 overflow-x-auto pb-4 sm:pb-0 no-scrollbar">
+            <div className="flex justify-start gap-2">
+              {categories.map((cat) => (
+                <motion.button
+                  key={cat}
+                  onClick={() => setActive(cat)}
+                  whileHover={{ scale: 1.04 }}
+                  whileTap={{ scale: 0.97 }}
+                  className={`relative px-5 py-2 rounded-xl text-sm font-semibold transition-colors whitespace-nowrap ${
+                    active === cat
+                      ? "text-white"
+                      : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700"
+                  }`}
+                >
+                  {active === cat && (
+                    <motion.span
+                      layoutId="filter-pill"
+                      className="absolute inset-0 rounded-xl bg-gradient-to-r from-brand-500 to-brand-600"
+                      transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                    />
+                  )}
+                  <span className="relative">{cat}</span>
+                </motion.button>
+              ))}
+            </div>
+          </div>
+
+          {/* Navigation Buttons - Top Position for Modern UI */}
+          <div className="hidden sm:flex items-center gap-2">
+            <button
+              onClick={scrollPrev}
+              className="w-10 h-10 rounded-xl glass flex items-center justify-center text-gray-600 dark:text-gray-400 hover:bg-brand-500 hover:text-white dark:hover:bg-brand-500 transition-all border border-gray-200 dark:border-gray-700"
+              aria-label="Previous project"
             >
-              {active === cat && (
-                <motion.span
-                  layoutId="filter-pill"
-                  className="absolute inset-0 rounded-xl bg-gradient-to-r from-brand-500 to-brand-600"
-                  transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                />
-              )}
-              <span className="relative">{cat}</span>
-            </motion.button>
-          ))}
+              <FiChevronLeft size={20} />
+            </button>
+            <button
+              onClick={scrollNext}
+              className="w-10 h-10 rounded-xl glass flex items-center justify-center text-gray-600 dark:text-gray-400 hover:bg-brand-500 hover:text-white dark:hover:bg-brand-500 transition-all border border-gray-200 dark:border-gray-700"
+              aria-label="Next project"
+            >
+              <FiChevronRight size={20} />
+            </button>
+          </div>
         </div>
 
-        <motion.div layout className="grid sm:grid-cols-2 lg:grid-cols-2 gap-6">
-          <AnimatePresence mode="popLayout">
-            {filtered.map((project, i) => (
-              <ProjectCard key={project.title} project={project} index={i} />
-            ))}
-          </AnimatePresence>
-        </motion.div>
+        {/* Carousel Container */}
+        <div className="relative group">
+          <div className="overflow-hidden cursor-grab active:cursor-grabbing" ref={emblaRef}>
+            <div className="flex items-stretch gap-6 px-1 py-4">
+              <AnimatePresence mode="popLayout">
+                {filtered.map((project, i) => (
+                  <div key={project.title} className="flex-[0_0_100%] sm:flex-[0_0_calc(50%-12px)] lg:flex-[0_0_calc(50%-12px)] min-w-0">
+                    <ProjectCard project={project} index={i} />
+                  </div>
+                ))}
+              </AnimatePresence>
+            </div>
+          </div>
+        </div>
+
+        {/* Pagination Dots */}
+        <div className="flex justify-center gap-2.5 mt-8">
+          {filtered.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => emblaApi && emblaApi.scrollTo(index)}
+              className={`h-1.5 rounded-full transition-all duration-500 ${
+                selectedIndex === index 
+                  ? "w-10 bg-brand-500 shadow-[0_0_12px_rgba(14,165,233,0.4)]" 
+                  : "w-2 bg-gray-300 dark:bg-gray-800 hover:bg-brand-500/40"
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+        </div>
       </div>
     </section>
   );

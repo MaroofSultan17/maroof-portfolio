@@ -21,7 +21,7 @@ function ExperienceCard({ exp, index }) {
         <div className="w-2 h-2 rounded-full bg-white" />
       </div>
 
-      <div className="card p-6 sm:p-8">
+      <div className="card p-5 sm:p-8">
         <div className="flex flex-wrap items-start justify-between gap-3 mb-4">
           <div>
             <h3 className="font-display font-bold text-xl text-gray-900 dark:text-white">
@@ -49,7 +49,7 @@ function ExperienceCard({ exp, index }) {
 
         <ul className="space-y-2.5">
           {exp.bullets.map((b, i) => (
-            <li key={i} className="flex gap-3 text-sm text-gray-600 dark:text-gray-400">
+            <li key={i} className="flex gap-2 sm:gap-3 text-sm text-gray-600 dark:text-gray-400">
               <span className="mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-brand-500" />
               <span>{b}</span>
             </li>

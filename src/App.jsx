@@ -11,7 +11,7 @@ export default function App() {
   const { toggle, isDark } = useTheme();
 
   return (
-    <div className="min-h-screen font-body">
+    <div className="min-h-screen font-body overflow-x-hidden">
       <Navbar toggle={toggle} isDark={isDark} />
       <main>
         <Hero />

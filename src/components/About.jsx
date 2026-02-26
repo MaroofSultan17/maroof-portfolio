@@ -56,7 +56,7 @@ export default function About() {
         >
           {/* Bio */}
           <motion.div variants={item}>
-            <h3 className="font-display font-bold text-2xl text-gray-900 dark:text-white mb-5">
+            <h3 className="font-display font-bold text-xl sm:text-2xl text-gray-900 dark:text-white mb-5">
               Professional Summary
             </h3>
             <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
@@ -107,14 +107,15 @@ export default function About() {
             <h4 className="font-semibold text-gray-800 dark:text-gray-200 mt-8 mb-4">
               Supporting Technologies
             </h4>
-            <div className="flex flex-wrap gap-2">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               {skills.supporting.map((s) => (
-                <span
+                <div
                   key={s}
-                  className="px-3 py-1.5 text-xs font-medium rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700"
+                  className="px-4 py-3 text-sm font-medium rounded-xl bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 text-gray-700 dark:text-gray-300 shadow-sm hover:shadow-md hover:border-brand-500/30 dark:hover:border-brand-400/30 transition-all flex items-center gap-2 group"
                 >
+                  <div className="w-1.5 h-1.5 rounded-full bg-brand-500/40 group-hover:bg-brand-500 transition-colors" />
                   {s}
-                </span>
+                </div>
               ))}
             </div>
           </motion.div>

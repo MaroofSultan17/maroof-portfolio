@@ -73,31 +73,12 @@ export default function Certifications() {
   return (
     <section id="certifications" className="section-pad bg-white dark:bg-gray-950 overflow-hidden">
       <div className="max-w-6xl mx-auto">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-          <SectionHeader
-            label="Certifications"
-            title="Licenses & Training"
-            subtitle="Verified professional certifications and technical specializations across major platforms."
-          />
-          
-          <div className="hidden md:flex items-center gap-3 lg:hidden">
-            <button
-              onClick={scrollPrev}
-              className="w-10 h-10 rounded-xl glass flex items-center justify-center text-gray-500 hover:text-brand-500 transition-all border border-gray-200 dark:border-gray-800"
-              aria-label="Previous slide"
-            >
-              <FiChevronLeft size={20} />
-            </button>
-            <button
-              onClick={scrollNext}
-              className="w-10 h-10 rounded-xl glass flex items-center justify-center text-gray-500 hover:text-brand-500 transition-all border border-gray-200 dark:border-gray-800"
-              aria-label="Next slide"
-            >
-              <FiChevronRight size={20} />
-            </button>
-          </div>
-        </div>
-
+        <SectionHeader
+          label="Certifications"
+          title="Licenses & Training"
+          subtitle="Verified professional certifications and technical specializations across major platforms."
+        />
+        
         <div className="relative">
           <div className="overflow-visible" ref={emblaRef}>
             <motion.div
@@ -105,7 +86,7 @@ export default function Certifications() {
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, margin: "-50px" }}
-              className="flex lg:grid lg:grid-cols-3 gap-6"
+              className="flex lg:grid lg:grid-cols-3 gap-6 mt-5"
             >
               {certifications.map((cert) => (
                 <div 

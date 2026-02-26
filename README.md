@@ -21,12 +21,14 @@ npm run preview
 ## Deploy to Vercel
 
 ### Option 1 — Vercel CLI
+
 ```bash
 npm install -g vercel
 vercel
 ```
 
 ### Option 2 — GitHub Integration
+
 1. Push this repo to GitHub
 2. Go to [vercel.com](https://vercel.com) → Import Project
 3. Select your repo — Vercel auto-detects Vite

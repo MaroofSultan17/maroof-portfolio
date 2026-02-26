@@ -4,7 +4,7 @@ import { useRef } from "react";
 /**
  * SectionHeader Component
  * Standardized header for all major landing sections.
- * 
+ *
  * @param {Object} props
  * @param {string} props.label - Small uppercase label (e.g., "CONTACT")
  * @param {string} props.title - Main heading title

@@ -1,6 +1,13 @@
 import { useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { FiMail, FiPhone, FiGithub, FiLinkedin, FiSend, FiCheckCircle } from "react-icons/fi";
+import {
+  FiMail,
+  FiPhone,
+  FiGithub,
+  FiLinkedin,
+  FiSend,
+  FiCheckCircle,
+} from "react-icons/fi";
 import { personal } from "../data/portfolio";
 import SectionHeader from "./SectionHeader";
 
@@ -44,8 +51,8 @@ export default function Contact() {
                 Get in touch
               </h3>
               <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                I'm always open to discussing new projects, consulting opportunities, or just a
-                friendly chat about tech.
+                I'm always open to discussing new projects, consulting
+                opportunities, or just a friendly chat about tech.
               </p>
             </div>
 
@@ -78,7 +85,11 @@ export default function Contact() {
             <div className="flex gap-3 pt-2">
               {[
                 { icon: FiGithub, href: personal.github, label: "GitHub" },
-                { icon: FiLinkedin, href: personal.linkedin, label: "LinkedIn" },
+                {
+                  icon: FiLinkedin,
+                  href: personal.linkedin,
+                  label: "LinkedIn",
+                },
               ].map(({ icon: Icon, href, label }) => (
                 <motion.a
                   key={label}
@@ -100,6 +111,8 @@ export default function Contact() {
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
+                role="status"
+                aria-live="polite"
                 className="card p-10 text-center h-full flex flex-col items-center justify-center gap-4"
               >
                 <FiCheckCircle size={48} className="text-emerald-500" />
@@ -111,13 +124,20 @@ export default function Contact() {
                 </p>
               </motion.div>
             ) : (
-              <form onSubmit={handleSubmit} className="card p-6 sm:p-8 space-y-5">
+              <form
+                onSubmit={handleSubmit}
+                className="card p-6 sm:p-8 space-y-5"
+              >
                 <div className="grid sm:grid-cols-2 gap-5">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+                    <label
+                      htmlFor="contact-name"
+                      className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5"
+                    >
                       Name
                     </label>
                     <input
+                      id="contact-name"
                       type="text"
                       name="name"
                       required
@@ -128,10 +148,14 @@ export default function Contact() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+                    <label
+                      htmlFor="contact-email"
+                      className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5"
+                    >
                       Email
                     </label>
                     <input
+                      id="contact-email"
                       type="email"
                       name="email"
                       required
@@ -144,10 +168,14 @@ export default function Contact() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+                  <label
+                    htmlFor="contact-message"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5"
+                  >
                     Message
                   </label>
                   <textarea
+                    id="contact-message"
                     name="message"
                     required
                     rows={5}
@@ -161,14 +189,18 @@ export default function Contact() {
                 <motion.button
                   type="submit"
                   disabled={loading}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="w-full flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-brand-500 to-brand-600 text-white font-semibold shadow-lg shadow-brand-500/25 hover:shadow-brand-500/40 transition-shadow disabled:opacity-70"
+                  whileHover={{ scale: loading ? 1 : 1.02 }}
+                  whileTap={{ scale: loading ? 1 : 0.98 }}
+                  className="w-full flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-brand-500 to-brand-600 text-white font-semibold shadow-lg shadow-brand-500/25 hover:shadow-brand-500/40 transition-shadow disabled:opacity-70 disabled:cursor-not-allowed"
                 >
                   {loading ? (
                     <motion.div
                       animate={{ rotate: 360 }}
-                      transition={{ repeat: Infinity, duration: 0.8, ease: "linear" }}
+                      transition={{
+                        repeat: Infinity,
+                        duration: 0.8,
+                        ease: "linear",
+                      }}
                       className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full"
                     />
                   ) : (

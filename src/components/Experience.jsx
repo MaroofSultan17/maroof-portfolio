@@ -6,7 +6,7 @@ import { FiBriefcase, FiCalendar } from "react-icons/fi";
 
 /**
  * Displays a professional history record with timeline visualization.
- * 
+ *
  * @param {Object} props
  * @param {Object} props.exp - Experience entry data
  * @param {number} props.index - Index for staggering animations
@@ -62,7 +62,10 @@ function ExperienceCard({ exp, index }) {
 
         <ul className="space-y-2.5">
           {exp.bullets.map((b, i) => (
-            <li key={i} className="flex gap-2 sm:gap-3 text-sm text-gray-600 dark:text-gray-400">
+            <li
+              key={i}
+              className="flex gap-2 sm:gap-3 text-sm text-gray-600 dark:text-gray-400"
+            >
               <span className="mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-brand-500" />
               <span>{b}</span>
             </li>
@@ -88,7 +91,11 @@ export default function Experience() {
 
           <div className="space-y-8">
             {experiences.map((exp, i) => (
-              <ExperienceCard key={`${exp.company}-${exp.role}-${i}`} exp={exp} index={i} />
+              <ExperienceCard
+                key={`${exp.company}-${exp.role}-${i}`}
+                exp={exp}
+                index={i}
+              />
             ))}
           </div>
         </div>

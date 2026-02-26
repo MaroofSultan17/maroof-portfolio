@@ -8,16 +8,34 @@ function SkillBar({ name, level, index }) {
   const inView = useInView(ref, { once: true, margin: "-50px" });
 
   return (
-    <div ref={ref} className="mb-5" aria-label={`${name} skill level ${level}%`}>
+    <div
+      ref={ref}
+      className="mb-5"
+      aria-label={`${name} skill level ${level}%`}
+    >
       <div className="flex justify-between items-center mb-2">
-        <span className="text-sm font-semibold text-gray-800 dark:text-gray-200">{name}</span>
-        <span className="text-sm font-mono text-brand-500 dark:text-brand-400">{level}%</span>
+        <span className="text-sm font-semibold text-gray-800 dark:text-gray-200">
+          {name}
+        </span>
+        <span className="text-sm font-mono text-brand-500 dark:text-brand-400">
+          {level}%
+        </span>
       </div>
-      <div className="h-2 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden" role="progressbar" aria-valuenow={level} aria-valuemin="0" aria-valuemax="100">
+      <div
+        className="h-2 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden"
+        role="progressbar"
+        aria-valuenow={level}
+        aria-valuemin="0"
+        aria-valuemax="100"
+      >
         <motion.div
           initial={{ width: 0 }}
           animate={inView ? { width: `${level}%` } : {}}
-          transition={{ duration: 1.2, delay: index * 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
+          transition={{
+            duration: 1.2,
+            delay: index * 0.1,
+            ease: [0.25, 0.46, 0.45, 0.94],
+          }}
           className="h-full rounded-full bg-gradient-to-r from-brand-500 to-brand-400"
         />
       </div>
@@ -39,7 +57,10 @@ export default function About() {
   };
 
   return (
-    <section id="about" className="section-pad bg-gray-50/50 dark:bg-gray-900/50">
+    <section
+      id="about"
+      className="section-pad bg-gray-50/50 dark:bg-gray-900/50"
+    >
       <div className="max-w-6xl mx-auto">
         <SectionHeader
           label="About Me"
@@ -59,31 +80,59 @@ export default function About() {
               Professional Summary
             </h3>
             <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
-              Full-Stack Developer with 2+ years of experience building scalable web applications.
-              Expert in <strong className="text-gray-900 dark:text-white">Laravel</strong> and{" "}
-              <strong className="text-gray-900 dark:text-white">Symfony</strong> backends, paired
-              with modern frontends using{" "}
-              <strong className="text-gray-900 dark:text-white">Vue.js</strong> and{" "}
-              <strong className="text-gray-900 dark:text-white">Livewire</strong>.
+              Full-Stack Developer with 2+ years of experience building scalable
+              web applications. Expert in{" "}
+              <strong className="text-gray-900 dark:text-white">Laravel</strong>{" "}
+              and{" "}
+              <strong className="text-gray-900 dark:text-white">Symfony</strong>{" "}
+              backends, paired with modern frontends using{" "}
+              <strong className="text-gray-900 dark:text-white">Vue.js</strong>{" "}
+              and{" "}
+              <strong className="text-gray-900 dark:text-white">
+                Livewire
+              </strong>
+              .
             </p>
             <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
               I&apos;ve delivered end-to-end{" "}
-              <strong className="text-gray-900 dark:text-white">SaaS platforms</strong>,{" "}
-              <strong className="text-gray-900 dark:text-white">enterprise eCommerce</strong>, and{" "}
-              <strong className="text-gray-900 dark:text-white">REST APIs</strong> for
-              international clients — integrating payment gateways like{" "}
+              <strong className="text-gray-900 dark:text-white">
+                SaaS platforms
+              </strong>
+              ,{" "}
+              <strong className="text-gray-900 dark:text-white">
+                enterprise eCommerce
+              </strong>
+              , and{" "}
+              <strong className="text-gray-900 dark:text-white">
+                REST APIs
+              </strong>{" "}
+              for international clients — integrating payment gateways like{" "}
               <strong className="text-gray-900 dark:text-white">Stripe</strong>,{" "}
-              <strong className="text-gray-900 dark:text-white">PayPal</strong>, and{" "}
-              <strong className="text-gray-900 dark:text-white">Braintree</strong>.
+              <strong className="text-gray-900 dark:text-white">PayPal</strong>,
+              and{" "}
+              <strong className="text-gray-900 dark:text-white">
+                Braintree
+              </strong>
+              .
             </p>
             <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
               Currently pursuing BS Computer Science at{" "}
-              <strong className="text-gray-900 dark:text-white">COMSATS University Islamabad</strong>{" "}
-              with a CGPA of <strong className="text-brand-500">3.80/4.00</strong>.
+              <strong className="text-gray-900 dark:text-white">
+                COMSATS University Islamabad
+              </strong>{" "}
+              with a CGPA of{" "}
+              <strong className="text-brand-500">3.80/4.00</strong>.
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
-              {["Laravel", "Symfony", "PHP", "REST APIs", "SaaS", "TailwindCSS"].map((tag) => (
+              {[
+                "Laravel",
+                "Symfony",
+                "PHP",
+                "REST APIs",
+                "SaaS",
+                "TailwindCSS",
+              ].map((tag) => (
                 <span
                   key={tag}
                   className="px-3 py-1.5 text-xs font-semibold rounded-lg bg-brand-500/10 text-brand-600 dark:text-brand-400 border border-brand-500/20"
@@ -113,7 +162,10 @@ export default function About() {
                   whileTap={{ scale: 0.98 }}
                   className="px-4 py-3 text-sm font-medium rounded-xl bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 text-gray-700 dark:text-gray-300 shadow-sm hover:shadow-md hover:border-brand-500/30 dark:hover:border-brand-400/30 transition-all flex items-center gap-2 group cursor-default"
                 >
-                  <div className="w-1.5 h-1.5 rounded-full bg-brand-500/40 group-hover:bg-brand-500 group-hover:shadow-[0_0_8px_rgba(14,165,233,0.6)] transition-all" aria-hidden="true" />
+                  <div
+                    className="w-1.5 h-1.5 rounded-full bg-brand-500/40 group-hover:bg-brand-500 group-hover:shadow-[0_0_8px_rgba(14,165,233,0.6)] transition-all"
+                    aria-hidden="true"
+                  />
                   {s}
                 </motion.div>
               ))}

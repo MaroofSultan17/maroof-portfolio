@@ -5,7 +5,10 @@ import { FiHeart, FiHexagon } from "react-icons/fi";
 
 export default function Volunteering() {
   return (
-    <section id="volunteering" className="section-pad bg-gray-50/50 dark:bg-gray-900/50">
+    <section
+      id="volunteering"
+      className="section-pad bg-gray-50/50 dark:bg-gray-900/50"
+    >
       <div className="max-w-5xl mx-auto">
         <SectionHeader
           label="Volunteering"
@@ -43,8 +46,14 @@ export default function Volunteering() {
 
               <ul className="space-y-3">
                 {item.bullets.map((bullet, i) => (
-                  <li key={i} className="flex gap-3 text-sm text-gray-600 dark:text-gray-400">
-                    <FiHexagon size={14} className="mt-1 text-brand-400 shrink-0" />
+                  <li
+                    key={i}
+                    className="flex gap-3 text-sm text-gray-600 dark:text-gray-400"
+                  >
+                    <FiHexagon
+                      size={14}
+                      className="mt-1 text-brand-400 shrink-0"
+                    />
                     <span>{bullet}</span>
                   </li>
                 ))}

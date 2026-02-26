@@ -2,7 +2,6 @@ import { motion } from "framer-motion";
 import { FiGithub, FiLinkedin, FiMail, FiHeart } from "react-icons/fi";
 import { personal } from "../data/portfolio";
 
-
 export default function Footer() {
   const year = new Date().getFullYear();
 
@@ -23,7 +22,11 @@ export default function Footer() {
             {[
               { icon: FiGithub, href: personal.github, label: "GitHub" },
               { icon: FiLinkedin, href: personal.linkedin, label: "LinkedIn" },
-              { icon: FiMail, href: `mailto:${personal.email}`, label: "Email" },
+              {
+                icon: FiMail,
+                href: `mailto:${personal.email}`,
+                label: "Email",
+              },
             ].map(({ icon: Icon, href, label }) => (
               <motion.a
                 key={href}

@@ -3,12 +3,18 @@ import { motion, useInView, AnimatePresence } from "framer-motion";
 import useEmblaCarousel from "embla-carousel-react";
 import { projects, categories } from "../data/portfolio";
 import SectionHeader from "./SectionHeader";
-import { FiGithub, FiExternalLink, FiLock, FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import {
+  FiGithub,
+  FiExternalLink,
+  FiLock,
+  FiChevronLeft,
+  FiChevronRight,
+} from "react-icons/fi";
 
 /**
  * ProjectCard Component
  * Renders a single project item with high-performance animations.
- * 
+ *
  * @param {Object} props
  * @param {Object} props.project - The project data
  * @param {number} props.index - Staggering index
@@ -27,7 +33,10 @@ function ProjectCard({ project, index }) {
       layout
       className="card group flex flex-col h-full overflow-hidden"
     >
-      <div className={`h-2 bg-gradient-to-r ${project.color}`} aria-hidden="true" />
+      <div
+        className={`h-2 bg-gradient-to-r ${project.color}`}
+        aria-hidden="true"
+      />
 
       <div className="p-6 flex flex-col flex-1">
         <div className="flex items-center justify-between mb-4">
@@ -110,13 +119,15 @@ export default function Projects() {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const filtered = useMemo(() => {
-    return active === "All" ? projects : projects.filter((p) => p.category === active);
+    return active === "All"
+      ? projects
+      : projects.filter((p) => p.category === active);
   }, [active]);
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: "start",
     skipSnaps: false,
-    containScroll: "trimSnaps"
+    containScroll: "trimSnaps",
   });
 
   const onSelect = useCallback(() => {
@@ -129,7 +140,7 @@ export default function Projects() {
     onSelect();
     emblaApi.on("select", onSelect);
     emblaApi.on("reInit", onSelect);
-    
+
     return () => {
       emblaApi.off("select", onSelect);
       emblaApi.off("reInit", onSelect);
@@ -147,7 +158,10 @@ export default function Projects() {
   }, [emblaApi, filtered]);
 
   return (
-    <section id="projects" className="section-pad bg-gray-50/50 dark:bg-gray-900/50">
+    <section
+      id="projects"
+      className="section-pad bg-gray-50/50 dark:bg-gray-900/50"
+    >
       <div className="max-w-6xl mx-auto">
         <SectionHeader
           label="Showcase"
@@ -174,7 +188,11 @@ export default function Projects() {
                     <motion.span
                       layoutId="filter-bg"
                       className="absolute inset-0 rounded-xl bg-gradient-to-r from-brand-500 to-brand-600"
-                      transition={{ type: "spring", stiffness: 350, damping: 25 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 350,
+                        damping: 25,
+                      }}
                     />
                   )}
                   <span className="relative z-10">{cat}</span>
@@ -202,11 +220,17 @@ export default function Projects() {
         </div>
 
         <div className="relative overflow-visible">
-          <div className="overflow-hidden cursor-grab active:cursor-grabbing" ref={emblaRef}>
+          <div
+            className="overflow-hidden cursor-grab active:cursor-grabbing"
+            ref={emblaRef}
+          >
             <div className="flex items-stretch gap-6 px-1 py-4">
               <AnimatePresence mode="popLayout" initial={false}>
                 {filtered.map((project, i) => (
-                  <div key={project.title} className="flex-[0_0_100%] sm:flex-[0_0_calc(50%-12px)] lg:flex-[0_0_calc(50%-12px)] min-w-0">
+                  <div
+                    key={project.title}
+                    className="flex-[0_0_100%] sm:flex-[0_0_calc(50%-12px)] lg:flex-[0_0_calc(50%-12px)] min-w-0"
+                  >
                     <ProjectCard project={project} index={i} />
                   </div>
                 ))}
@@ -221,8 +245,8 @@ export default function Projects() {
               key={index}
               onClick={() => emblaApi?.scrollTo(index)}
               className={`h-1.5 rounded-full transition-all duration-500 ease-in-out ${
-                selectedIndex === index 
-                  ? "w-10 bg-brand-500 shadow-[0_0_15px_rgba(14,165,233,0.3)]" 
+                selectedIndex === index
+                  ? "w-10 bg-brand-500 shadow-[0_0_15px_rgba(14,165,233,0.3)]"
                   : "w-2 bg-gray-300 dark:bg-gray-800 hover:bg-brand-500/30"
               }`}
               aria-label={`Jump to project ${index + 1}`}

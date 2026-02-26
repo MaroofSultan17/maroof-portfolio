@@ -3,25 +3,33 @@ import { motion, AnimatePresence } from "framer-motion";
 import useEmblaCarousel from "embla-carousel-react";
 import { certifications } from "../data/portfolio";
 import SectionHeader from "./SectionHeader";
-import { FiAward, FiExternalLink, FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import {
+  FiAward,
+  FiExternalLink,
+  FiChevronLeft,
+  FiChevronRight,
+} from "react-icons/fi";
 import { SiUdemy, SiLinkedin, SiDatacamp } from "react-icons/si";
 import { FaMicrosoft } from "react-icons/fa";
 
 function BrandIcon({ issuer }) {
   const name = issuer.toLowerCase();
-  
+
   const iconVariants = {
-    hover: { 
+    hover: {
       y: [0, -4, 0],
-      transition: { duration: 2, repeat: Infinity, ease: "easeInOut" }
-    }
+      transition: { duration: 2, repeat: Infinity, ease: "easeInOut" },
+    },
   };
 
   const getIcon = () => {
-    if (name.includes("microsoft")) return <FaMicrosoft className="text-[#00A4EF]" />;
+    if (name.includes("microsoft"))
+      return <FaMicrosoft className="text-[#00A4EF]" />;
     if (name.includes("udemy")) return <SiUdemy className="text-[#A435F0]" />;
-    if (name.includes("linkedin")) return <SiLinkedin className="text-[#0A66C2]" />;
-    if (name.includes("datacamp")) return <SiDatacamp className="text-[#05192D] dark:text-brand-400" />;
+    if (name.includes("linkedin"))
+      return <SiLinkedin className="text-[#0A66C2]" />;
+    if (name.includes("datacamp"))
+      return <SiDatacamp className="text-[#05192D] dark:text-brand-400" />;
     return <FiAward className="text-brand-500" />;
   };
 
@@ -38,8 +46,8 @@ export default function Certifications() {
     align: "start",
     containScroll: "trimSnaps",
     breakpoints: {
-      "(min-width: 1024px)": { active: false }
-    }
+      "(min-width: 1024px)": { active: false },
+    },
   });
 
   const onSelect = useCallback(() => {
@@ -71,14 +79,17 @@ export default function Certifications() {
   };
 
   return (
-    <section id="certifications" className="section-pad bg-white dark:bg-gray-950 overflow-hidden">
+    <section
+      id="certifications"
+      className="section-pad bg-white dark:bg-gray-950 overflow-hidden"
+    >
       <div className="max-w-6xl mx-auto">
         <SectionHeader
           label="Certifications"
           title="Licenses & Training"
           subtitle="Verified professional certifications and technical specializations across major platforms."
         />
-        
+
         <div className="relative">
           <div className="overflow-visible" ref={emblaRef}>
             <motion.div
@@ -89,8 +100,8 @@ export default function Certifications() {
               className="flex lg:grid lg:grid-cols-3 gap-6 mt-5"
             >
               {certifications.map((cert) => (
-                <div 
-                  key={cert.title} 
+                <div
+                  key={cert.title}
                   className="flex-[0_0_85%] sm:flex-[0_0_45%] lg:flex-none min-w-0"
                 >
                   <motion.div
@@ -111,7 +122,7 @@ export default function Certifications() {
                     <h3 className="font-display font-bold text-lg text-gray-900 dark:text-white leading-tight mb-2 group-hover:text-brand-500 transition-colors">
                       {cert.title}
                     </h3>
-                    
+
                     <div className="flex items-center gap-2 mb-6">
                       <p className="text-sm font-semibold text-gray-700 dark:text-gray-300">
                         {cert.issuer}
@@ -159,7 +170,9 @@ export default function Certifications() {
               key={index}
               onClick={() => emblaApi?.scrollTo(index)}
               className={`h-1.5 rounded-full transition-all duration-300 ${
-                selectedIndex === index ? "w-8 bg-brand-500" : "w-1.5 bg-gray-200 dark:bg-gray-800"
+                selectedIndex === index
+                  ? "w-8 bg-brand-500"
+                  : "w-1.5 bg-gray-200 dark:bg-gray-800"
               }`}
               aria-label={`Go to slide ${index + 1}`}
             />
@@ -169,4 +182,3 @@ export default function Certifications() {
     </section>
   );
 }
-

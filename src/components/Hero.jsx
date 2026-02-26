@@ -8,6 +8,11 @@ const fadeUp = (delay = 0) => ({
   transition: { duration: 0.7, delay, ease: [0.25, 0.46, 0.45, 0.94] },
 });
 
+/**
+ * Hero Component
+ * Premium landing section featuring high-impact typography and CTA.
+ * Uses a refined motion-orchestrated entrance sequence.
+ */
 export default function Hero() {
   const scrollTo = (id) =>
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
@@ -76,7 +81,6 @@ export default function Hero() {
           elegant, performant solutions.
         </motion.p>
 
-        {/* CTAs */}
         <motion.div
           {...fadeUp(0.65)}
           className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12"
@@ -86,6 +90,7 @@ export default function Hero() {
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.97 }}
             className="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-gradient-to-r from-brand-500 to-brand-600 text-white font-semibold shadow-lg shadow-brand-500/30 hover:shadow-brand-500/50 transition-shadow"
+            aria-label="View my featured projects"
           >
             View Projects
           </motion.button>
@@ -95,6 +100,7 @@ export default function Hero() {
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.97 }}
             className="w-full sm:w-auto px-7 py-3.5 rounded-xl border-2 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-semibold flex items-center justify-center gap-2 hover:border-brand-500 hover:text-brand-500 dark:hover:border-brand-400 dark:hover:text-brand-400 transition-colors"
+            aria-label="Download my professional CV"
           >
             <FiDownload size={16} />
             Download CV

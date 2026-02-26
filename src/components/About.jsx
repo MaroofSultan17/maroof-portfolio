@@ -3,10 +3,6 @@ import { motion, useInView } from "framer-motion";
 import { skills, personal } from "../data/portfolio";
 import SectionHeader from "./SectionHeader";
 
-/**
- * SkillBar Component
- * Renders a horizontal progress bar for a specific technical skill.
- */
 function SkillBar({ name, level, index }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-50px" });
@@ -29,10 +25,6 @@ function SkillBar({ name, level, index }) {
   );
 }
 
-/**
- * About Section
- * Highlights professional biography and core competencies.
- */
 export default function About() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
@@ -62,7 +54,6 @@ export default function About() {
           animate={inView ? "show" : "hidden"}
           className="grid lg:grid-cols-2 gap-12 mt-14"
         >
-          {/* Bio */}
           <motion.div variants={item}>
             <h3 className="font-display font-bold text-xl sm:text-2xl text-gray-900 dark:text-white mb-5">
               Professional Summary
@@ -103,7 +94,6 @@ export default function About() {
             </div>
           </motion.div>
 
-          {/* Skills */}
           <motion.div variants={item}>
             <h3 className="font-display font-bold text-2xl text-gray-900 dark:text-white mb-6">
               Core Skills

@@ -13,7 +13,6 @@ export default function WelcomeToast() {
   const fullText = "SYSTEM Ready. Welcome, explorer. Check out the latest projects below.";
   
   useEffect(() => {
-    // Show toast after a short delay for better UX entrance
     const timer = setTimeout(() => setShow(true), 2000);
     return () => clearTimeout(timer);
   }, []);
@@ -37,7 +36,6 @@ export default function WelcomeToast() {
           className="fixed bottom-6 right-6 z-[100] max-w-sm w-full"
         >
           <div className="bg-gray-900 border border-gray-800 rounded-2xl p-5 shadow-2xl overflow-hidden relative group">
-            {/* Terminal bar */}
             <div className="flex items-center gap-2 mb-3 border-b border-gray-800 pb-2">
               <div className="flex gap-1.5">
                 <div className="w-2.5 h-2.5 rounded-full bg-rose-500/80" />
@@ -85,7 +83,6 @@ export default function WelcomeToast() {
               </div>
             </div>
 
-            {/* Subtle glow effect */}
             <div className="absolute inset-0 bg-brand-500/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
           </div>
         </motion.div>

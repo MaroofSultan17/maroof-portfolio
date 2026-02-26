@@ -6,14 +6,12 @@ const links = [
   { label: "Home", href: "#home" },
   { label: "About", href: "#about" },
   { label: "Experience", href: "#experience" },
+  { label: "Certifications", href: "#certifications" },
+  { label: "Volunteering", href: "#volunteering" },
   { label: "Projects", href: "#projects" },
   { label: "Contact", href: "#contact" },
 ];
 
-/**
- * Navbar Component
- * Handles sticky logic, theme toggling, and smooth navigation.
- */
 export default function Navbar({ toggle, isDark }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -30,21 +28,28 @@ export default function Navbar({ toggle, isDark }) {
   }, [scrolled]);
 
   useEffect(() => {
-    const sections = links.map((l) => l.href.replace("#", ""));
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) setActive(e.target.id);
-        });
-      },
-      { threshold: 0.4 }
-    );
-    sections.forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
-    });
-    return () => observer.disconnect();
-  }, []);
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + 100;
+      
+      const current = links.reduce((acc, link) => {
+        const id = link.href.replace("#", "");
+        const element = document.getElementById(id);
+        if (element && scrollPosition >= element.offsetTop) {
+          return id;
+        }
+        return acc;
+      }, "home");
+
+      if (current !== active) {
+        setActive(current);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [active]);
 
   const handleNav = (href) => {
     const id = href.replace("#", "");
@@ -54,7 +59,7 @@ export default function Navbar({ toggle, isDark }) {
     setTimeout(() => {
       const element = document.getElementById(id);
       if (element) {
-        const offset = 80; // Account for sticky navbar
+        const offset = 80;
         const bodyRect = document.body.getBoundingClientRect().top;
         const elementRect = element.getBoundingClientRect().top;
         const elementPosition = elementRect - bodyRect;

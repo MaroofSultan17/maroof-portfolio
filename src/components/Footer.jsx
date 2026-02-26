@@ -2,10 +2,7 @@ import { motion } from "framer-motion";
 import { FiGithub, FiLinkedin, FiMail, FiHeart } from "react-icons/fi";
 import { personal } from "../data/portfolio";
 
-/**
- * Footer Component
- * Site-wide footer with social links and copyright attribution.
- */
+
 export default function Footer() {
   const year = new Date().getFullYear();
 

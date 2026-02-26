@@ -8,11 +8,6 @@ const fadeUp = (delay = 0) => ({
   transition: { duration: 0.7, delay, ease: [0.25, 0.46, 0.45, 0.94] },
 });
 
-/**
- * Hero Component
- * Premium landing section featuring high-impact typography and CTA.
- * Uses a refined motion-orchestrated entrance sequence.
- */
 export default function Hero() {
   const scrollTo = (id) =>
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
@@ -22,18 +17,15 @@ export default function Hero() {
       id="home"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Background gradient blobs */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-1/4 -left-32 w-96 h-96 bg-brand-500/20 rounded-full blur-3xl" />
         <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-violet-500/5 rounded-full blur-3xl" />
       </div>
 
-      {/* Grid pattern */}
       <div className="absolute inset-0 -z-10 bg-[linear-gradient(rgba(14,165,233,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(14,165,233,0.03)_1px,transparent_1px)] bg-[size:60px_60px]" />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-24 pb-16 text-center">
-        {/* Badge */}
         <motion.div {...fadeUp(0.1)} className="flex justify-center mb-6">
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-500/10 dark:bg-brand-400/10 border border-brand-500/20 dark:border-brand-400/20 text-brand-600 dark:text-brand-400 text-sm font-medium">
             <span className="relative flex h-2 w-2">
@@ -44,7 +36,6 @@ export default function Hero() {
           </span>
         </motion.div>
 
-        {/* Name */}
         <motion.h1
           {...fadeUp(0.2)}
           className="font-display font-extrabold text-4xl sm:text-7xl md:text-8xl tracking-tight text-gray-900 dark:text-white mb-4"
@@ -56,7 +47,6 @@ export default function Hero() {
           ))}
         </motion.h1>
 
-        {/* Role */}
         <motion.p
           {...fadeUp(0.35)}
           className="font-display font-semibold text-lg sm:text-2xl text-gray-500 dark:text-gray-400 mb-3"
@@ -64,7 +54,6 @@ export default function Hero() {
           {personal.role}
         </motion.p>
 
-        {/* Tagline */}
         <motion.p
           {...fadeUp(0.45)}
           className="font-mono text-xs sm:text-base text-brand-500 dark:text-brand-400 mb-6 tracking-wide"
@@ -72,7 +61,6 @@ export default function Hero() {
           {personal.tagline}
         </motion.p>
 
-        {/* Bio */}
         <motion.p
           {...fadeUp(0.55)}
           className="max-w-2xl mx-auto text-gray-600 dark:text-gray-400 text-sm sm:text-lg leading-relaxed mb-10"
@@ -107,7 +95,6 @@ export default function Hero() {
           </motion.a>
         </motion.div>
 
-        {/* Social links */}
         <motion.div
           {...fadeUp(0.75)}
           className="flex items-center justify-center gap-5"
@@ -132,7 +119,6 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* Scroll indicator */}
       <div className="absolute bottom-8 left-0 right-0 flex justify-center">
         <motion.button
           onClick={() => scrollTo("about")}

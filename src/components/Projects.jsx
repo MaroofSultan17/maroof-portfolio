@@ -105,15 +105,10 @@ function ProjectCard({ project, index }) {
   );
 }
 
-/**
- * Projects Component
- * Orchestrates the project showcase with an interactive, optimized carousel.
- */
 export default function Projects() {
   const [active, setActive] = useState("All");
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  // Performance Optimization: Memoize filtered projects to prevent expensive re-renders
   const filtered = useMemo(() => {
     return active === "All" ? projects : projects.filter((p) => p.category === active);
   }, [active]);
@@ -144,7 +139,6 @@ export default function Projects() {
   const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
   const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
 
-  // Synchronize carousel when filter state or data changes
   useEffect(() => {
     if (emblaApi) {
       emblaApi.reInit();
@@ -162,7 +156,6 @@ export default function Projects() {
         />
 
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mt-12 mb-12">
-          {/* Elite filter controls with active indicator */}
           <div className="flex-1 overflow-x-auto pb-2 sm:pb-0 no-scrollbar">
             <div className="flex justify-start gap-3">
               {categories.map((cat) => (

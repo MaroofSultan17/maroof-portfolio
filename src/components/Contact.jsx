@@ -17,7 +17,6 @@ export default function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    // Simulated send — wire up to Formspree or EmailJS in production
     await new Promise((r) => setTimeout(r, 1500));
     setSent(true);
     setLoading(false);
@@ -39,7 +38,6 @@ export default function Contact() {
           transition={{ duration: 0.7, ease: "easeOut" }}
           className="grid md:grid-cols-5 gap-10 mt-14"
         >
-          {/* Info panel */}
           <div className="md:col-span-2 space-y-6">
             <div>
               <h3 className="font-display font-bold text-xl text-gray-900 dark:text-white mb-4">
@@ -97,7 +95,6 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* Form */}
           <div className="md:col-span-3">
             {sent ? (
               <motion.div

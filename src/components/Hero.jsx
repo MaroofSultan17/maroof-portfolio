@@ -42,7 +42,7 @@ export default function Hero() {
         {/* Name */}
         <motion.h1
           {...fadeUp(0.2)}
-          className="font-display font-extrabold text-5xl sm:text-7xl md:text-8xl tracking-tight text-gray-900 dark:text-white mb-4"
+          className="font-display font-extrabold text-4xl sm:text-7xl md:text-8xl tracking-tight text-gray-900 dark:text-white mb-4"
         >
           {personal.name.split(" ").map((word, i) => (
             <span key={i} className={i === 1 ? "gradient-text" : ""}>
@@ -54,7 +54,7 @@ export default function Hero() {
         {/* Role */}
         <motion.p
           {...fadeUp(0.35)}
-          className="font-display font-semibold text-xl sm:text-2xl text-gray-500 dark:text-gray-400 mb-3"
+          className="font-display font-semibold text-lg sm:text-2xl text-gray-500 dark:text-gray-400 mb-3"
         >
           {personal.role}
         </motion.p>
@@ -62,7 +62,7 @@ export default function Hero() {
         {/* Tagline */}
         <motion.p
           {...fadeUp(0.45)}
-          className="font-mono text-sm sm:text-base text-brand-500 dark:text-brand-400 mb-6 tracking-wide"
+          className="font-mono text-xs sm:text-base text-brand-500 dark:text-brand-400 mb-6 tracking-wide"
         >
           {personal.tagline}
         </motion.p>
@@ -70,7 +70,7 @@ export default function Hero() {
         {/* Bio */}
         <motion.p
           {...fadeUp(0.55)}
-          className="max-w-2xl mx-auto text-gray-600 dark:text-gray-400 text-base sm:text-lg leading-relaxed mb-10"
+          className="max-w-2xl mx-auto text-gray-600 dark:text-gray-400 text-sm sm:text-lg leading-relaxed mb-10"
         >
           Building scalable web applications with clean architecture. Turning complex requirements into
           elegant, performant solutions.
@@ -79,13 +79,13 @@ export default function Hero() {
         {/* CTAs */}
         <motion.div
           {...fadeUp(0.65)}
-          className="flex flex-wrap items-center justify-center gap-4 mb-12"
+          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12"
         >
           <motion.button
             onClick={() => scrollTo("projects")}
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.97 }}
-            className="px-7 py-3.5 rounded-xl bg-gradient-to-r from-brand-500 to-brand-600 text-white font-semibold shadow-lg shadow-brand-500/30 hover:shadow-brand-500/50 transition-shadow"
+            className="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-gradient-to-r from-brand-500 to-brand-600 text-white font-semibold shadow-lg shadow-brand-500/30 hover:shadow-brand-500/50 transition-shadow"
           >
             View Projects
           </motion.button>
@@ -94,7 +94,7 @@ export default function Hero() {
             download
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.97 }}
-            className="px-7 py-3.5 rounded-xl border-2 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-semibold flex items-center gap-2 hover:border-brand-500 dark:hover:border-brand-400 hover:text-brand-500 dark:hover:text-brand-400 transition-colors"
+            className="w-full sm:w-auto px-7 py-3.5 rounded-xl border-2 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-semibold flex items-center justify-center gap-2 hover:border-brand-500 hover:text-brand-500 dark:hover:border-brand-400 dark:hover:text-brand-400 transition-colors"
           >
             <FiDownload size={16} />
             Download CV
@@ -127,16 +127,18 @@ export default function Hero() {
       </div>
 
       {/* Scroll indicator */}
-      <motion.button
-        onClick={() => scrollTo("about")}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1, y: [0, 8, 0] }}
-        transition={{ opacity: { delay: 1.5, duration: 0.5 }, y: { repeat: Infinity, duration: 2, ease: "easeInOut" } }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 p-2 text-gray-400 dark:text-gray-600"
-        aria-label="Scroll down"
-      >
-        <FiArrowDown size={22} />
-      </motion.button>
+      <div className="absolute bottom-8 left-0 right-0 flex justify-center">
+        <motion.button
+          onClick={() => scrollTo("about")}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1, y: [0, 8, 0] }}
+          transition={{ opacity: { delay: 1.5, duration: 0.5 }, y: { repeat: Infinity, duration: 2, ease: "easeInOut" } }}
+          className="p-2 text-gray-400 dark:text-gray-600 hover:text-brand-500 transition-colors"
+          aria-label="Scroll down"
+        >
+          <FiArrowDown size={22} />
+        </motion.button>
+      </div>
     </section>
   );
 }

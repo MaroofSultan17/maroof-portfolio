@@ -39,8 +39,25 @@ export default function Navbar({ toggle, isDark }) {
   }, []);
 
   const handleNav = (href) => {
+    const id = href.replace("#", "");
+    setActive(id);
     setOpen(false);
-    document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+    
+    setTimeout(() => {
+      const element = document.getElementById(id);
+      if (element) {
+        const offset = 80; // Account for sticky navbar
+        const bodyRect = document.body.getBoundingClientRect().top;
+        const elementRect = element.getBoundingClientRect().top;
+        const elementPosition = elementRect - bodyRect;
+        const offsetPosition = elementPosition - offset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth"
+        });
+      }
+    }, 100);
   };
 
   return (
@@ -48,10 +65,10 @@ export default function Navbar({ toggle, isDark }) {
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,border-color,box-shadow] duration-500 ease-in-out border-b ${
         scrolled
-          ? "glass shadow-lg shadow-black/5"
-          : "bg-transparent"
+          ? "bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-gray-200/60 dark:border-gray-700/60 shadow-lg shadow-black/5"
+          : "bg-transparent border-transparent"
       }`}
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
@@ -125,19 +142,25 @@ export default function Navbar({ toggle, isDark }) {
             transition={{ duration: 0.25 }}
             className="md:hidden glass border-t border-gray-200/60 dark:border-gray-700/60"
           >
-            <nav className="px-4 py-4 flex flex-col gap-1">
+            <nav className="px-4 py-6 flex flex-col gap-2">
               {links.map((l) => (
                 <a
                   key={l.label}
                   href={l.href}
                   onClick={(e) => { e.preventDefault(); handleNav(l.href); }}
-                  className={`px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
+                  className={`flex items-center justify-between px-5 py-4 rounded-xl text-base font-semibold transition-all ${
                     active === l.href.replace("#", "")
                       ? "bg-brand-500/10 text-brand-500 dark:text-brand-400"
                       : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
                   }`}
                 >
-                  {l.label}
+                  <span>{l.label}</span>
+                  {active === l.href.replace("#", "") && (
+                    <motion.div
+                      layoutId="active-indicator"
+                      className="w-1.5 h-1.5 rounded-full bg-brand-500"
+                    />
+                  )}
                 </a>
               ))}
             </nav>

@@ -1,7 +1,7 @@
 export const personal = {
   name: "Maroof Sultan",
   role: "Full-Stack Engineer",
-  tagline: "Laravel · Symfony · Vue.js · SaaS · REST APIs",
+  tagline: ["Laravel", "Symfony", "Vue.js", "Next.js", "SaaS", "REST APIs"],
   bio: "Full-Stack Laravel Developer with 2+ years of experience building scalable web applications for product-based and service-based companies. Skilled in backend architecture, modern frontend tools, and delivering end-to-end solutions. Experienced collaborating with cross-functional and international teams, optimizing performance, and shipping secure, reliable features.",
   email: "maroofsultan.dev@gmail.com",
   phone: "+92 310 6510421",

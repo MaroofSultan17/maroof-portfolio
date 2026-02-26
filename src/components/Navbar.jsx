@@ -30,7 +30,7 @@ export default function Navbar({ toggle, isDark }) {
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY + 100;
-      
+
       const current = links.reduce((acc, link) => {
         const id = link.href.replace("#", "");
         const element = document.getElementById(id);
@@ -47,7 +47,7 @@ export default function Navbar({ toggle, isDark }) {
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
-    
+
     return () => window.removeEventListener("scroll", handleScroll);
   }, [active]);
 
@@ -55,7 +55,7 @@ export default function Navbar({ toggle, isDark }) {
     const id = href.replace("#", "");
     setActive(id);
     setOpen(false);
-    
+
     setTimeout(() => {
       const element = document.getElementById(id);
       if (element) {
@@ -67,7 +67,7 @@ export default function Navbar({ toggle, isDark }) {
 
         window.scrollTo({
           top: offsetPosition,
-          behavior: "smooth"
+          behavior: "smooth",
         });
       }
     }, 100);
@@ -87,7 +87,10 @@ export default function Navbar({ toggle, isDark }) {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
         <a
           href="#home"
-          onClick={(e) => { e.preventDefault(); handleNav("#home"); }}
+          onClick={(e) => {
+            e.preventDefault();
+            handleNav("#home");
+          }}
           className="font-display font-bold text-xl tracking-tight gradient-text"
         >
           MS<span className="text-gray-900 dark:text-white">.</span>
@@ -98,7 +101,10 @@ export default function Navbar({ toggle, isDark }) {
             <a
               key={l.label}
               href={l.href}
-              onClick={(e) => { e.preventDefault(); handleNav(l.href); }}
+              onClick={(e) => {
+                e.preventDefault();
+                handleNav(l.href);
+              }}
               className={`relative px-4 py-2 text-sm font-medium rounded-lg transition-colors duration-200 ${
                 active === l.href.replace("#", "")
                   ? "text-brand-500 dark:text-brand-400"
@@ -160,7 +166,10 @@ export default function Navbar({ toggle, isDark }) {
                 <a
                   key={l.label}
                   href={l.href}
-                  onClick={(e) => { e.preventDefault(); handleNav(l.href); }}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNav(l.href);
+                  }}
                   className={`flex items-center justify-between px-5 py-4 rounded-xl text-base font-semibold transition-all ${
                     active === l.href.replace("#", "")
                       ? "bg-brand-500/10 text-brand-500 dark:text-brand-400"

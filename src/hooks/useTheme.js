@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 
 export function useTheme() {
   const getSystemTheme = () =>
-    window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
 
   const [theme, setTheme] = useState(() => {
     const saved = localStorage.getItem("ms-theme");

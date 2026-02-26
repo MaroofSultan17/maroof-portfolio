@@ -10,8 +10,9 @@ import { FiTerminal, FiX } from "react-icons/fi";
 export default function WelcomeToast() {
   const [show, setShow] = useState(false);
   const [text, setText] = useState("");
-  const fullText = "SYSTEM Ready. Welcome, explorer. Check out the latest projects below.";
-  
+  const fullText =
+    "SYSTEM Ready. Welcome, explorer. Check out the latest projects below.";
+
   useEffect(() => {
     const timer = setTimeout(() => setShow(true), 2000);
     return () => clearTimeout(timer);
@@ -45,8 +46,8 @@ export default function WelcomeToast() {
               <span className="text-[10px] font-mono text-gray-500 uppercase tracking-widest ml-1">
                 status_check.sh
               </span>
-              
-              <button 
+
+              <button
                 onClick={() => setShow(false)}
                 className="ml-auto text-gray-500 hover:text-white transition-colors"
                 aria-label="Close message"
@@ -61,19 +62,19 @@ export default function WelcomeToast() {
                   <FiTerminal size={20} />
                 </div>
               </div>
-              
+
               <div className="flex-1">
                 <p className="text-sm font-mono text-gray-300 leading-relaxed min-h-[40px]">
                   {text}
-                  <motion.span 
+                  <motion.span
                     animate={{ opacity: [1, 0] }}
                     transition={{ repeat: Infinity, duration: 0.8 }}
                     className="inline-block w-2 h-4 bg-brand-500 ml-1 translate-y-0.5"
                   />
                 </p>
-                
+
                 <div className="mt-4 flex justify-end">
-                  <button 
+                  <button
                     onClick={() => setShow(false)}
                     className="text-[11px] font-bold text-brand-500 uppercase tracking-wider hover:text-brand-400 transition-colors"
                   >

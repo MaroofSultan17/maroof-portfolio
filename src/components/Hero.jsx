@@ -1,5 +1,13 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { FiArrowDown, FiGithub, FiLinkedin, FiMail, FiDownload } from "react-icons/fi";
+import {
+  FiArrowDown,
+  FiGithub,
+  FiLinkedin,
+  FiMail,
+  FiDownload,
+  FiLoader,
+} from "react-icons/fi";
 import { personal } from "../data/portfolio";
 
 const fadeUp = (delay = 0) => ({
@@ -9,8 +17,30 @@ const fadeUp = (delay = 0) => ({
 });
 
 export default function Hero() {
+  const [isDownloading, setIsDownloading] = useState(false);
+
   const scrollTo = (id) =>
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+
+  const handleDownload = async (e) => {
+    e.preventDefault();
+    if (isDownloading) return;
+
+    setIsDownloading(true);
+
+    // Simulate a brief delay to show the loader as requested
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    // Trigger download
+    const link = document.createElement("a");
+    link.href = personal.cv;
+    link.download = "Maroof_FullStack.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    setIsDownloading(false);
+  };
 
   return (
     <section
@@ -42,7 +72,8 @@ export default function Hero() {
         >
           {personal.name.split(" ").map((word, i) => (
             <span key={i} className={i === 1 ? "gradient-text" : ""}>
-              {word}{i === 0 ? " " : ""}
+              {word}
+              {i === 0 ? " " : ""}
             </span>
           ))}
         </motion.h1>
@@ -65,8 +96,8 @@ export default function Hero() {
           {...fadeUp(0.55)}
           className="max-w-2xl mx-auto text-gray-600 dark:text-gray-400 text-sm sm:text-lg leading-relaxed mb-10"
         >
-          Building scalable web applications with clean architecture. Turning complex requirements into
-          elegant, performant solutions.
+          Building scalable web applications with clean architecture. Turning
+          complex requirements into elegant, performant solutions.
         </motion.p>
 
         <motion.div
@@ -82,17 +113,29 @@ export default function Hero() {
           >
             View Projects
           </motion.button>
-          <motion.a
-            href={personal.cv}
-            download
-            whileHover={{ scale: 1.04 }}
-            whileTap={{ scale: 0.97 }}
-            className="w-full sm:w-auto px-7 py-3.5 rounded-xl border-2 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-semibold flex items-center justify-center gap-2 hover:border-brand-500 hover:text-brand-500 dark:hover:border-brand-400 dark:hover:text-brand-400 transition-colors"
-            aria-label="Download my professional CV"
+          <motion.button
+            onClick={handleDownload}
+            disabled={isDownloading}
+            whileHover={{ scale: isDownloading ? 1 : 1.04 }}
+            whileTap={{ scale: isDownloading ? 1 : 0.97 }}
+            className={`w-full sm:w-auto px-7 py-3.5 rounded-xl border-2 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-semibold flex items-center justify-center gap-2 transition-all ${
+              isDownloading
+                ? "opacity-80 cursor-not-allowed bg-gray-50 dark:bg-gray-800"
+                : "hover:border-brand-500 hover:text-brand-500 dark:hover:border-brand-400 dark:hover:text-brand-400"
+            }`}
+            aria-label={
+              isDownloading
+                ? "Downloading CV..."
+                : "Download my professional CV"
+            }
           >
-            <FiDownload size={16} />
-            Download CV
-          </motion.a>
+            {isDownloading ? (
+              <FiLoader size={16} className="animate-spin" />
+            ) : (
+              <FiDownload size={16} />
+            )}
+            {isDownloading ? "Downloading..." : "Download CV"}
+          </motion.button>
         </motion.div>
 
         <motion.div
@@ -124,7 +167,10 @@ export default function Hero() {
           onClick={() => scrollTo("about")}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1, y: [0, 8, 0] }}
-          transition={{ opacity: { delay: 1.5, duration: 0.5 }, y: { repeat: Infinity, duration: 2, ease: "easeInOut" } }}
+          transition={{
+            opacity: { delay: 1.5, duration: 0.5 },
+            y: { repeat: Infinity, duration: 2, ease: "easeInOut" },
+          }}
           className="p-2 text-gray-400 dark:text-gray-600 hover:text-brand-500 transition-colors"
           aria-label="Scroll down"
         >

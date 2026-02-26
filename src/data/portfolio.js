@@ -7,7 +7,7 @@ export const personal = {
   phone: "+92 310 6510421",
   github: "https://github.com/MaroofSultan17",
   linkedin: "https://linkedin.com/in/maroof-sultan-081b33220",
-  cv: "/Maroof_Sultan_CV.pdf",
+  cv: "/Maroof_FullStack.pdf",
 };
 
 export const skills = {
@@ -19,11 +19,18 @@ export const skills = {
     { name: "REST APIs", level: 90 },
   ],
   supporting: [
-    "Next.js", "Blade Templates", "Docker", "Redis",
-    "Stripe / PayPal / Braintree", "GitLab CI/CD",
-    "WebSockets / Laravel Reverb", "OpenCart",
-    "Google APIs", "VPS / cPanel Deployment",
-    "Doctrine ORM", "TailwindCSS",
+    "Next.js",
+    "Blade Templates",
+    "Docker",
+    "Redis",
+    "Stripe / PayPal / Braintree",
+    "GitLab CI/CD",
+    "WebSockets / Laravel Reverb",
+    "OpenCart",
+    "Google APIs",
+    "VPS / cPanel Deployment",
+    "Doctrine ORM",
+    "TailwindCSS",
   ],
 };
 
@@ -34,7 +41,8 @@ export const experiences = [
     type: "Full-Time",
     period: "March 2025 – Present",
     location: "Sahiwal, Pakistan · Hybrid",
-    description: "AlphaSoft360 is a product-based technology company focused on building scalable enterprise solutions for global clients.",
+    description:
+      "AlphaSoft360 is a product-based technology company focused on building scalable enterprise solutions for global clients.",
     bullets: [
       "Developed high-performance REST APIs in Symfony consumed by Next.js applications.",
       "Integrated Braintree Payments with PayPal, Google Pay, Apple Pay, and Venmo, supporting partial capture and multi-method transactions.",
@@ -52,7 +60,8 @@ export const experiences = [
     type: "Part-Time",
     period: "Oct 2025 – Present",
     location: "Sahiwal, Pakistan · Remote",
-    description: "Focusing on delivering end-to-end custom SaaS, enterprise applications, and professional tech solutions.",
+    description:
+      "Focusing on delivering end-to-end custom SaaS, enterprise applications, and professional tech solutions.",
     bullets: [
       "Built complete projects from scratch using Laravel Livewire and Blade with a clean, modular architecture.",
       "Implemented full payment workflows (Stripe/PayPal) and real-time features using Laravel Reverb (WebSockets, Queues, Events).",
@@ -67,7 +76,8 @@ export const experiences = [
     type: "Freelance",
     period: "Dec 2024 – Oct 2025",
     location: "Sahiwal, Pakistan · Remote",
-    description: "Delivering end-to-end web and mobile dashboard solutions specializing in Laravel and Next.js.",
+    description:
+      "Delivering end-to-end web and mobile dashboard solutions specializing in Laravel and Next.js.",
     bullets: [
       "Built scalable Laravel & Next.js applications that are fast, secure, and maintainable.",
       "Optimized eCommerce sites, resolving critical checkout and rendering bugs to boost conversion rates.",
@@ -81,7 +91,8 @@ export const experiences = [
     type: "Part-Time",
     period: "Apr 2024 – Oct 2025",
     location: "Okara, Pakistan",
-    description: "Engineered scalable web applications with a focus on Laravel, PHP, JavaScript, and OpenCart.",
+    description:
+      "Engineered scalable web applications with a focus on Laravel, PHP, JavaScript, and OpenCart.",
     bullets: [
       "Enhanced eCommerce platforms by fixing checkout and payment bugs, increasing sales conversion.",
       "Built RESTful APIs for mobile apps, streamlining data flow and automation.",
@@ -95,7 +106,8 @@ export const experiences = [
     type: "Internship",
     period: "Feb 2024 – Apr 2024",
     location: "Okara, Pakistan",
-    description: "Actively engaged in designing and developing robust web applications using Laravel.",
+    description:
+      "Actively engaged in designing and developing robust web applications using Laravel.",
     bullets: [
       "Collaborated with a talented team to create efficient and scalable solutions.",
       "Mastered PHP and GitLab fundamentals in a professional environment.",
@@ -155,7 +167,8 @@ export const volunteering = [
     role: "Management Team Member",
     organization: "GDSC COMSATS SAHIWAL",
     period: "May 2024",
-    description: "Volunteered for the Tegathon event held in collaboration with GDSC, CSDS, and GitHub.",
+    description:
+      "Volunteered for the Tegathon event held in collaboration with GDSC, CSDS, and GitHub.",
     bullets: [
       "Coordinated event logistics and managed participant registrations.",
       "Collaborated with industry experts and engineers to ensure smooth event execution.",
@@ -166,7 +179,8 @@ export const volunteering = [
     role: "Home Automation Presenter",
     organization: "NIC Lahore",
     period: "Feb 2020",
-    description: "Developed and presented a home automation project selected for presentation at the National Incubation Center Lahore (LUMS).",
+    description:
+      "Developed and presented a home automation project selected for presentation at the National Incubation Center Lahore (LUMS).",
     bullets: [
       "Successfully cleared Round 1 and was selected to present at the Expo Center Lahore.",
       "Networked with CEOs and peers from top institutions like LUMS and COMSATS.",
@@ -179,7 +193,8 @@ export const projects = [
   {
     title: "Dhobbee",
     subtitle: "SaaS Laundry Management System",
-    description: "Multi-tenant SaaS platform to manage laundry operations, customers, orders, and billing with role-based access control and clean REST APIs.",
+    description:
+      "Multi-tenant SaaS platform to manage laundry operations, customers, orders, and billing with role-based access control and clean REST APIs.",
     tech: ["Laravel", "Vue.js", "MySQL", "REST API", "SaaS"],
     category: "SaaS",
     github: "https://github.com/MaroofSultan17/dhobee",
@@ -190,7 +205,8 @@ export const projects = [
   {
     title: "CountLinks",
     subtitle: "Publisher & Advertiser Marketplace",
-    description: "Two-sided marketplace where publishers list websites and advertisers purchase backlink placements with real-time chat, Stripe payments, and automated Artisan commands.",
+    description:
+      "Two-sided marketplace where publishers list websites and advertisers purchase backlink placements with real-time chat, Stripe payments, and automated Artisan commands.",
     tech: ["Laravel", "Livewire", "Stripe", "MySQL", "WebSockets"],
     category: "SaaS",
     github: "https://github.com/MaroofSultan17/countlinks",
@@ -201,7 +217,8 @@ export const projects = [
   {
     title: "Gempacked",
     subtitle: "Enterprise eCommerce Platform",
-    description: "Large-scale enterprise eCommerce platform handling high-volume transactions, complex fulfillment flows, and multi-method payment processing via Braintree and Stripe.",
+    description:
+      "Large-scale enterprise eCommerce platform handling high-volume transactions, complex fulfillment flows, and multi-method payment processing via Braintree and Stripe.",
     tech: ["Symfony", "Next.js", "Braintree", "Stripe", "CI/CD"],
     category: "eCommerce",
     github: null,
@@ -212,7 +229,8 @@ export const projects = [
   {
     title: "RoundHere",
     subtitle: "Location-based Scheduling Platform",
-    description: "Scheduling platform for managing location-based appointments with Google Auth, Google Calendar sync, optimized queries, and real-time availability.",
+    description:
+      "Scheduling platform for managing location-based appointments with Google Auth, Google Calendar sync, optimized queries, and real-time availability.",
     tech: ["Laravel", "MySQL", "Google APIs", "OAuth"],
     category: "Enterprise",
     github: null,

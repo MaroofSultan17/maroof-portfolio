@@ -183,7 +183,7 @@ export default function Projects() {
                   className={`relative px-6 py-2 rounded-xl text-sm font-bold transition-all whitespace-nowrap ${
                     active === cat
                       ? "text-white shadow-lg shadow-brand-500/25"
-                      : "text-gray-500 dark:text-gray-400 hover:text-gray-950 dark:hover:text-white bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800"
+                      : "text-gray-600 dark:text-gray-400 hover:text-gray-950 dark:hover:text-white bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800"
                   }`}
                   aria-pressed={active === cat}
                   aria-label={`Filter by ${cat}`}
@@ -208,14 +208,14 @@ export default function Projects() {
           <div className="hidden sm:flex items-center gap-3">
             <button
               onClick={scrollPrev}
-              className="w-11 h-11 rounded-xl glass flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-brand-500 dark:hover:text-brand-400 transition-all border border-gray-200/50 dark:border-gray-700/50 active:scale-90"
+              className="w-11 h-11 rounded-xl glass flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-brand-500 dark:hover:text-brand-400 transition-all border border-gray-200/50 dark:border-gray-700/50 active:scale-90"
               aria-label="Previous slide"
             >
               <FiChevronLeft size={22} />
             </button>
             <button
               onClick={scrollNext}
-              className="w-11 h-11 rounded-xl glass flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-brand-500 dark:hover:text-brand-400 transition-all border border-gray-200/50 dark:border-gray-700/50 active:scale-90"
+              className="w-11 h-11 rounded-xl glass flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-brand-500 dark:hover:text-brand-400 transition-all border border-gray-200/50 dark:border-gray-700/50 active:scale-90"
               aria-label="Next slide"
             >
               <FiChevronRight size={22} />

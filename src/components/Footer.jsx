@@ -34,7 +34,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ y: -2 }}
-                className="p-2 text-gray-500 dark:text-gray-400 hover:text-brand-500 dark:hover:text-brand-400 transition-colors"
+                className="p-2 text-gray-600 dark:text-gray-400 hover:text-brand-500 dark:hover:text-brand-400 transition-colors"
                 aria-label={label}
               >
                 <Icon size={18} />
@@ -42,7 +42,7 @@ export default function Footer() {
             ))}
           </div>
 
-          <p className="text-sm text-gray-500 dark:text-gray-500 flex items-center gap-1.5">
+          <p className="text-sm text-gray-600 dark:text-gray-500 flex items-center gap-1.5">
             © {year} Maroof Sultan
           </p>
         </div>

@@ -84,12 +84,13 @@ function ProjectCard({ project, index }) {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="flex items-center gap-1.5 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+              aria-label={`View ${project.title} repository on GitHub`}
             >
               <FiGithub size={15} />
               <span>Repository</span>
             </motion.a>
           ) : (
-            <span className="flex items-center gap-1.5 text-sm text-gray-400 dark:text-gray-600 italic">
+            <span className="flex items-center gap-1.5 text-sm text-gray-400 dark:text-gray-600 italic" aria-label="Source code is proprietary">
               <FiLock size={14} />
               <span>Proprietary</span>
             </span>
@@ -103,6 +104,7 @@ function ProjectCard({ project, index }) {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="flex items-center gap-1.5 text-sm text-brand-500 dark:text-brand-400 hover:text-brand-600 font-bold transition-colors ml-auto"
+              aria-label={`Launch ${project.title} live demo`}
             >
               <FiExternalLink size={15} />
               <span>Launch</span>
@@ -183,6 +185,8 @@ export default function Projects() {
                       ? "text-white shadow-lg shadow-brand-500/25"
                       : "text-gray-500 dark:text-gray-400 hover:text-gray-950 dark:hover:text-white bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800"
                   }`}
+                  aria-pressed={active === cat}
+                  aria-label={`Filter by ${cat}`}
                 >
                   {active === cat && (
                     <motion.span

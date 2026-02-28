@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://maroof-portfolio-rose.vercel.app/sitemap.xml

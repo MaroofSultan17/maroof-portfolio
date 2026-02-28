@@ -110,6 +110,7 @@ export default function Navbar({ toggle, isDark }) {
                   ? "text-brand-500 dark:text-brand-400"
                   : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
               }`}
+              aria-current={active === l.href.replace("#", "") ? "page" : undefined}
             >
               {active === l.href.replace("#", "") && (
                 <motion.span

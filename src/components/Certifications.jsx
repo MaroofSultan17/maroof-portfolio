@@ -34,7 +34,7 @@ function BrandIcon({ issuer }) {
   };
 
   return (
-    <motion.div variants={iconVariants} whileHover="hover">
+    <motion.div variants={iconVariants} whileHover="hover" aria-label={`${issuer} icon`}>
       {getIcon()}
     </motion.div>
   );
@@ -151,6 +151,7 @@ export default function Certifications() {
                           target="_blank"
                           rel="noopener noreferrer"
                           className="inline-flex items-center gap-2 text-xs font-bold text-brand-500 hover:text-brand-600 transition-colors py-2 px-3 rounded-lg bg-brand-500/5 border border-brand-500/10 hover:bg-brand-500/10"
+                          aria-label={`Verify ${cert.title} credential from ${cert.issuer}`}
                         >
                           <FiExternalLink size={14} />
                           Verify Credential

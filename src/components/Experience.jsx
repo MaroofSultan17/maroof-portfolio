@@ -50,13 +50,13 @@ function ExperienceCard({ exp, index }) {
               )}
             </div>
           </div>
-          <div className="flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400">
+          <div className="flex items-center gap-1.5 text-sm text-gray-600 dark:text-gray-400">
             <FiCalendar size={13} />
             <span className="font-mono text-xs">{exp.period}</span>
           </div>
         </div>
 
-        <p className="text-sm text-gray-500 dark:text-gray-400 mb-5 italic">
+        <p className="text-sm text-gray-600 dark:text-gray-400 mb-5 italic">
           {exp.description}
         </p>
 

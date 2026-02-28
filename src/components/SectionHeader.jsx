@@ -29,7 +29,7 @@ export default function SectionHeader({ label, title, subtitle }) {
         {title}
       </h2>
       {subtitle && (
-        <p className="max-w-xl mx-auto text-gray-500 dark:text-gray-400 text-base sm:text-lg lg:text-xl leading-relaxed">
+        <p className="max-w-xl mx-auto text-gray-600 dark:text-gray-400 text-base sm:text-lg lg:text-xl leading-relaxed">
           {subtitle}
         </p>
       )}

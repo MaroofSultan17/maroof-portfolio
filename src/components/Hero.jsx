@@ -106,7 +106,7 @@ export default function Hero() {
 
         <motion.p
           {...fadeUp(0.35)}
-          className="font-display font-semibold text-lg sm:text-2xl text-gray-500 dark:text-gray-400 mb-3"
+          className="font-display font-semibold text-lg sm:text-2xl text-gray-600 dark:text-gray-400 mb-3"
         >
           {personal.role}
         </motion.p>
@@ -192,7 +192,7 @@ export default function Hero() {
               rel="noopener noreferrer"
               aria-label={label}
               whileHover={{ y: -3 }}
-              className="p-3 rounded-xl glass text-gray-500 dark:text-gray-400 hover:text-brand-500 dark:hover:text-brand-400 transition-colors"
+              className="p-3.5 rounded-xl glass text-gray-600 dark:text-gray-400 hover:text-brand-500 dark:hover:text-brand-400 transition-colors"
             >
               <Icon size={20} />
             </motion.a>

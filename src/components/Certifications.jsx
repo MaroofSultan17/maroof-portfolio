@@ -128,7 +128,7 @@ export default function Certifications() {
                         {cert.issuer}
                       </p>
                       <span className="w-1.5 h-1.5 rounded-full bg-gray-200 dark:bg-gray-800" />
-                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                      <p className="text-xs text-gray-600 dark:text-gray-400">
                         {cert.date}
                       </p>
                     </div>

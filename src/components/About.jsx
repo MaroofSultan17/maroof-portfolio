@@ -11,7 +11,6 @@ function SkillBar({ name, level, index }) {
     <div
       ref={ref}
       className="mb-5"
-      aria-label={`${name} skill level ${level}%`}
     >
       <div className="flex justify-between items-center mb-2">
         <span className="text-sm font-semibold text-gray-800 dark:text-gray-200">
@@ -27,6 +26,7 @@ function SkillBar({ name, level, index }) {
         aria-valuenow={level}
         aria-valuemin="0"
         aria-valuemax="100"
+        aria-label={`${name} skill level`}
       >
         <motion.div
           initial={{ width: 0 }}
@@ -37,6 +37,7 @@ function SkillBar({ name, level, index }) {
             ease: [0.25, 0.46, 0.45, 0.94],
           }}
           className="h-full rounded-full bg-gradient-to-r from-brand-500 to-brand-400"
+          aria-label={`${name} skill progress`}
         />
       </div>
     </div>

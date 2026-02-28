@@ -10,6 +10,7 @@ import {
 } from "react-icons/fi";
 import { personal } from "../data/portfolio";
 import SectionHeader from "./SectionHeader";
+import emailjs from "@emailjs/browser";
 
 export default function Contact() {
   const ref = useRef(null);
@@ -24,9 +25,26 @@ export default function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 1500));
-    setSent(true);
-    setLoading(false);
+
+    try {
+      const result = await emailjs.sendForm(
+        import.meta.env.VITE_EMAIL_SERVICE_ID,
+        import.meta.env.VITE_EMAIL_TEMPLATE_ID,
+        e.target,
+        import.meta.env.VITE_EMAIL_PUBLIC_KEY
+      );
+
+      if (result.text === "OK") {
+        setSent(true);
+      } else {
+        alert("Failed to send message. Please try again later.");
+      }
+    } catch (error) {
+      console.error("EmailJS Error:", error);
+      alert("An error occurred while sending the message. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

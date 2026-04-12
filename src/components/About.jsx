@@ -87,7 +87,8 @@ export default function About() {
               and{" "}
               <strong className="text-gray-900 dark:text-white">Symfony</strong>{" "}
               backends, paired with modern frontends using{" "}
-              <strong className="text-gray-900 dark:text-white">Vue.js</strong>{" "}
+              <strong className="text-gray-900 dark:text-white">Vue.js , </strong>{" "}
+              <strong className="text-gray-900 dark:text-white">Next.js</strong>{" "}
               and{" "}
               <strong className="text-gray-900 dark:text-white">
                 Livewire
@@ -117,7 +118,7 @@ export default function About() {
               .
             </p>
             <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-              Currently pursuing BS Computer Science at{" "}
+              Completed a BS in Computer Science from{" "}
               <strong className="text-gray-900 dark:text-white">
                 COMSATS University Islamabad
               </strong>{" "}

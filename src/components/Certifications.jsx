@@ -138,7 +138,7 @@ export default function Certifications() {
                         {cert.skills.map((skill) => (
                           <span
                             key={skill}
-                            className="text-[10px] uppercase tracking-wider font-bold px-2 py-1 rounded bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors"
+                            className="text-[10px] uppercase tracking-wider font-bold px-2 py-1 rounded bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors"
                           >
                             {skill}
                           </span>

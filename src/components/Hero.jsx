@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { SiLaravel, SiSymfony, SiVuedotjs, SiNextdotjs } from "react-icons/si";
+import { SiLaravel, SiSymfony, SiVuedotjs, SiNextdotjs, SiNestjs } from "react-icons/si";
 import {
   FiArrowDown,
   FiGithub,
@@ -33,6 +33,8 @@ const getTechIcon = (tech) => {
       return (
         <SiNextdotjs size={14} className="text-gray-900 dark:text-gray-100" />
       );
+    case "NestJS":
+      return <SiNestjs size={14} className="text-[#E0234E]" />;
     case "SaaS":
       return <FiGlobe size={14} className="text-blue-500" />;
     case "REST APIs":

@@ -6,7 +6,7 @@ export const personal = {
   email: "maroofsultan.dev@gmail.com",
   phone: "+92 310 6510421",
   github: "https://github.com/MaroofSultan17",
-  linkedin: "https://linkedin.com/in/maroof-sultan-081b33220",
+  linkedin: "https://linkedin.com/in/maroofsultan",
   cv: "/Maroof_FullStack.pdf",
 };
 
@@ -85,7 +85,7 @@ export const certifications = [
     issuer: "Microsoft",
     date: "Dec 2024",
     id: "wLqFS-FahH",
-    url: "https://www.linkedin.com/in/maroof-sultan-081b33220/overlay/Certifications/1001242762/treasury?profileId=ACoAADeyS6EBSrPd7Kfgubp6FVPOcK1Obz5U2kE",
+    url: "https://www.linkedin.com/in/maroofsultan/overlay/Certifications/1001242762/treasury?profileId=ACoAADeyS6EBSrPd7Kfgubp6FVPOcK1Obz5U2kE",
     skills: ["Machine Learning", "Artificial Intelligence"],
   },
   {
@@ -93,7 +93,7 @@ export const certifications = [
     issuer: "Udemy",
     date: "Jul 2024",
     id: "UC-57b1853c-f4bb-4d0b-a126-a75ad8d34a4c",
-    url: "https://www.linkedin.com/in/maroof-sultan-081b33220/overlay/Certifications/1876886103/treasury?profileId=ACoAADeyS6EBSrPd7Kfgubp6FVPOcK1Obz5U2kE",
+    url: "https://www.linkedin.com/in/maroofsultan/overlay/Certifications/1876886103/treasury?profileId=ACoAADeyS6EBSrPd7Kfgubp6FVPOcK1Obz5U2kE",
     skills: ["Advanced Laravel", "Middleware", "Admin Panels"],
   },
   {

@@ -49,7 +49,7 @@ function ProjectCard({ project, index }) {
           >
             {project.status}
           </span>
-          <span className="text-xs text-gray-400 dark:text-gray-600 font-semibold tracking-wide uppercase">
+          <span className="text-xs text-gray-500 dark:text-gray-400 font-semibold tracking-wide uppercase">
             {project.category}
           </span>
         </div>
@@ -90,7 +90,7 @@ function ProjectCard({ project, index }) {
               <span>Repository</span>
             </motion.a>
           ) : (
-            <span className="flex items-center gap-1.5 text-sm text-gray-400 dark:text-gray-600 italic" aria-label="Source code is proprietary">
+            <span className="flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400 italic" aria-label="Source code is proprietary">
               <FiLock size={14} />
               <span>Proprietary</span>
             </span>

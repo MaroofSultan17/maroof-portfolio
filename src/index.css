@@ -5,10 +5,11 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    scrollbar-gutter: stable;
   }
 
   body {
-    @apply font-body bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100 transition-colors duration-300;
+    @apply font-body bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100;
   }
 
   section {
@@ -20,13 +21,24 @@
   }
 
   ::-webkit-scrollbar {
-    width: 6px;
+    width: 5px;
   }
   ::-webkit-scrollbar-track {
-    @apply bg-gray-100 dark:bg-gray-900;
+    background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    @apply bg-brand-500 rounded-full;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    transition: background 0.3s;
+  }
+  .dark ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.2);
+  }
+  .dark ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
   }
 }
 
@@ -54,4 +66,26 @@
   .card {
     @apply rounded-2xl bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-lg transition-all duration-300;
   }
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  z-index: 9999;
+}
+::view-transition-new(root) {
+  z-index: 1;
+}
+.dark::view-transition-old(root) {
+  z-index: 1;
+}
+.dark::view-transition-new(root) {
+  z-index: 9999;
+}
+
+::view-transition-group(theme-toggle) {
+  animation-duration: 0s;
 }

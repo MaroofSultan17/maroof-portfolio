@@ -8,7 +8,7 @@
   }
 
   body {
-    @apply font-body bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100 transition-colors duration-300;
+    @apply font-body bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100;
   }
 
   section {
@@ -54,4 +54,26 @@
   .card {
     @apply rounded-2xl bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-lg transition-all duration-300;
   }
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  z-index: 9999;
+}
+::view-transition-new(root) {
+  z-index: 1;
+}
+.dark::view-transition-old(root) {
+  z-index: 1;
+}
+.dark::view-transition-new(root) {
+  z-index: 9999;
+}
+
+::view-transition-group(theme-toggle) {
+  animation-duration: 0s;
 }

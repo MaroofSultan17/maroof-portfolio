@@ -211,10 +211,10 @@ export default function Hero() {
             opacity: { delay: 1.5, duration: 0.5 },
             y: { repeat: Infinity, duration: 2, ease: "easeInOut" },
           }}
-          className="p-2 text-gray-400 dark:text-gray-600 hover:text-brand-500 transition-colors"
+          className="p-3 min-w-[48px] min-h-[48px] flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-brand-500 transition-colors"
           aria-label="Scroll down"
         >
-          <FiArrowDown size={22} />
+          <FiArrowDown size={28} />
         </motion.button>
       </div>
     </section>

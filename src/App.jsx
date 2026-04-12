@@ -29,7 +29,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen font-body overflow-x-hidden transition-colors duration-300">
+    <div className="min-h-screen font-body overflow-x-hidden">
       <WelcomeToast />
       <Navbar toggle={toggle} isDark={isDark} />
       <main>

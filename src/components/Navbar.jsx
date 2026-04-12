@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiSun, FiMoon, FiMenu, FiX } from "react-icons/fi";
+import { FiMenu, FiX } from "react-icons/fi";
+import { DarkModeSwitch } from "react-toggle-dark-mode";
 
 const links = [
   { label: "Home", href: "#home" },
@@ -93,7 +94,7 @@ export default function Navbar({ toggle, isDark }) {
           }}
           className="font-display font-bold text-xl tracking-tight gradient-text"
         >
-          MS<span className="text-gray-900 dark:text-white">.</span>
+          MS
         </a>
 
         <nav className="hidden md:flex items-center gap-1">
@@ -107,10 +108,10 @@ export default function Navbar({ toggle, isDark }) {
               }}
               className={`relative px-4 py-2 text-sm font-medium rounded-lg transition-colors duration-200 ${
                 active === l.href.replace("#", "")
-                  ? "text-brand-500 dark:text-brand-400"
-                  : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
+                  ? "text-brand-600 dark:text-brand-400"
+                  : "text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100"
               }`}
-              aria-current={active === l.href.replace("#", "") ? "page" : undefined}
+              aria-current={active === l.href.replace("#", "") ? "true" : undefined}
             >
               {active === l.href.replace("#", "") && (
                 <motion.span
@@ -125,27 +126,29 @@ export default function Navbar({ toggle, isDark }) {
         </nav>
 
         <div className="flex items-center gap-3">
-          <button
-            onClick={toggle}
+          <div
+            onClick={(e) => toggle(e)}
+            style={{ viewTransitionName: "theme-toggle" }}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => e.key === "Enter" && toggle(e)}
             aria-label="Toggle theme"
-            className="p-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            className="p-3 min-w-[48px] min-h-[48px] rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer flex items-center justify-center"
           >
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.span
-                key={isDark ? "sun" : "moon"}
-                initial={{ rotate: -90, opacity: 0 }}
-                animate={{ rotate: 0, opacity: 1 }}
-                exit={{ rotate: 90, opacity: 0 }}
-                transition={{ duration: 0.2 }}
-              >
-                {isDark ? <FiSun size={18} /> : <FiMoon size={18} />}
-              </motion.span>
-            </AnimatePresence>
-          </button>
+            <div className="pointer-events-none flex items-center justify-center">
+              <DarkModeSwitch
+                checked={isDark}
+                onChange={() => {}}
+                size={20}
+                moonColor="#9CA3AF"
+                sunColor="#4B5563"
+              />
+            </div>
+          </div>
 
           <button
             onClick={() => setOpen(!open)}
-            className="md:hidden p-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            className="md:hidden p-3 min-w-[48px] min-h-[48px] rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors flex items-center justify-center"
             aria-label="Toggle menu"
           >
             {open ? <FiX size={20} /> : <FiMenu size={20} />}

@@ -29,12 +29,59 @@ export function useTheme() {
     }
   }, [theme]);
 
-  const toggle = () => {
-    setTheme((prev) => {
-      const next = prev === "dark" ? "light" : "dark";
-      localStorage.setItem("ms-theme", next);
-      return next;
-    });
+  const toggle = (e) => {
+    if (e && document.startViewTransition) {
+      const x = e.clientX ?? window.innerWidth / 2;
+      const y = e.clientY ?? window.innerHeight / 2;
+      const transition = document.startViewTransition(() => {
+        const root = document.documentElement;
+        if (root.classList.contains("dark")) {
+          root.classList.remove("dark");
+        } else {
+          root.classList.add("dark");
+        }
+        
+        setTheme((prev) => {
+          const next = prev === "dark" ? "light" : "dark";
+          localStorage.setItem("ms-theme", next);
+          return next;
+        });
+      });
+      transition.ready.then(() => {
+        const endRadius = Math.hypot(
+          Math.max(x, window.innerWidth - x),
+          Math.max(y, window.innerHeight - y)
+        );
+        const isDarkNow = document.documentElement.classList.contains("dark");
+        const clipPath = isDarkNow
+          ? [
+              `circle(0px at ${x}px ${y}px)`,
+              `circle(${endRadius}px at ${x}px ${y}px)`,
+            ]
+          : [
+              `circle(${endRadius}px at ${x}px ${y}px)`,
+              `circle(0px at ${x}px ${y}px)`,
+            ];
+            
+        document.documentElement.animate(
+          { clipPath },
+          {
+            duration: 600,
+            easing: "ease-in-out",
+            fill: "forwards",
+            pseudoElement: isDarkNow
+              ? "::view-transition-new(root)"
+              : "::view-transition-old(root)",
+          }
+        );
+      });
+    } else {
+      setTheme((prev) => {
+        const next = prev === "dark" ? "light" : "dark";
+        localStorage.setItem("ms-theme", next);
+        return next;
+      });
+    }
   };
 
   const isDark =

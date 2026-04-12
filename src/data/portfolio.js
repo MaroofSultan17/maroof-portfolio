@@ -1,8 +1,8 @@
 export const personal = {
   name: "Maroof Sultan",
   role: "Full-Stack Engineer",
-  tagline: ["Laravel", "Symfony", "Vue.js", "Next.js", "SaaS", "REST APIs"],
-  bio: "Full-Stack Laravel Developer with 2+ years of experience building scalable web applications for product-based and service-based companies. Skilled in backend architecture, modern frontend tools, and delivering end-to-end solutions. Experienced collaborating with cross-functional and international teams, optimizing performance, and shipping secure, reliable features.",
+  tagline: ["Laravel", "Symfony", "Vue.js", "Next.js", "NestJS", "SaaS", "REST APIs"],
+  bio: "Full-Stack Engineer with 2+ years of experience building scalable SaaS and enterprise web applications using Laravel and Symfony. Experienced in designing REST APIs, payment integrations, and high-performance back-end systems. Skilled in modern frontend tools and DevOps workflows, with a proven ability to deliver reliable production-ready solutions while collaborating with international teams.",
   email: "maroofsultan.dev@gmail.com",
   phone: "+92 310 6510421",
   github: "https://github.com/MaroofSultan17",
@@ -17,6 +17,7 @@ export const skills = {
     { name: "Vue.js / Livewire", level: 78 },
     { name: "MySQL / Eloquent ORM", level: 85 },
     { name: "REST APIs", level: 90 },
+    { name: "NestJS", level: 75 },
   ],
   supporting: [
     "Next.js",
@@ -30,6 +31,7 @@ export const skills = {
     "Google APIs",
     "VPS / cPanel Deployment",
     "Doctrine ORM",
+    "Prisma ORM",
     "TailwindCSS",
   ],
 };
@@ -55,62 +57,24 @@ export const experiences = [
     ],
   },
   {
-    role: "Full-stack Developer",
+    role: "Full-Stack Developer",
     company: "HiddenLogics",
-    type: "Part-Time",
-    period: "Oct 2025 – Present",
+    type: "Full-Time",
+    period: "Feb 2024 – Apr 2026",
     location: "Sahiwal, Pakistan · Remote",
     description:
-      "Focusing on delivering end-to-end custom SaaS, enterprise applications, and professional tech solutions.",
+      "HiddenLogics is a service-based software company delivering custom solutions, SaaS platforms, and enterprise applications.",
     bullets: [
-      "Built complete projects from scratch using Laravel Livewire and Blade with a clean, modular architecture.",
-      "Implemented full payment workflows (Stripe/PayPal) and real-time features using Laravel Reverb (WebSockets, Queues, Events).",
-      "Developed robust authentication flows including Google Auth and role-based access control.",
+      "Built complete projects from scratch using Laravel Livewire and Blade, ensuring clean architecture and modular development.",
+      "Delivered end-to-end solutions, including backend APIs, admin dashboards, and frontend interfaces.",
+      "Developed fully functional admin dashboard structures with role-based access and analytics.",
+      "Implemented full payment workflows using Stripe and PayPal.",
+      "Deployed projects on cPanel and VPS servers, and configured DevOps setups including WebSockets and related services.",
+      "Implemented Jobs, Queues, Events, Listeners and real-time chat features using Laravel Reverb.",
+      "Developed authentication flows including Google Authentication and local login systems.",
       "Integrated Google and Microsoft Calendars with full API console configuration.",
-      "Managed client communication directly, presenting completed modules and gathering requirements.",
-    ],
-  },
-  {
-    role: "Full-Stack Web Developer",
-    company: "Upwork",
-    type: "Freelance",
-    period: "Dec 2024 – Oct 2025",
-    location: "Sahiwal, Pakistan · Remote",
-    description:
-      "Delivering end-to-end web and mobile dashboard solutions specializing in Laravel and Next.js.",
-    bullets: [
-      "Built scalable Laravel & Next.js applications that are fast, secure, and maintainable.",
-      "Optimized eCommerce sites, resolving critical checkout and rendering bugs to boost conversion rates.",
-      "Designed and integrated RESTful APIs and payment gateways to automate operations securely.",
-      "Provided technical consultation to align business objectives with digital strategy.",
-    ],
-  },
-  {
-    role: "Laravel Developer",
-    company: "HiddenLogics",
-    type: "Part-Time",
-    period: "Apr 2024 – Oct 2025",
-    location: "Okara, Pakistan",
-    description:
-      "Engineered scalable web applications with a focus on Laravel, PHP, JavaScript, and OpenCart.",
-    bullets: [
-      "Enhanced eCommerce platforms by fixing checkout and payment bugs, increasing sales conversion.",
-      "Built RESTful APIs for mobile apps, streamlining data flow and automation.",
-      "Managed end-to-end project lifecycles using GitLab for version control and cross-functional collaboration.",
-      "Led multiple solo projects, delivering tailored business and eCommerce solutions on time.",
-    ],
-  },
-  {
-    role: "Laravel Developer",
-    company: "HiddenLogics",
-    type: "Internship",
-    period: "Feb 2024 – Apr 2024",
-    location: "Okara, Pakistan",
-    description:
-      "Actively engaged in designing and developing robust web applications using Laravel.",
-    bullets: [
-      "Collaborated with a talented team to create efficient and scalable solutions.",
-      "Mastered PHP and GitLab fundamentals in a professional environment.",
+      "Performed extensive debugging, troubleshooting, and bug fixes across projects.",
+      "Managed client communication, handled requirements, and presented completed modules directly to clients.",
     ],
   },
 ];

@@ -118,7 +118,7 @@ export default function About() {
               .
             </p>
             <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-              Completed a BS in Computer Science from{" "}
+              Graduated with a BS in Computer Science from{" "}
               <strong className="text-gray-900 dark:text-white">
                 COMSATS University Islamabad
               </strong>{" "}

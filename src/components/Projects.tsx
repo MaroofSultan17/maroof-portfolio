@@ -50,10 +50,10 @@ function Pipeline() {
 }
 
 function Status({ project }: { project: Project }) {
-  const live = project.status === "Live";
+  const dot = { Live: "bg-[#34d399]", "Pre-launch": "bg-yellow" }[project.status] ?? "bg-muted";
   return (
     <span className="inline-flex items-center gap-2 rounded-full bg-bg px-3 py-1 text-sm font-medium text-fg">
-      <span className={`h-2 w-2 rounded-full ${live ? "bg-[#34d399]" : "bg-yellow"}`} aria-hidden="true" />
+      <span className={`h-2 w-2 rounded-full ${dot}`} aria-hidden="true" />
       {project.status}
     </span>
   );
@@ -83,7 +83,8 @@ function CaseStudy({ project }: { project: Project }) {
 }
 
 function ProjectLink({ project }: { project: Project }) {
-  const href = project.live ?? project.github;
+  const href = project.live;
+  if (!href) return <span className="font-medium text-muted">Private repository</span>;
   return (
     <a
       href={href}
@@ -91,7 +92,7 @@ function ProjectLink({ project }: { project: Project }) {
       rel="noopener noreferrer"
       className="inline-flex items-center gap-1 font-semibold text-fg hover:text-blue transition-colors"
     >
-      {project.live ? "Visit site" : "View code"}
+      Visit site
       <FiArrowUpRight className="h-5 w-5" aria-hidden="true" />
     </a>
   );

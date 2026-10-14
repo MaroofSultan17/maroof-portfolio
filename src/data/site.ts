@@ -5,7 +5,7 @@ export const siteData = {
     bio: "Software Engineer with 2.5+ years of experience building SaaS, video streaming, and eCommerce platforms with Node.js, Laravel, and Symfony. Currently building backend systems for a video streaming platform, spanning video pipelines, background queue workers, and webhook-driven payments. Focused on clean architecture, reliable REST APIs, and high-throughput databases.",
     email: "maroofsultan.dev@gmail.com",
     phone: "+92 310 6510421",
-    location: "Pakistan (Open to Remote)",
+    location: "Pakistan, PKT (UTC+5)",
     github: "https://github.com/MaroofSultan17",
     linkedin: "https://www.linkedin.com/in/maroofsultan",
     cv: "/resume.pdf",
@@ -56,7 +56,7 @@ export const siteData = {
       id: "alphasoft360",
       role: "Software Engineer",
       company: "AlphaSoft360",
-      companyUrl: "https://www.alphasoft360.org/team/maroof-sultan",
+      companyUrl: "https://www.alphasoft360.com/team/maroof-sultan",
       type: "Full-Time",
       period: "Mar 2025 to Jul 2026",
       location: "Hybrid",
@@ -156,9 +156,8 @@ export const siteData = {
       description:
         "Multi-branch SaaS platform managing laundry workflows, POS order tracking, automated customer SMS notifications, and revenue analytics across retail locations.",
       tech: ["Laravel", "Vue.js", "MySQL", "Tailwind CSS", "REST APIs"],
-      status: "Live",
+      status: "Private",
       role: "Full-Stack Engineer",
-      github: "https://github.com/MaroofSultan17/dhobee",
       caseStudy: {
         problem:
           "Dry cleaners and laundry chains struggled with lost order tickets, delayed customer handoffs, and disjointed branch-level accounting.",

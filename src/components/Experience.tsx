@@ -20,15 +20,19 @@ export default function Experience() {
                 </span>
                 <div>
                   <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-fg">{exp.role}</h3>
-                  <a
-                    href={exp.companyUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-1 inline-flex items-center gap-1 text-lg font-medium text-muted hover:text-fg transition-colors"
-                  >
-                    {exp.company}
-                    <FiArrowUpRight className="h-4 w-4" aria-hidden="true" />
-                  </a>
+                  {exp.companyUrl ? (
+                    <a
+                      href={exp.companyUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-1 inline-flex items-center gap-1 text-lg font-medium text-muted hover:text-fg transition-colors"
+                    >
+                      {exp.company}
+                      <FiArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                    </a>
+                  ) : (
+                    <p className="mt-1 text-lg font-medium text-muted">{exp.company}</p>
+                  )}
                 </div>
               </div>
               <div className="flex flex-wrap gap-2 sm:justify-end">

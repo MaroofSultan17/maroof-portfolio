@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FiArrowDown, FiDownload, FiGithub, FiLinkedin, FiMenu, FiMoon, FiSun, FiX } from "react-icons/fi";
 import { SiNodedotjs, SiLaravel, SiRedis, SiMongodb, SiReact, SiSymfony } from "react-icons/si";
 import { siteData } from "@/data/site";
@@ -86,14 +86,32 @@ function Portrait() {
         style={{ animationDelay: "2.1s" }}
       >
         <span className="h-2.5 w-2.5 rounded-full bg-[#34d399]" aria-hidden="true" />
-        <span className="text-sm font-semibold text-fg">Open to remote</span>
+        <span className="text-sm font-semibold text-fg">Open to opportunities</span>
       </div>
     </div>
   );
 }
 
+// Highlights the nav link for the section currently in the middle of the screen.
+function useActiveSection() {
+  const [active, setActive] = useState("");
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach((e) => e.isIntersecting && setActive(`#${e.target.id}`)),
+      { rootMargin: "-45% 0px -50% 0px" },
+    );
+    ["top", ...nav.map((n) => n.href.slice(1))].forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, []);
+  return active;
+}
+
 export function Navbar() {
   const [open, setOpen] = useState(false);
+  const active = useActiveSection();
   return (
     <header className="sticky top-0 z-40 border-b border-line/60 bg-bg/80 backdrop-blur-lg">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-6 px-5 sm:px-8 lg:px-12">
@@ -104,7 +122,13 @@ export function Navbar() {
           <ul className="flex items-center gap-8">
             {nav.map(({ href, label }) => (
               <li key={href}>
-                <a href={href} className="text-lg font-medium text-muted hover:text-fg transition-colors">
+                <a
+                  href={href}
+                  aria-current={active === href ? "true" : undefined}
+                  className={`relative py-2 text-lg font-medium transition-colors after:absolute after:inset-x-0 after:-bottom-0.5 after:h-0.5 after:rounded-full after:bg-blue after:transition-transform after:duration-300 ${
+                    active === href ? "text-fg after:scale-x-100" : "text-muted hover:text-fg after:scale-x-0"
+                  }`}
+                >
                   {label}
                 </a>
               </li>
@@ -132,7 +156,8 @@ export function Navbar() {
                 <a
                   href={href}
                   onClick={() => setOpen(false)}
-                  className="block py-3 text-2xl font-semibold text-fg"
+                  aria-current={active === href ? "true" : undefined}
+                  className={`block py-3 text-2xl font-semibold ${active === href ? "text-blue" : "text-fg"}`}
                 >
                   {label}
                 </a>

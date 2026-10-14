@@ -38,7 +38,7 @@ export default function Contact() {
             Need a backend that holds up?
           </h2>
           <p className="mt-4 text-xl leading-relaxed text-muted">
-            I'm open to backend and full-stack roles, remote or hybrid. Send a message and I'll
+            I'm open to backend and full-stack opportunities, remote or hybrid, from Pakistan (UTC+5). Send a message and I'll
             reply within a day.
           </p>
           <a href={`mailto:${personal.email}`} className="btn-primary mt-8">

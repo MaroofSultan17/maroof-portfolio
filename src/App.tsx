@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "@/hooks/useTheme";
 import { usePortfolio } from "@/hooks/usePortfolio";
 import { FlashProvider } from "@/contexts/FlashContext";
@@ -45,21 +46,33 @@ function PortfolioApp() {
         </div>
       )}
 
-      {isLoading || !portfolio ? (
-        <main>
-          <PortfolioSkeleton />
-        </main>
-      ) : (
-        <main>
-          <Hero personal={portfolio.personal} />
-          <About personal={portfolio.personal} />
-          <Skills skills={portfolio.skills} />
-          <Experience experiences={portfolio.experiences} />
-          <Projects projects={portfolio.projects} />
-          <Education education={portfolio.education} />
-          <Contact personal={portfolio.personal} />
-        </main>
-      )}
+      <AnimatePresence mode="wait">
+        {isLoading || !portfolio ? (
+          <motion.main
+            key="skeleton"
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <PortfolioSkeleton />
+          </motion.main>
+        ) : (
+          <motion.main
+            key="content"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4 }}
+          >
+            <Hero personal={portfolio.personal} />
+            <About personal={portfolio.personal} />
+            <Skills skills={portfolio.skills} />
+            <Experience experiences={portfolio.experiences} />
+            <Projects projects={portfolio.projects} />
+            <Education education={portfolio.education} />
+            <Contact personal={portfolio.personal} />
+          </motion.main>
+        )}
+      </AnimatePresence>
 
       <Footer personal={portfolio?.personal} />
     </div>

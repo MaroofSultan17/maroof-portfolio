@@ -8,6 +8,12 @@ export default function PortfolioSkeleton() {
         id="home"
         className="relative min-h-[92vh] flex items-center justify-center overflow-hidden pt-20 pb-16"
       >
+        <div className="absolute inset-0 -z-10 pointer-events-none">
+          <div className="absolute top-1/4 -left-32 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
+          <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-accent/5 rounded-full blur-3xl" />
+        </div>
+        <div className="absolute inset-0 -z-10 bg-[linear-gradient(rgba(2,132,199,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(2,132,199,0.03)_1px,transparent_1px)] bg-[size:60px_60px]" />
+
         <div className="section-container text-center max-w-4xl w-full">
           <div className="flex justify-center mb-6">
             <Skeleton className="h-7 w-72 rounded-full" />
@@ -21,9 +27,12 @@ export default function PortfolioSkeleton() {
             <Skeleton className="h-7 sm:h-8 w-44 sm:w-56 rounded-lg" />
           </div>
 
-          <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-2.5 mb-8 max-w-3xl mx-auto">
-            {[1, 2, 3, 4, 5, 6, 7].map((i) => (
-              <Skeleton key={i} className="h-7 w-24 rounded-lg" />
+          <div className="flex flex-wrap justify-center items-center gap-x-3.5 gap-y-2.5 mb-8 max-w-4xl mx-auto">
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((i) => (
+              <div key={i} className="flex items-center gap-2">
+                <Skeleton className="h-7 w-24 rounded-lg" />
+                {i < 9 && <span className="ml-2 w-1 h-1 rounded-full bg-border/40 hidden sm:block" />}
+              </div>
             ))}
           </div>
 

@@ -1,6 +1,28 @@
 import { motion } from "framer-motion";
-import { FiDownload, FiGithub, FiLinkedin, FiMail, FiMessageSquare } from "react-icons/fi";
-import { SiNodedotjs, SiLaravel, SiSymfony, SiReact, SiNextdotjs } from "react-icons/si";
+import {
+  FiDownload,
+  FiGithub,
+  FiLinkedin,
+  FiMail,
+  FiMessageSquare,
+  FiVideo,
+  FiServer,
+  FiArrowDown,
+} from "react-icons/fi";
+import {
+  SiNodedotjs,
+  SiExpress,
+  SiTypescript,
+  SiLaravel,
+  SiSymfony,
+  SiReact,
+  SiNextdotjs,
+  SiPostgresql,
+  SiMysql,
+  SiMongodb,
+  SiRedis,
+  SiDocker,
+} from "react-icons/si";
 import { Badge } from "@/components/ui/badge";
 
 const fadeUp = (delay = 0) => ({
@@ -13,6 +35,11 @@ const getTechIcon = (tech: string) => {
   switch (tech) {
     case "Node.js":
       return <SiNodedotjs className="text-emerald-500 w-3.5 h-3.5" />;
+    case "Express.js":
+    case "Express":
+      return <SiExpress className="text-neutral-400 dark:text-neutral-300 w-3.5 h-3.5" />;
+    case "TypeScript":
+      return <SiTypescript className="text-blue-500 w-3.5 h-3.5" />;
     case "Laravel":
       return <SiLaravel className="text-red-500 w-3.5 h-3.5" />;
     case "Symfony":
@@ -21,6 +48,20 @@ const getTechIcon = (tech: string) => {
       return <SiReact className="text-sky-400 w-3.5 h-3.5" />;
     case "Next.js":
       return <SiNextdotjs className="text-primary w-3.5 h-3.5" />;
+    case "PostgreSQL":
+      return <SiPostgresql className="text-sky-600 w-3.5 h-3.5" />;
+    case "MySQL":
+      return <SiMysql className="text-blue-600 w-3.5 h-3.5" />;
+    case "MongoDB":
+      return <SiMongodb className="text-emerald-600 w-3.5 h-3.5" />;
+    case "Redis":
+      return <SiRedis className="text-rose-500 w-3.5 h-3.5" />;
+    case "Docker":
+      return <SiDocker className="text-sky-500 w-3.5 h-3.5" />;
+    case "Streaming":
+      return <FiVideo className="text-purple-400 w-3.5 h-3.5" />;
+    case "REST APIs":
+      return <FiServer className="text-amber-400 w-3.5 h-3.5" />;
     default:
       return null;
   }
@@ -42,7 +83,10 @@ export default function Hero({ personal }: HeroProps) {
       <div className="absolute inset-0 -z-10 pointer-events-none">
         <div className="absolute top-1/4 -left-32 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
         <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-3xl" />
       </div>
+
+      <div className="absolute inset-0 -z-10 bg-[linear-gradient(rgba(2,132,199,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(2,132,199,0.03)_1px,transparent_1px)] bg-[size:60px_60px]" />
 
       <div className="section-container text-center max-w-4xl">
         <motion.div {...fadeUp(0.05)} className="flex justify-center mb-6">
@@ -76,15 +120,19 @@ export default function Hero({ personal }: HeroProps) {
 
         <motion.div
           {...fadeUp(0.35)}
-          className="flex flex-wrap justify-center items-center gap-2 sm:gap-2.5 mb-8 max-w-3xl mx-auto"
+          className="flex flex-wrap justify-center items-center gap-x-3.5 gap-y-2.5 mb-8 max-w-4xl mx-auto"
         >
-          {personal.tagline.map((tech) => (
-            <div
-              key={tech}
-              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-surface border border-border text-xs font-mono text-muted hover:border-primary/30 transition-colors shadow-sm"
-            >
-              {getTechIcon(tech)}
-              <span>{tech}</span>
+          {personal.tagline.map((tech, index) => (
+            <div key={tech} className="flex items-center gap-2 group">
+              <span className="p-1.5 rounded-lg bg-surface border border-border group-hover:border-primary/40 transition-colors shadow-sm flex items-center justify-center">
+                {getTechIcon(tech)}
+              </span>
+              <span className="font-mono text-xs sm:text-sm font-medium text-muted tracking-wide">
+                {tech}
+              </span>
+              {index < personal.tagline.length - 1 && (
+                <span className="ml-2 w-1 h-1 rounded-full bg-border hidden sm:block" />
+              )}
             </div>
           ))}
         </motion.div>
@@ -159,6 +207,22 @@ export default function Hero({ personal }: HeroProps) {
             </motion.a>
           ))}
         </motion.div>
+      </div>
+
+      <div className="absolute bottom-6 left-0 right-0 flex justify-center">
+        <motion.button
+          onClick={() => scrollTo("about")}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1, y: [0, 8, 0] }}
+          transition={{
+            opacity: { delay: 1.2, duration: 0.5 },
+            y: { repeat: Infinity, duration: 2, ease: "easeInOut" },
+          }}
+          className="p-3 flex items-center justify-center text-muted hover:text-primary transition-colors"
+          aria-label="Scroll down to about section"
+        >
+          <FiArrowDown className="w-5 h-5" />
+        </motion.button>
       </div>
     </section>
   );

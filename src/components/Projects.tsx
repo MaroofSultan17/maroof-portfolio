@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { FiExternalLink, FiChevronDown, FiChevronUp, FiCheckCircle, FiClock, FiCode } from "react-icons/fi";
+import { FiExternalLink, FiChevronDown, FiChevronUp, FiCode } from "react-icons/fi";
 import SectionHeader from "./SectionHeader";
 import { Badge } from "@/components/ui/badge";
 
@@ -17,8 +17,9 @@ function ProjectCard({ project, index }: { project: ProjectGetResponseDTO; index
       initial={{ opacity: 0, y: 30 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
-      className="surface-card flex flex-col h-full overflow-hidden"
+      className="group surface-card flex flex-col h-full overflow-hidden hover:border-primary/40 transition-all duration-300"
     >
+      <div className="h-1.5 w-full bg-gradient-to-r from-primary to-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       <div className="p-6 sm:p-7 flex flex-col flex-1">
         <div className="flex items-center justify-between gap-3 mb-4">
           <Badge
@@ -29,20 +30,37 @@ function ProjectCard({ project, index }: { project: ProjectGetResponseDTO; index
                 : "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20 gap-1.5"
             }
           >
-            {isLive ? <FiCheckCircle className="w-3.5 h-3.5" /> : <FiClock className="w-3.5 h-3.5" />}
+            <span
+              className={`w-1.5 h-1.5 rounded-full ${
+                isLive ? "bg-emerald-500 animate-pulse" : "bg-amber-500"
+              }`}
+            />
             {project.status?.name || "Completed"}
           </Badge>
 
           {project.role && (
-            <Badge variant="outline" className="text-muted">
+            <Badge variant="outline" className="text-muted text-[11px] font-mono">
               {project.role}
             </Badge>
           )}
         </div>
 
-        <h3 className="font-display font-bold text-2xl text-primary mb-1">
-          {project.title}
-        </h3>
+        <div className="flex items-start justify-between gap-2 mb-1">
+          <h3 className="font-display font-bold text-2xl text-primary group-hover:text-primary-hover transition-colors">
+            {project.title}
+          </h3>
+          {project.live && (
+            <a
+              href={project.live}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted hover:text-primary transition-colors p-1"
+              aria-label={`Open ${project.title}`}
+            >
+              <FiExternalLink className="w-4 h-4" />
+            </a>
+          )}
+        </div>
         <p className="text-sm font-semibold text-primary/80 mb-3">
           {project.subtitle}
         </p>
@@ -106,19 +124,29 @@ function ProjectCard({ project, index }: { project: ProjectGetResponseDTO; index
               href={project.live}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
+              className="inline-flex items-center gap-1.5 text-xs font-mono font-medium text-primary hover:underline"
             >
-              <span>Visit Platform</span>
-              <FiExternalLink className="w-4 h-4" />
+              <span>Launch Live Site</span>
+              <FiExternalLink className="w-3.5 h-3.5" />
+            </a>
+          ) : project.github ? (
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-xs font-mono font-medium text-primary hover:underline"
+            >
+              <span>View Repository</span>
+              <FiExternalLink className="w-3.5 h-3.5" />
             </a>
           ) : (
             <span className="text-xs text-muted font-mono italic">Platform in private pre-launch</span>
           )}
 
           {project.category?.name && (
-            <span className="text-[11px] font-mono text-muted uppercase tracking-wider">
+            <Badge variant="outline" className="text-[10px] font-mono text-muted uppercase tracking-wider">
               {project.category.name}
-            </span>
+            </Badge>
           )}
         </div>
       </div>

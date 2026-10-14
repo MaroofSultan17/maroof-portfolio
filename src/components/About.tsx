@@ -84,13 +84,13 @@ export default function About({ personal }: AboutProps) {
               return (
                 <Card
                   key={item.title}
-                  className="p-5 flex flex-col justify-between hover:border-primary/30"
+                  className="group p-5 flex flex-col justify-between hover:border-primary/40 hover:shadow-lg transition-all duration-300"
                 >
-                  <div className="p-2.5 w-fit rounded-xl bg-primary/10 text-primary border border-primary/20 mb-4">
+                  <div className="p-2.5 w-fit rounded-xl bg-primary/10 text-primary border border-primary/20 mb-4 group-hover:scale-110 group-hover:bg-primary/20 transition-all duration-300">
                     <Icon className="w-5 h-5" />
                   </div>
                   <div>
-                    <h4 className="font-display font-bold text-base text-primary mb-1.5">
+                    <h4 className="font-display font-bold text-base text-primary mb-1.5 group-hover:text-primary-hover transition-colors">
                       {item.title}
                     </h4>
                     <p className="text-xs text-muted leading-relaxed">

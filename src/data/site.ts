@@ -2,7 +2,7 @@ export const siteData: PortfolioGetResponseDTO = {
   personal: {
     name: "Maroof Sultan",
     role: "Software Engineer",
-    tagline: ["Node.js", "Laravel", "Symfony", "React", "Next.js", "Streaming", "REST APIs"],
+    tagline: ["Node.js", "Express.js", "TypeScript", "Laravel", "Symfony", "React", "Next.js", "Streaming", "REST APIs"],
     bio: "Software Engineer with 2.5+ years of experience building SaaS, video streaming, and eCommerce platforms with Node.js, Laravel, and Symfony. Currently building backend systems for a video streaming platform, spanning video pipelines, background queue workers, and webhook-driven payments. Focused on clean architecture, reliable REST APIs, and high-throughput databases.",
     email: "maroofsultan.dev@gmail.com",
     phone: "+92 310 6510421",
@@ -151,6 +151,26 @@ export const siteData: PortfolioGetResponseDTO = {
           "Integrated Vonage messaging APIs, bidirectional Google/Microsoft Calendar sync, and real-time chat with Laravel Reverb events and queues.",
         decisions:
           "Offloaded calendar syncing and notification dispatches to background queue workers, eliminating checkout lag during concurrent event registrations.",
+      },
+    },
+    {
+      id: "dhobbee",
+      title: "Dhobbee",
+      subtitle: "Multi-Branch SaaS Laundry Management",
+      description:
+        "Multi-branch SaaS platform managing laundry workflows, POS order tracking, automated customer SMS notifications, and revenue analytics across retail locations.",
+      tech: ["Laravel", "Vue.js", "MySQL", "Tailwind CSS", "REST APIs"],
+      category: { id: "saas", name: "SaaS & Scheduling", code: "saas" },
+      status: { id: "live", name: "Live", code: "live" },
+      role: "Full-Stack Engineer",
+      github: "https://github.com/MaroofSultan17/dhobee",
+      caseStudy: {
+        problem:
+          "Dry cleaners and laundry chains struggled with lost order tickets, delayed customer handoffs, and disjointed branch-level accounting.",
+        contribution:
+          "Engineered the core multi-tenant Laravel backend, status workflow engine, automated SMS dispatch via Twilio, and real-time order dashboard.",
+        decisions:
+          "Designed normalized database schema with indexed order states, cutting branch ticket lookup times to under 50ms.",
       },
     },
   ],

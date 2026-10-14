@@ -1,26 +1,30 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiMenu, FiX } from "react-icons/fi";
-import { DarkModeSwitch } from "react-toggle-dark-mode";
+import { FiMenu, FiX, FiDownload, FiSun, FiMoon } from "react-icons/fi";
 
 const links = [
   { label: "Home", href: "#home" },
   { label: "About", href: "#about" },
+  { label: "Skills", href: "#skills" },
   { label: "Experience", href: "#experience" },
-  { label: "Certifications", href: "#certifications" },
-  { label: "Volunteering", href: "#volunteering" },
   { label: "Projects", href: "#projects" },
+  { label: "Education", href: "#education" },
   { label: "Contact", href: "#contact" },
 ];
 
-export default function Navbar({ toggle, isDark }) {
-  const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen] = useState(false);
-  const [active, setActive] = useState("home");
+export interface NavbarProps {
+  toggle: (e?: React.MouseEvent | React.KeyboardEvent) => void;
+  isDark: boolean;
+}
+
+export default function Navbar({ toggle, isDark }: NavbarProps) {
+  const [scrolled, setScrolled] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false);
+  const [active, setActive] = useState<string>("home");
 
   useEffect(() => {
     const onScroll = () => {
-      const isScrolled = window.scrollY > 50;
+      const isScrolled = window.scrollY > 40;
       if (scrolled !== isScrolled) setScrolled(isScrolled);
     };
 
@@ -30,7 +34,7 @@ export default function Navbar({ toggle, isDark }) {
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollPosition = window.scrollY + 100;
+      const scrollPosition = window.scrollY + 120;
 
       const current = links.reduce((acc, link) => {
         const id = link.href.replace("#", "");
@@ -52,7 +56,7 @@ export default function Navbar({ toggle, isDark }) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [active]);
 
-  const handleNav = (href) => {
+  const handleNav = (href: string) => {
     const id = href.replace("#", "");
     setActive(id);
     setOpen(false);
@@ -71,21 +75,21 @@ export default function Navbar({ toggle, isDark }) {
           behavior: "smooth",
         });
       }
-    }, 100);
+    }, 50);
   };
 
   return (
     <motion.header
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,border-color,box-shadow] duration-500 ease-in-out border-b ${
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 border-b ${
         scrolled
-          ? "bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-gray-200/60 dark:border-gray-700/60 shadow-lg shadow-black/5"
+          ? "glass-panel border-border shadow-sm shadow-black/5"
           : "bg-transparent border-transparent"
       }`}
     >
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <div className="section-container h-16 flex items-center justify-between">
         <a
           href="#home"
           onClick={(e) => {
@@ -94,7 +98,7 @@ export default function Navbar({ toggle, isDark }) {
           }}
           className="font-display font-bold text-xl tracking-tight gradient-text"
         >
-          MS
+          MS.
         </a>
 
         <nav className="hidden md:flex items-center gap-1">
@@ -106,17 +110,17 @@ export default function Navbar({ toggle, isDark }) {
                 e.preventDefault();
                 handleNav(l.href);
               }}
-              className={`relative px-4 py-2 text-sm font-medium rounded-lg transition-colors duration-200 ${
+              className={`relative px-3.5 py-1.5 text-xs font-mono font-medium rounded-lg transition-colors duration-200 ${
                 active === l.href.replace("#", "")
-                  ? "text-brand-600 dark:text-brand-400"
-                  : "text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100"
+                  ? "text-primary"
+                  : "text-muted hover:text-primary"
               }`}
               aria-current={active === l.href.replace("#", "") ? "true" : undefined}
             >
               {active === l.href.replace("#", "") && (
                 <motion.span
                   layoutId="nav-pill"
-                  className="absolute inset-0 rounded-lg bg-brand-500/10 dark:bg-brand-400/10"
+                  className="absolute inset-0 rounded-lg bg-primary/10 border border-primary/20"
                   transition={{ type: "spring", stiffness: 400, damping: 30 }}
                 />
               )}
@@ -125,33 +129,36 @@ export default function Navbar({ toggle, isDark }) {
           ))}
         </nav>
 
-        <div className="flex items-center gap-3">
-          <div
-            onClick={(e) => toggle(e)}
-            style={{ viewTransitionName: "theme-toggle" }}
-            role="button"
-            tabIndex={0}
-            onKeyDown={(e) => e.key === "Enter" && toggle(e)}
-            aria-label="Toggle theme"
-            className="p-3 min-w-[48px] min-h-[48px] rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer flex items-center justify-center"
+        <div className="flex items-center gap-2.5">
+          <a
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary border border-primary/20 text-xs font-mono font-medium transition-colors"
           >
-            <div className="pointer-events-none flex items-center justify-center">
-              <DarkModeSwitch
-                checked={isDark}
-                onChange={() => {}}
-                size={20}
-                moonColor="#9CA3AF"
-                sunColor="#4B5563"
-              />
-            </div>
-          </div>
+            <FiDownload className="w-3.5 h-3.5" />
+            <span>Resume</span>
+          </a>
+
+          <button
+            type="button"
+            onClick={(e) => toggle(e)}
+            aria-label="Toggle theme"
+            className="p-2.5 rounded-lg text-muted hover:text-primary hover:bg-surface border border-border transition-colors flex items-center justify-center"
+          >
+            {isDark ? (
+              <FiSun className="w-4 h-4 text-amber-400 transition-transform hover:rotate-45" />
+            ) : (
+              <FiMoon className="w-4 h-4 text-primary transition-transform hover:-rotate-12" />
+            )}
+          </button>
 
           <button
             onClick={() => setOpen(!open)}
-            className="md:hidden p-3 min-w-[48px] min-h-[48px] rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors flex items-center justify-center"
+            className="md:hidden p-2.5 rounded-lg text-muted hover:text-primary hover:bg-surface border border-border transition-colors flex items-center justify-center"
             aria-label="Toggle menu"
           >
-            {open ? <FiX size={20} /> : <FiMenu size={20} />}
+            {open ? <FiX size={18} /> : <FiMenu size={18} />}
           </button>
         </div>
       </div>
@@ -162,10 +169,10 @@ export default function Navbar({ toggle, isDark }) {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.25 }}
-            className="md:hidden glass border-t border-gray-200/60 dark:border-gray-700/60"
+            transition={{ duration: 0.2 }}
+            className="md:hidden glass-panel border-t border-border px-4 py-4"
           >
-            <nav className="px-4 py-6 flex flex-col gap-2">
+            <nav className="flex flex-col gap-1.5">
               {links.map((l) => (
                 <a
                   key={l.label}
@@ -174,21 +181,27 @@ export default function Navbar({ toggle, isDark }) {
                     e.preventDefault();
                     handleNav(l.href);
                   }}
-                  className={`flex items-center justify-between px-5 py-4 rounded-xl text-base font-semibold transition-all ${
+                  className={`flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-all ${
                     active === l.href.replace("#", "")
-                      ? "bg-brand-500/10 text-brand-500 dark:text-brand-400"
-                      : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                      ? "bg-primary/10 text-primary font-semibold"
+                      : "text-muted hover:text-primary hover:bg-surface"
                   }`}
                 >
                   <span>{l.label}</span>
                   {active === l.href.replace("#", "") && (
-                    <motion.div
-                      layoutId="active-indicator"
-                      className="w-1.5 h-1.5 rounded-full bg-brand-500"
-                    />
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary" />
                   )}
                 </a>
               ))}
+              <a
+                href="/resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 mt-2 px-4 py-3 rounded-xl bg-primary text-white text-sm font-semibold"
+              >
+                <FiDownload className="w-4 h-4" />
+                <span>Download Resume</span>
+              </a>
             </nav>
           </motion.div>
         )}

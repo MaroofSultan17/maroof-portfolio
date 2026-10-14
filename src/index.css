@@ -2,90 +2,123 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Palette inspired by kentcdodds.com: slate background, blue / yellow / red accents. */
+:root {
+  --bg: #ffffff;
+  --surface: #f3f4f6;
+  --line: #e4e5ea;
+  --fg: #1f2028;
+  --muted: #5b5e6b;
+  --blue: #1f6ff0;
+  --yellow: #e0a800;
+  --red: #e53935;
+  --teal: #0d9488;
+  color-scheme: light;
+}
+
+.dark {
+  --bg: #1f2028;
+  --surface: #2a2c36;
+  --line: #3a3d4a;
+  --fg: #ffffff;
+  --muted: #a9adc1;
+  --blue: #4b96ff;
+  --yellow: #ffd644;
+  --red: #ff4545;
+  --teal: #5ad1c4;
+  color-scheme: dark;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
-    scrollbar-gutter: stable;
+    background: var(--bg);
   }
 
   body {
-    @apply font-body bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100;
-  }
-
-  section {
-    scroll-margin-top: 5rem;
+    @apply bg-bg text-fg font-sans antialiased;
   }
 
   ::selection {
-    @apply bg-brand-500/30 text-brand-700 dark:text-brand-300;
+    background: var(--blue);
+    color: #fff;
   }
 
-  ::-webkit-scrollbar {
-    width: 5px;
-  }
-  ::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.1);
-    border-radius: 20px;
-    transition: background 0.3s;
-  }
-  .dark ::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.1);
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: rgba(0, 0, 0, 0.2);
-  }
-  .dark ::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.2);
+  :focus-visible {
+    outline: 2px solid var(--blue);
+    outline-offset: 3px;
+    border-radius: 6px;
   }
 }
 
-@layer utilities {
-  .gradient-text {
-    @apply bg-gradient-to-r from-brand-500 to-accent bg-clip-text text-transparent;
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-fg px-7 py-3.5 text-base font-semibold text-bg transition-transform hover:scale-[1.03] active:scale-[0.98];
   }
 
-  .glass {
-    @apply bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border border-gray-200/60 dark:border-gray-700/60;
-  }
-
-  .no-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-  .no-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
-
-  .section-pad {
-    @apply py-20 md:py-28 px-4 sm:px-6 lg:px-8;
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border-2 border-line px-7 py-3.5 text-base font-semibold text-fg transition-colors hover:border-fg;
   }
 
   .card {
-    @apply rounded-2xl bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-lg transition-all duration-300;
+    @apply rounded-3xl bg-surface;
   }
 }
 
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation: none;
-  mix-blend-mode: normal;
-}
-::view-transition-old(root) {
-  z-index: 9999;
-}
-::view-transition-new(root) {
-  z-index: 1;
-}
-.dark::view-transition-old(root) {
-  z-index: 1;
-}
-.dark::view-transition-new(root) {
-  z-index: 9999;
+/* Page-load entrance for the hero. */
+.rise {
+  animation: rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-::view-transition-group(theme-toggle) {
-  animation-duration: 0s;
+@keyframes rise {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Floating tech chips around the portrait. */
+.float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+
+/* Slowly turning tri-colour ring behind the portrait. */
+.spin-slow {
+  animation: spin 24s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Sections fade up as they scroll into view; browsers without scroll timelines just show them. */
+@supports (animation-timeline: view()) {
+  .reveal {
+    animation: rise linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 30%;
+  }
+}
+
+/* FilmLauncher pipeline: a pulse travels the track, each stage lights as it passes. */
+@keyframes pipelineTravel {
+  from { left: 0%; }
+  to { left: 100%; }
+}
+
+@keyframes stageLit {
+  0%, 14% { border-color: var(--blue); color: var(--fg); background-color: color-mix(in srgb, var(--blue) 22%, var(--bg)); }
+  24%, 100% { border-color: var(--line); color: var(--muted); background-color: var(--bg); }
+}
+
+.pipeline-pulse { animation: pipelineTravel var(--cycle) linear infinite; }
+.pipeline-stage { animation: stageLit var(--cycle) linear infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .rise, .reveal, .float, .spin-slow, .pipeline-stage { animation: none; }
+  .pipeline-pulse { display: none; }
 }

@@ -1,17 +1,10 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import { fileURLToPath } from "node:url";
 
 export default defineConfig({
   plugins: [react()],
-  build: {
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          vendor: ["react", "react-dom"],
-          motion: ["framer-motion"],
-          icons: ["react-icons"],
-        },
-      },
-    },
+  resolve: {
+    alias: { "@": fileURLToPath(new URL("./src", import.meta.url)) },
   },
 });

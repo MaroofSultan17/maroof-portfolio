@@ -132,6 +132,7 @@ export default function Navbar({ toggle, isDark }: NavbarProps) {
         <div className="flex items-center gap-2.5">
           <a
             href="/resume.pdf"
+            download="Maroof_Sultan.pdf"
             target="_blank"
             rel="noopener noreferrer"
             className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary border border-primary/20 text-xs font-mono font-medium transition-colors"
@@ -195,6 +196,7 @@ export default function Navbar({ toggle, isDark }: NavbarProps) {
               ))}
               <a
                 href="/resume.pdf"
+                download="Maroof_Sultan.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 mt-2 px-4 py-3 rounded-xl bg-primary text-white text-sm font-semibold"

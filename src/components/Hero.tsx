@@ -173,6 +173,7 @@ export default function Hero({ personal }: HeroProps) {
 
           <motion.a
             href={personal.cv || "/resume.pdf"}
+            download="Maroof_Sultan.pdf"
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.02 }}

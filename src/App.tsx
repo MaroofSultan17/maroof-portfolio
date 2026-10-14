@@ -21,9 +21,8 @@ function PortfolioApp() {
 
   useEffect(() => {
     if ("scrollRestoration" in window.history) {
-      window.history.scrollRestoration = "manual";
+      window.history.scrollRestoration = "auto";
     }
-    window.scrollTo(0, 0);
   }, []);
 
   return (

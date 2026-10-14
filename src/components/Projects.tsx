@@ -1,209 +1,166 @@
-import { useState, useRef } from "react";
-import { motion, useInView, AnimatePresence } from "framer-motion";
-import { FiExternalLink, FiChevronDown, FiChevronUp, FiCode } from "react-icons/fi";
-import SectionHeader from "./SectionHeader";
-import { Badge } from "@/components/ui/badge";
+import type { IconType } from "react-icons";
+import { FiArrowUpRight, FiChevronDown, FiShoppingBag, FiCalendar, FiDroplet } from "react-icons/fi";
+import { siteData } from "@/data/site";
+import Section from "./Section";
 
-function ProjectCard({ project, index }: { project: ProjectGetResponseDTO; index: number }) {
-  const [showCaseStudy, setShowCaseStudy] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-50px" });
+type Project = (typeof siteData.projects)[number];
 
-  const isLive = project.status?.code === "live" || project.status?.name === "Live";
+// Cover colour and icon per project; FilmLauncher gets the live pipeline instead.
+const covers: Record<string, { bg: string; icon: IconType }> = {
+  gempacked: { bg: "bg-yellow", icon: FiShoppingBag },
+  roundhere: { bg: "bg-blue", icon: FiCalendar },
+  dhobbee: { bg: "bg-red", icon: FiDroplet },
+};
 
+// What a film goes through in the FilmLauncher backend, in order.
+const stages = [
+  { name: "Upload", tool: "Signed URL" },
+  { name: "Encode", tool: "Mux" },
+  { name: "Queue", tool: "BullMQ" },
+  { name: "Notify", tool: "RabbitMQ" },
+  { name: "Stream", tool: "HLS" },
+];
+const CYCLE_SECONDS = 6;
+
+function Pipeline() {
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 30 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
-      className="group surface-card flex flex-col h-full overflow-hidden hover:border-primary/40 transition-all duration-300"
-    >
-      <div className="h-1.5 w-full bg-gradient-to-r from-primary to-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-      <div className="p-6 sm:p-7 flex flex-col flex-1">
-        <div className="flex items-center justify-between gap-3 mb-4">
-          <Badge
-            variant={isLive ? "default" : "secondary"}
-            className={
-              isLive
-                ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20 gap-1.5"
-                : "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20 gap-1.5"
-            }
-          >
-            <span
-              className={`w-1.5 h-1.5 rounded-full ${
-                isLive ? "bg-emerald-500 animate-pulse" : "bg-amber-500"
-              }`}
-            />
-            {project.status?.name || "Completed"}
-          </Badge>
-
-          {project.role && (
-            <Badge variant="outline" className="text-muted text-[11px] font-mono">
-              {project.role}
-            </Badge>
-          )}
+    <figure className="flex h-full flex-col justify-center rounded-2xl bg-bg p-6 sm:p-8">
+      <div className="relative" style={{ ["--cycle" as string]: `${CYCLE_SECONDS}s` }}>
+        <div className="hidden sm:block absolute top-1/2 left-[10%] right-[10%] h-0.5 bg-line" aria-hidden="true">
+          <span className="pipeline-pulse absolute top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue shadow-[0_0_16px_var(--blue)]" />
         </div>
-
-        <div className="flex items-start justify-between gap-2 mb-1">
-          <h3 className="font-display font-bold text-2xl text-primary group-hover:text-primary-hover transition-colors">
-            {project.title}
-          </h3>
-          {project.live && (
-            <a
-              href={project.live}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted hover:text-primary transition-colors p-1"
-              aria-label={`Open ${project.title}`}
+        <ol className="relative grid grid-cols-1 sm:grid-cols-5 gap-2.5">
+          {stages.map((stage, i) => (
+            <li
+              key={stage.name}
+              className="pipeline-stage relative flex sm:block items-baseline justify-between rounded-xl border-2 border-line bg-bg px-3 py-3 sm:text-center text-muted"
+              style={{ animationDelay: `${(i / (stages.length - 1)) * CYCLE_SECONDS}s` }}
             >
-              <FiExternalLink className="w-4 h-4" />
-            </a>
-          )}
-        </div>
-        <p className="text-sm font-semibold text-primary/80 mb-3">
-          {project.subtitle}
-        </p>
-
-        <p className="text-sm text-muted leading-relaxed mb-6 flex-1">
-          {project.description}
-        </p>
-
-        <div className="flex flex-wrap gap-2 mb-6">
-          {project.tech.map((t) => (
-            <Badge key={t} variant="secondary" className="font-mono text-xs font-normal">
-              {t}
-            </Badge>
+              <span className="block text-sm font-bold">{stage.name}</span>
+              <span className="block text-xs opacity-80">{stage.tool}</span>
+            </li>
           ))}
-        </div>
-
-        {project.caseStudy && (
-          <div className="mb-6 pt-4 border-t border-border">
-            <button
-              onClick={() => setShowCaseStudy(!showCaseStudy)}
-              className="w-full flex items-center justify-between text-xs font-semibold uppercase tracking-wider text-primary hover:text-primary-hover transition-colors py-1"
-              aria-expanded={showCaseStudy}
-            >
-              <span className="flex items-center gap-1.5">
-                <FiCode className="w-3.5 h-3.5" />
-                {showCaseStudy ? "Hide Technical Case Study" : "View Technical Case Study"}
-              </span>
-              {showCaseStudy ? <FiChevronUp className="w-4 h-4" /> : <FiChevronDown className="w-4 h-4" />}
-            </button>
-
-            <AnimatePresence>
-              {showCaseStudy && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
-                  exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.25 }}
-                  className="overflow-hidden mt-3 space-y-3.5 text-xs text-muted leading-relaxed bg-surface/70 rounded-xl p-4 border border-border"
-                >
-                  <div>
-                    <strong className="block text-primary font-semibold mb-1">The Problem:</strong>
-                    <p>{project.caseStudy.problem}</p>
-                  </div>
-                  <div>
-                    <strong className="block text-primary font-semibold mb-1">My Contribution:</strong>
-                    <p>{project.caseStudy.contribution}</p>
-                  </div>
-                  <div>
-                    <strong className="block text-primary font-semibold mb-1">Technical Decisions:</strong>
-                    <p>{project.caseStudy.decisions}</p>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-        )}
-
-        <div className="pt-4 border-t border-border flex items-center justify-between">
-          {project.live ? (
-            <a
-              href={project.live}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-xs font-mono font-medium text-primary hover:underline"
-            >
-              <span>Launch Live Site</span>
-              <FiExternalLink className="w-3.5 h-3.5" />
-            </a>
-          ) : project.github ? (
-            <a
-              href={project.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-xs font-mono font-medium text-primary hover:underline"
-            >
-              <span>View Repository</span>
-              <FiExternalLink className="w-3.5 h-3.5" />
-            </a>
-          ) : (
-            <span className="text-xs text-muted font-mono italic">Platform in private pre-launch</span>
-          )}
-
-          {project.category?.name && (
-            <Badge variant="outline" className="text-[10px] font-mono text-muted uppercase tracking-wider">
-              {project.category.name}
-            </Badge>
-          )}
-        </div>
+        </ol>
       </div>
-    </motion.div>
+      <figcaption className="mt-5 text-sm text-muted">
+        A film's path through the backend I build, from upload to adaptive playback.
+      </figcaption>
+    </figure>
   );
 }
 
-export interface ProjectsProps {
-  projects: ProjectGetResponseDTO[];
+function Status({ project }: { project: Project }) {
+  const live = project.status === "Live";
+  return (
+    <span className="inline-flex items-center gap-2 rounded-full bg-bg px-3 py-1 text-sm font-medium text-fg">
+      <span className={`h-2 w-2 rounded-full ${live ? "bg-[#34d399]" : "bg-yellow"}`} aria-hidden="true" />
+      {project.status}
+    </span>
+  );
 }
 
-export default function Projects({ projects }: ProjectsProps) {
-  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+function CaseStudy({ project }: { project: Project }) {
+  return (
+    <details className="group mt-6">
+      <summary className="inline-flex cursor-pointer list-none items-center gap-1.5 font-semibold text-fg hover:text-blue transition-colors [&::-webkit-details-marker]:hidden">
+        Read the case study
+        <FiChevronDown className="h-4 w-4 transition-transform group-open:rotate-180" aria-hidden="true" />
+      </summary>
+      <dl className="mt-4 space-y-4 border-l-2 border-blue pl-5 text-muted leading-relaxed">
+        {[
+          ["Problem", project.caseStudy.problem],
+          ["What I did", project.caseStudy.contribution],
+          ["Key decisions", project.caseStudy.decisions],
+        ].map(([term, text]) => (
+          <div key={term}>
+            <dt className="font-semibold text-fg">{term}</dt>
+            <dd className="mt-1">{text}</dd>
+          </div>
+        ))}
+      </dl>
+    </details>
+  );
+}
 
-  const categories = [
-    { id: "all", name: "All Projects" },
-    { id: "streaming", name: "Streaming & SaaS" },
-    { id: "ecommerce", name: "eCommerce" },
-    { id: "saas", name: "Scheduling & SaaS" },
-  ];
+function ProjectLink({ project }: { project: Project }) {
+  const href = project.live ?? project.github;
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex items-center gap-1 font-semibold text-fg hover:text-blue transition-colors"
+    >
+      {project.live ? "Visit site" : "View code"}
+      <FiArrowUpRight className="h-5 w-5" aria-hidden="true" />
+    </a>
+  );
+}
 
-  const filteredProjects = projects.filter((p) => {
-    if (selectedCategory === "all") return true;
-    return p.category?.code === selectedCategory || p.category?.id === selectedCategory;
-  });
+function Tech({ items }: { items: string[] }) {
+  return (
+    <ul className="mt-5 flex flex-wrap gap-2">
+      {items.map((t) => (
+        <li key={t} className="rounded-full border border-line px-3 py-1 text-sm text-muted">
+          {t}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+export default function Projects() {
+  const [featured, ...rest] = siteData.projects;
 
   return (
-    <section id="projects" className="section-padding bg-surface/30">
-      <div className="section-container">
-        <SectionHeader
-          label="Projects"
-          title="Featured Production Work"
-          subtitle="Real-world streaming infrastructure, enterprise eCommerce, and scheduling platforms."
-        />
-
-        <div className="flex flex-wrap items-center justify-center gap-2 mt-8 mb-12">
-          {categories.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => setSelectedCategory(cat.id)}
-              className={`px-4 py-2 rounded-xl text-xs font-mono font-medium transition-all ${
-                selectedCategory === cat.id
-                  ? "bg-primary text-white shadow-md shadow-primary/25"
-                  : "bg-surface border border-border text-muted hover:text-primary hover:border-border-hover"
-              }`}
-            >
-              {cat.name}
-            </button>
-          ))}
+    <Section id="projects" title="Projects" subtitle="Production platforms I've built and contributed to.">
+      <article className="reveal card grid gap-8 p-6 sm:p-10 lg:grid-cols-2 lg:items-center">
+        <div>
+          <div className="flex flex-wrap items-center gap-3">
+            <Status project={featured} />
+            <span className="text-sm text-muted">{featured.role}</span>
+          </div>
+          <h3 className="mt-5 text-3xl sm:text-4xl font-bold tracking-tight text-fg">{featured.title}</h3>
+          <p className="mt-2 text-lg font-medium text-blue">{featured.subtitle}</p>
+          <p className="mt-4 text-lg leading-relaxed text-muted">{featured.description}</p>
+          <Tech items={featured.tech} />
+          <div className="mt-6">
+            <ProjectLink project={featured} />
+          </div>
+          <CaseStudy project={featured} />
         </div>
+        <Pipeline />
+      </article>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredProjects.map((project, idx) => (
-            <ProjectCard key={project.id} project={project} index={idx} />
-          ))}
-        </div>
+      <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {rest.map((project) => {
+          const cover = covers[project.id];
+          const Icon = cover.icon;
+          return (
+            <article key={project.id} className="reveal card group flex flex-col overflow-hidden">
+              <div className={`relative grid h-48 place-items-center overflow-hidden ${cover.bg}`}>
+                <Icon
+                  className="h-20 w-20 text-[#1f2028]/80 transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-6"
+                  aria-hidden="true"
+                />
+                <span className="absolute left-4 top-4">
+                  <Status project={project} />
+                </span>
+              </div>
+              <div className="flex flex-1 flex-col p-6 sm:p-8">
+                <h3 className="text-2xl font-bold tracking-tight text-fg">{project.title}</h3>
+                <p className="mt-1 font-medium text-muted">{project.subtitle}</p>
+                <p className="mt-4 flex-1 leading-relaxed text-muted">{project.description}</p>
+                <Tech items={project.tech} />
+                <div className="mt-6">
+                  <ProjectLink project={project} />
+                </div>
+                <CaseStudy project={project} />
+              </div>
+            </article>
+          );
+        })}
       </div>
-    </section>
+    </Section>
   );
 }

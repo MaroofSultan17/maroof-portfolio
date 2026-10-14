@@ -1,230 +1,215 @@
-import { motion } from "framer-motion";
-import {
-  FiDownload,
-  FiGithub,
-  FiLinkedin,
-  FiMail,
-  FiMessageSquare,
-  FiVideo,
-  FiServer,
-  FiArrowDown,
-} from "react-icons/fi";
-import {
-  SiNodedotjs,
-  SiExpress,
-  SiTypescript,
-  SiLaravel,
-  SiSymfony,
-  SiReact,
-  SiNextdotjs,
-  SiPostgresql,
-  SiMysql,
-  SiMongodb,
-  SiRedis,
-  SiDocker,
-} from "react-icons/si";
-import { Badge } from "@/components/ui/badge";
+import { useState } from "react";
+import { FiArrowDown, FiDownload, FiGithub, FiLinkedin, FiMenu, FiMoon, FiSun, FiX } from "react-icons/fi";
+import { SiNodedotjs, SiLaravel, SiRedis, SiMongodb, SiReact, SiSymfony } from "react-icons/si";
+import { siteData } from "@/data/site";
 
-const fadeUp = (delay = 0) => ({
-  initial: { opacity: 0, y: 24 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6, delay, ease: [0.25, 0.46, 0.45, 0.94] },
-});
+const { personal } = siteData;
 
-const getTechIcon = (tech: string) => {
-  switch (tech) {
-    case "Node.js":
-      return <SiNodedotjs className="text-emerald-500 w-3.5 h-3.5" />;
-    case "Express.js":
-    case "Express":
-      return <SiExpress className="text-neutral-400 dark:text-neutral-300 w-3.5 h-3.5" />;
-    case "TypeScript":
-      return <SiTypescript className="text-blue-500 w-3.5 h-3.5" />;
-    case "Laravel":
-      return <SiLaravel className="text-red-500 w-3.5 h-3.5" />;
-    case "Symfony":
-      return <SiSymfony className="text-primary w-3.5 h-3.5" />;
-    case "React":
-      return <SiReact className="text-sky-400 w-3.5 h-3.5" />;
-    case "Next.js":
-      return <SiNextdotjs className="text-primary w-3.5 h-3.5" />;
-    case "PostgreSQL":
-      return <SiPostgresql className="text-sky-600 w-3.5 h-3.5" />;
-    case "MySQL":
-      return <SiMysql className="text-blue-600 w-3.5 h-3.5" />;
-    case "MongoDB":
-      return <SiMongodb className="text-emerald-600 w-3.5 h-3.5" />;
-    case "Redis":
-      return <SiRedis className="text-rose-500 w-3.5 h-3.5" />;
-    case "Docker":
-      return <SiDocker className="text-sky-500 w-3.5 h-3.5" />;
-    case "Streaming":
-      return <FiVideo className="text-purple-400 w-3.5 h-3.5" />;
-    case "REST APIs":
-      return <FiServer className="text-amber-400 w-3.5 h-3.5" />;
-    default:
-      return null;
-  }
-};
+const nav = [
+  { href: "#about", label: "About" },
+  { href: "#projects", label: "Projects" },
+  { href: "#experience", label: "Experience" },
+  { href: "#skills", label: "Skills" },
+  { href: "#contact", label: "Contact" },
+];
 
-export interface HeroProps {
-  personal: PersonalGetResponseDTO;
+// Tech chips orbiting the portrait; positions are % of the portrait box.
+const chips = [
+  { icon: SiNodedotjs, label: "Node.js", color: "#5fa04e", pos: "left-[2%] top-[14%]", delay: "0s" },
+  { icon: SiLaravel, label: "Laravel", color: "#ff2d20", pos: "left-[-4%] top-[58%]", delay: "1.2s" },
+  { icon: SiReact, label: "React", color: "#61dafb", pos: "right-[0%] top-[6%]", delay: "2.4s" },
+  { icon: SiRedis, label: "Redis", color: "#ff4438", pos: "right-[-5%] top-[46%]", delay: "0.6s" },
+  { icon: SiMongodb, label: "MongoDB", color: "#47a248", pos: "right-[14%] bottom-[0%]", delay: "1.8s" },
+  { icon: SiSymfony, label: "Symfony", color: "currentColor", pos: "left-[22%] bottom-[-2%]", delay: "3s" },
+];
+
+function ThemeToggle() {
+  // index.html sets the initial class before paint, so read it back here.
+  const [dark, setDark] = useState(() => document.documentElement.classList.contains("dark"));
+  const toggle = () => {
+    document.documentElement.classList.toggle("dark", !dark);
+    try {
+      localStorage.setItem("ms-theme", dark ? "light" : "dark");
+    } catch {
+      /* private mode: theme just won't persist */
+    }
+    setDark(!dark);
+  };
+  return (
+    <button
+      type="button"
+      onClick={toggle}
+      aria-label={dark ? "Switch to light theme" : "Switch to dark theme"}
+      className="grid h-12 w-12 place-items-center rounded-full border-2 border-line text-fg hover:border-fg transition-colors"
+    >
+      {dark ? <FiSun className="h-5 w-5" /> : <FiMoon className="h-5 w-5" />}
+    </button>
+  );
 }
 
-export default function Hero({ personal }: HeroProps) {
-  const scrollTo = (id: string) =>
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-
+function Portrait() {
   return (
-    <section
-      id="home"
-      className="relative min-h-[92vh] flex items-center justify-center overflow-hidden pt-20 pb-16"
-    >
-      <div className="absolute inset-0 -z-10 pointer-events-none">
-        <div className="absolute top-1/4 -left-32 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-3xl" />
+    <div className="relative mx-auto aspect-square w-full max-w-[300px] sm:max-w-[420px] lg:max-w-[500px]">
+      <div
+        className="spin-slow absolute inset-[9%] rounded-full [background:conic-gradient(var(--blue)_0_33%,var(--yellow)_0_66%,var(--red)_0)]"
+        aria-hidden="true"
+      />
+      <img
+        src="/maroof-sultan.jpg"
+        alt="Portrait of Maroof Sultan"
+        width={480}
+        height={480}
+        fetchPriority="high"
+        className="absolute inset-[11%] h-[78%] w-[78%] rounded-full border-[6px] border-bg object-cover"
+      />
+
+      {chips.map(({ icon: Icon, label, color, pos, delay }) => (
+        <div
+          key={label}
+          className={`float absolute ${pos} grid h-12 w-12 sm:h-16 sm:w-16 place-items-center rounded-2xl border border-line bg-surface shadow-xl shadow-black/20`}
+          style={{ animationDelay: delay }}
+          title={label}
+        >
+          <Icon className="h-6 w-6 sm:h-8 sm:w-8" style={{ color }} aria-label={label} />
+        </div>
+      ))}
+
+      <div
+        className="float absolute left-[-6%] top-[34%] hidden sm:block rounded-2xl border border-line bg-surface px-4 py-3 shadow-xl shadow-black/20"
+        style={{ animationDelay: "0.9s" }}
+      >
+        <p className="text-2xl font-bold text-fg">2.5+ yrs</p>
+        <p className="text-sm text-muted">building backends</p>
       </div>
+      <div
+        className="float absolute right-[-8%] bottom-[18%] hidden sm:flex items-center gap-2 rounded-full border border-line bg-surface px-4 py-2.5 shadow-xl shadow-black/20"
+        style={{ animationDelay: "2.1s" }}
+      >
+        <span className="h-2.5 w-2.5 rounded-full bg-[#34d399]" aria-hidden="true" />
+        <span className="text-sm font-semibold text-fg">Open to remote</span>
+      </div>
+    </div>
+  );
+}
 
-      <div className="absolute inset-0 -z-10 bg-[linear-gradient(rgba(2,132,199,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(2,132,199,0.03)_1px,transparent_1px)] bg-[size:60px_60px]" />
+export function Navbar() {
+  const [open, setOpen] = useState(false);
+  return (
+    <header className="sticky top-0 z-40 border-b border-line/60 bg-bg/80 backdrop-blur-lg">
+      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-6 px-5 sm:px-8 lg:px-12">
+        <a href="#top" className="text-xl font-bold tracking-tight text-fg">
+          Maroof Sultan
+        </a>
+        <nav aria-label="Sections" className="hidden lg:block">
+          <ul className="flex items-center gap-8">
+            {nav.map(({ href, label }) => (
+              <li key={href}>
+                <a href={href} className="text-lg font-medium text-muted hover:text-fg transition-colors">
+                  {label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+        <div className="flex items-center gap-3">
+          <ThemeToggle />
+          <button
+            type="button"
+            onClick={() => setOpen(!open)}
+            aria-label="Toggle menu"
+            aria-expanded={open}
+            className="grid h-12 w-12 place-items-center rounded-full border-2 border-line text-fg lg:hidden"
+          >
+            {open ? <FiX className="h-5 w-5" /> : <FiMenu className="h-5 w-5" />}
+          </button>
+        </div>
+      </div>
+      {open && (
+        <nav aria-label="Sections" className="border-t border-line/60 px-5 pb-6 pt-2 lg:hidden">
+          <ul>
+            {nav.map(({ href, label }) => (
+              <li key={href}>
+                <a
+                  href={href}
+                  onClick={() => setOpen(false)}
+                  className="block py-3 text-2xl font-semibold text-fg"
+                >
+                  {label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )}
+    </header>
+  );
+}
 
-      <div className="section-container text-center max-w-4xl">
-        <motion.div {...fadeUp(0.05)} className="flex justify-center mb-6">
-          <Badge variant="default" className="gap-2 px-4 py-1.5 text-xs font-mono">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
+export default function Hero() {
+  return (
+    <div className="flex min-h-[calc(100svh-5rem)] flex-col">
+      <section
+        id="top"
+        className="scroll-mt-20 flex flex-1 flex-col-reverse items-center gap-10 py-10 lg:flex-row lg:justify-between lg:gap-16"
+      >
+        <div className="rise max-w-2xl" style={{ animationDelay: "120ms" }}>
+          <h1>
+            <span className="block text-lg sm:text-xl font-semibold text-blue">
+              {personal.name}, {personal.role}
             </span>
-            Available for Senior Roles & Remote Opportunities
-          </Badge>
-        </motion.div>
-
-        <motion.h1
-          {...fadeUp(0.15)}
-          className="font-display font-extrabold text-5xl sm:text-7xl md:text-8xl tracking-tight text-primary mb-3"
-        >
-          {personal.name.split(" ").map((word, i) => (
-            <span key={i} className={i === 1 ? "gradient-text" : ""}>
-              {word}
-              {i === 0 ? " " : ""}
+            <span className="mt-4 block text-4xl sm:text-5xl xl:text-6xl font-bold leading-[1.1] tracking-tight text-fg">
+              I build the backends that keep streaming, payments and stores running.
             </span>
-          ))}
-        </motion.h1>
+          </h1>
+          <p className="mt-6 max-w-xl text-lg sm:text-xl leading-relaxed text-muted">
+            APIs, queue workers and payment flows with Node.js, Laravel and Symfony, for
+            platforms with thousands of users.
+          </p>
 
-        <motion.p
-          {...fadeUp(0.25)}
-          className="font-display font-semibold text-xl sm:text-2xl text-muted mb-6"
-        >
-          {personal.role}
-        </motion.p>
+          <div className="mt-10 flex flex-col sm:flex-row gap-4">
+            <a href="#projects" className="btn-primary">
+              See my work
+            </a>
+            <a href={personal.cv} target="_blank" rel="noopener noreferrer" className="btn-outline">
+              <FiDownload className="h-5 w-5" aria-hidden="true" />
+              Résumé
+            </a>
+          </div>
 
-        <motion.div
-          {...fadeUp(0.35)}
-          className="flex flex-wrap justify-center items-center gap-x-3.5 gap-y-2.5 mb-8 max-w-4xl mx-auto"
-        >
-          {personal.tagline.map((tech, index) => (
-            <div key={tech} className="flex items-center gap-2 group">
-              <span className="p-1.5 rounded-lg bg-surface border border-border group-hover:border-primary/40 transition-colors shadow-sm flex items-center justify-center">
-                {getTechIcon(tech)}
-              </span>
-              <span className="font-mono text-xs sm:text-sm font-medium text-muted tracking-wide">
-                {tech}
-              </span>
-              {index < personal.tagline.length - 1 && (
-                <span className="ml-2 w-1 h-1 rounded-full bg-border hidden sm:block" />
-              )}
-            </div>
-          ))}
-        </motion.div>
+          <div className="mt-8 flex items-center gap-3">
+            {[
+              { icon: FiGithub, href: personal.github, label: "GitHub" },
+              { icon: FiLinkedin, href: personal.linkedin, label: "LinkedIn" },
+            ].map(({ icon: Icon, href, label }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={label}
+                className="grid h-11 w-11 place-items-center rounded-full text-muted hover:bg-surface hover:text-fg transition-colors"
+              >
+                <Icon className="h-5 w-5" />
+              </a>
+            ))}
+          </div>
+        </div>
 
-        <motion.p
-          {...fadeUp(0.45)}
-          className="max-w-2xl mx-auto text-muted text-base sm:text-lg leading-relaxed mb-10"
-        >
-          Software Engineer building high-throughput SaaS, video streaming, and eCommerce platforms.
-          Specialized in video pipeline engineering with Mux, background queue workers with BullMQ on Redis,
-          and robust REST API architecture.
-        </motion.p>
+        <div className="rise w-full lg:w-auto lg:flex-1" style={{ animationDelay: "240ms" }}>
+          <Portrait />
+        </div>
+      </section>
 
-        <motion.div
-          {...fadeUp(0.55)}
-          className="flex flex-col sm:flex-row items-center justify-center gap-3.5 mb-12"
-        >
-          <motion.button
-            onClick={() => scrollTo("projects")}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-primary text-white font-semibold text-sm shadow-md shadow-primary/25 hover:bg-primary-hover transition-all"
-            aria-label="View featured projects"
-          >
-            View Projects
-          </motion.button>
-
-          <motion.button
-            onClick={() => scrollTo("contact")}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className="w-full sm:w-auto px-7 py-3.5 rounded-xl surface-card text-primary font-semibold text-sm hover:border-primary/40 flex items-center justify-center gap-2 transition-all"
-            aria-label="Contact Maroof Sultan"
-          >
-            <FiMessageSquare className="w-4 h-4 text-primary" />
-            <span>Contact Me</span>
-          </motion.button>
-
-          <motion.a
-            href={personal.cv || "/resume.pdf"}
-            download="Maroof_Sultan.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className="w-full sm:w-auto px-7 py-3.5 rounded-xl border border-border surface-card text-muted hover:text-primary font-semibold text-sm flex items-center justify-center gap-2 transition-all"
-            aria-label="Download Resume"
-          >
-            <FiDownload className="w-4 h-4 text-primary" />
-            <span>Download Resume</span>
-          </motion.a>
-        </motion.div>
-
-        <motion.div
-          {...fadeUp(0.65)}
-          className="flex items-center justify-center gap-4"
-        >
-          {[
-            { icon: FiGithub, href: personal.github, label: "GitHub" },
-            { icon: FiLinkedin, href: personal.linkedin, label: "LinkedIn" },
-            { icon: FiMail, href: `mailto:${personal.email}`, label: "Email" },
-          ].map(({ icon: Icon, href, label }) => (
-            <motion.a
-              key={label}
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={label}
-              whileHover={{ y: -2 }}
-              className="p-3 rounded-xl surface-card text-muted hover:text-primary hover:border-primary/40 transition-colors"
-            >
-              <Icon className="w-5 h-5" />
-            </motion.a>
-          ))}
-        </motion.div>
-      </div>
-
-      <div className="absolute bottom-6 left-0 right-0 flex justify-center">
-        <motion.button
-          onClick={() => scrollTo("about")}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1, y: [0, 8, 0] }}
-          transition={{
-            opacity: { delay: 1.2, duration: 0.5 },
-            y: { repeat: Infinity, duration: 2, ease: "easeInOut" },
-          }}
-          className="p-3 flex items-center justify-center text-muted hover:text-primary transition-colors"
-          aria-label="Scroll down to about section"
-        >
-          <FiArrowDown className="w-5 h-5" />
-        </motion.button>
-      </div>
-    </section>
+      <a
+        href="#about"
+        className="rise group mb-10 hidden sm:inline-flex items-center gap-5 self-start text-lg font-semibold text-fg"
+        style={{ animationDelay: "400ms" }}
+      >
+        <span className="grid h-14 w-14 place-items-center rounded-full border-2 border-line transition-colors group-hover:border-fg">
+          <FiArrowDown className="h-5 w-5 transition-transform group-hover:translate-y-1" aria-hidden="true" />
+        </span>
+        Learn more about Maroof
+      </a>
+    </div>
   );
 }

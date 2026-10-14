@@ -1,76 +1,39 @@
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import type { IconType } from "react-icons";
 import { FiServer, FiVideo, FiDatabase, FiLayout, FiTerminal } from "react-icons/fi";
-import SectionHeader from "./SectionHeader";
-import { Badge } from "@/components/ui/badge";
+import { siteData } from "@/data/site";
+import Section from "./Section";
 
-const categoryIcons: Record<string, typeof FiServer> = {
-  "Backend & Systems": FiServer,
-  "Streaming & APIs": FiVideo,
-  "Databases & Caching": FiDatabase,
-  "Frontend Engineering": FiLayout,
-  "DevOps & Cloud": FiTerminal,
+const looks: Record<string, { icon: IconType; tint: string }> = {
+  "Backend & Systems": { icon: FiServer, tint: "bg-blue/15 text-blue" },
+  "Streaming & APIs": { icon: FiVideo, tint: "bg-red/15 text-red" },
+  "Databases & Caching": { icon: FiDatabase, tint: "bg-yellow/15 text-yellow" },
+  "Frontend Engineering": { icon: FiLayout, tint: "bg-teal/15 text-teal" },
+  "DevOps & Cloud": { icon: FiTerminal, tint: "bg-fg/10 text-fg" },
 };
 
-export interface SkillsProps {
-  skills: SkillGroupGetResponseDTO[];
-}
-
-export default function Skills({ skills }: SkillsProps) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
-
+export default function Skills() {
   return (
-    <section id="skills" className="section-padding bg-surface/40">
-      <div className="section-container">
-        <SectionHeader
-          label="Skills"
-          title="Technical Capabilities"
-          subtitle="A battle-tested stack honed over 2.5+ years building production SaaS, streaming, and eCommerce platforms."
-        />
-
-        <div
-          ref={ref}
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-14"
-        >
-          {skills.map((group, idx) => {
-            const Icon = categoryIcons[group.category] || FiServer;
-
-            return (
-              <motion.div
-                key={group.category}
-                initial={{ opacity: 0, y: 30 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: idx * 0.1, ease: "easeOut" }}
-                className="surface-card p-6 flex flex-col justify-between"
-              >
-                <div>
-                  <div className="flex items-center gap-3 mb-5">
-                    <div className="p-2.5 rounded-xl bg-primary/10 text-primary border border-primary/20">
-                      <Icon className="w-5 h-5" />
-                    </div>
-                    <h3 className="font-display font-bold text-lg text-primary">
-                      {group.category}
-                    </h3>
-                  </div>
-
-                  <div className="flex flex-wrap gap-2">
-                    {group.skills.map((skill) => (
-                      <Badge
-                        key={skill}
-                        variant="secondary"
-                        className="px-3 py-1.5 text-xs font-mono font-medium rounded-lg hover:border-primary/40 hover:text-primary transition-colors cursor-default"
-                      >
-                        {skill}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
+    <Section id="skills" title="Skills" subtitle="The tools I reach for in production.">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {siteData.skills.map((group) => {
+          const { icon: Icon, tint } = looks[group.category] ?? looks["Backend & Systems"];
+          return (
+            <div key={group.category} className="reveal card p-6 sm:p-8">
+              <span className={`grid h-12 w-12 place-items-center rounded-2xl ${tint}`}>
+                <Icon className="h-6 w-6" aria-hidden="true" />
+              </span>
+              <h3 className="mt-5 text-xl font-bold text-fg">{group.category}</h3>
+              <ul className="mt-4 flex flex-wrap gap-2">
+                {group.skills.map((skill) => (
+                  <li key={skill} className="rounded-full bg-bg px-3 py-1.5 text-sm font-medium text-muted">
+                    {skill}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          );
+        })}
       </div>
-    </section>
+    </Section>
   );
 }

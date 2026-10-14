@@ -1,8 +1,7 @@
-export const siteData: PortfolioGetResponseDTO = {
+export const siteData = {
   personal: {
     name: "Maroof Sultan",
     role: "Software Engineer",
-    tagline: ["Node.js", "Express.js", "TypeScript", "Laravel", "Symfony", "React", "Next.js", "Streaming", "REST APIs"],
     bio: "Software Engineer with 2.5+ years of experience building SaaS, video streaming, and eCommerce platforms with Node.js, Laravel, and Symfony. Currently building backend systems for a video streaming platform, spanning video pipelines, background queue workers, and webhook-driven payments. Focused on clean architecture, reliable REST APIs, and high-throughput databases.",
     email: "maroofsultan.dev@gmail.com",
     phone: "+92 310 6510421",
@@ -60,7 +59,7 @@ export const siteData: PortfolioGetResponseDTO = {
       companyUrl: "https://www.alphasoft360.org/team/maroof-sultan",
       type: "Full-Time",
       period: "Mar 2025 to Jul 2026",
-      location: "On-site / Hybrid",
+      location: "Hybrid",
       description:
         "Contributed to Gempacked, a wholesale eCommerce platform serving 7K+ users with 40K+ catalog products across web, POS, and in-house orders.",
       bullets: [
@@ -100,8 +99,7 @@ export const siteData: PortfolioGetResponseDTO = {
       description:
         "A video streaming and crowdfunding platform for independent films, featuring adaptive HLS video streaming, background encoding queues, and secure payment processing.",
       tech: ["Node.js", "React", "MongoDB", "Mux Video API", "BullMQ", "Redis", "RabbitMQ"],
-      category: { id: "streaming", name: "Streaming & SaaS", code: "streaming" },
-      status: { id: "pre-launch", name: "Pre-launch", code: "pre-launch" },
+      status: "Pre-launch",
       role: "Backend Engineer",
       live: "https://filmlauncher.com",
       caseStudy: {
@@ -120,8 +118,7 @@ export const siteData: PortfolioGetResponseDTO = {
       description:
         "A wholesale jewelry findings and components eCommerce platform handling 7K+ users and 40K+ products across online storefronts, in-store POS, and warehouse sales.",
       tech: ["Symfony", "Next.js", "MySQL", "Braintree", "Stripe", "GitLab CI/CD"],
-      category: { id: "ecommerce", name: "eCommerce", code: "ecommerce" },
-      status: { id: "live", name: "Live", code: "live" },
+      status: "Live",
       role: "Contributor (Team of Engineers)",
       live: "https://www.gempacked.com",
       caseStudy: {
@@ -140,8 +137,7 @@ export const siteData: PortfolioGetResponseDTO = {
       description:
         "A location-based scheduling and event coordination platform syncing active user calendars and real-time alerts.",
       tech: ["Laravel", "Livewire", "MySQL", "Google APIs", "Vonage", "Laravel Reverb"],
-      category: { id: "saas", name: "SaaS & Scheduling", code: "saas" },
-      status: { id: "live", name: "Live", code: "live" },
+      status: "Live",
       role: "Contributor",
       live: "https://roundhere.io",
       caseStudy: {
@@ -160,8 +156,7 @@ export const siteData: PortfolioGetResponseDTO = {
       description:
         "Multi-branch SaaS platform managing laundry workflows, POS order tracking, automated customer SMS notifications, and revenue analytics across retail locations.",
       tech: ["Laravel", "Vue.js", "MySQL", "Tailwind CSS", "REST APIs"],
-      category: { id: "saas", name: "SaaS & Scheduling", code: "saas" },
-      status: { id: "live", name: "Live", code: "live" },
+      status: "Live",
       role: "Full-Stack Engineer",
       github: "https://github.com/MaroofSultan17/dhobee",
       caseStudy: {

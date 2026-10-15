@@ -1,14 +1,16 @@
 import type { IconType } from "react-icons";
-import { FiServer, FiVideo, FiDatabase, FiLayout, FiTerminal } from "react-icons/fi";
+import { FiServer, FiVideo, FiDatabase, FiLayout, FiTerminal, FiCode, FiLayers } from "react-icons/fi";
 import { siteData } from "@/data/site";
 import Section from "./Section";
 
 const looks: Record<string, { icon: IconType; tint: string }> = {
-  "Backend & Systems": { icon: FiServer, tint: "bg-blue/15 text-blue" },
-  "Streaming & APIs": { icon: FiVideo, tint: "bg-red/15 text-red" },
-  "Databases & Caching": { icon: FiDatabase, tint: "bg-yellow/15 text-yellow" },
-  "Frontend Engineering": { icon: FiLayout, tint: "bg-teal/15 text-teal" },
-  "DevOps & Cloud": { icon: FiTerminal, tint: "bg-fg/10 text-fg" },
+  Languages: { icon: FiCode, tint: "bg-blue/15 text-blue" },
+  Backend: { icon: FiServer, tint: "bg-red/15 text-red" },
+  Frontend: { icon: FiLayout, tint: "bg-teal/15 text-teal" },
+  "Databases & Search": { icon: FiDatabase, tint: "bg-yellow/15 text-yellow" },
+  "Queues & Caching": { icon: FiLayers, tint: "bg-blue/15 text-blue" },
+  Integrations: { icon: FiVideo, tint: "bg-red/15 text-red" },
+  "DevOps & Tools": { icon: FiTerminal, tint: "bg-fg/10 text-fg" },
 };
 
 export default function Skills() {
@@ -16,7 +18,7 @@ export default function Skills() {
     <Section id="skills" title="Skills" subtitle="The tools I reach for in production.">
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {siteData.skills.map((group) => {
-          const { icon: Icon, tint } = looks[group.category] ?? looks["Backend & Systems"];
+          const { icon: Icon, tint } = looks[group.category] ?? looks.Backend;
           return (
             <div key={group.category} className="reveal card p-6 sm:p-8">
               <span className={`grid h-12 w-12 place-items-center rounded-2xl ${tint}`}>

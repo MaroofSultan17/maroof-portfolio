@@ -22,3 +22,8 @@ Thumbs.db
 
 # TypeScript
 *.tsbuildinfo
+
+# Environment variables (set real values locally and in Vercel)
+.env
+.env.*
+!.env.example

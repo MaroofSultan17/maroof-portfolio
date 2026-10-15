@@ -17,25 +17,25 @@ export default function About() {
       <div className="grid gap-12 lg:grid-cols-5 lg:gap-16">
         <div className="reveal lg:col-span-3 space-y-5 text-lg sm:text-xl leading-relaxed text-muted">
           <p>
-            I'm a backend-focused software engineer from Pakistan. For the last 2.5+ years I've
-            built <span className="text-fg font-medium">video pipelines, payment flows, background
-            workers</span> and the APIs that tie them together.
+            I'm a full stack software engineer from Pakistan. For the last 2.5+ years I've built{" "}
+            <span className="text-fg font-medium">React interfaces, video pipelines, payment flows and
+            background workers</span>, and the APIs that tie them together.
           </p>
           <p>
             Right now I'm at{" "}
             <a href="https://buggcy.com" target="_blank" rel="noopener noreferrer" className="font-medium text-fg underline decoration-blue decoration-2 underline-offset-4 hover:text-blue">
               Buggcy
             </a>
-            , building the backend for FilmLauncher, a streaming and crowdfunding platform for
-            independent films. Before that I spent over a year at AlphaSoft360 on{" "}
+            , working across the stack on FilmLauncher, a streaming and crowdfunding platform for
+            independent films. Before that I spent about a year and a half at AlphaSoft360 on{" "}
             <a href="https://www.gempacked.com" target="_blank" rel="noopener noreferrer" className="font-medium text-fg underline decoration-yellow decoration-2 underline-offset-4 hover:text-yellow">
               Gempacked
             </a>
-            , a wholesale store with 7,000+ users, where I also mentored a team of junior developers.
+            , a wholesale store with 7,000+ users and 40,000+ products, where I also mentored four to five junior developers.
           </p>
           <p>
-            I like systems that stay boring under load: clear APIs, queues that retry safely, and
-            queries that stay fast as the data grows.
+            Most of my work sits in the parts users never see but always feel: how fast a page loads,
+            how safely a payment goes through, and how a database holds up as data grows.
           </p>
         </div>
 
@@ -56,7 +56,7 @@ export default function About() {
               <FiBookOpen className="h-6 w-6" aria-hidden="true" />
             </span>
             <div>
-              <p className="font-semibold text-fg">{edu.degree}, CGPA {edu.cgpa}</p>
+              <p className="font-semibold text-fg">{edu.degree}, {edu.grade}</p>
               <p className="text-sm text-muted">
                 {edu.institution}, {edu.period}
               </p>

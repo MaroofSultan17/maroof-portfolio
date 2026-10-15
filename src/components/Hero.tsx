@@ -10,6 +10,7 @@ const nav = [
   { href: "#projects", label: "Projects" },
   { href: "#experience", label: "Experience" },
   { href: "#skills", label: "Skills" },
+  { href: "#education", label: "Education" },
   { href: "#contact", label: "Contact" },
 ];
 
@@ -79,7 +80,7 @@ function Portrait() {
         style={{ animationDelay: "0.9s" }}
       >
         <p className="text-2xl font-bold text-fg">2.5+ yrs</p>
-        <p className="text-sm text-muted">building backends</p>
+        <p className="text-sm text-muted">building products</p>
       </div>
       <div
         className="float absolute right-[-8%] bottom-[18%] hidden sm:flex items-center gap-2 rounded-full border border-line bg-surface px-4 py-2.5 shadow-xl shadow-black/20"
@@ -183,19 +184,19 @@ export default function Hero() {
               {personal.name}, {personal.role}
             </span>
             <span className="mt-4 block text-4xl sm:text-5xl xl:text-6xl font-bold leading-[1.1] tracking-tight text-fg">
-              I build the backends that keep streaming, payments and stores running.
+              I build the products that keep streaming, payments and stores running.
             </span>
           </h1>
           <p className="mt-6 max-w-xl text-lg sm:text-xl leading-relaxed text-muted">
-            APIs, queue workers and payment flows with Node.js, Laravel and Symfony, for
-            platforms with thousands of users.
+            Full stack work with React, Node.js, Laravel and Symfony: interfaces, APIs, queue
+            workers and payment flows for platforms with thousands of users.
           </p>
 
           <div className="mt-10 flex flex-col sm:flex-row gap-4">
             <a href="#projects" className="btn-primary">
               See my work
             </a>
-            <a href={personal.cv} target="_blank" rel="noopener noreferrer" className="btn-outline">
+            <a href={personal.cv} download="Maroof_Sultan_Resume.pdf" className="btn-outline">
               <FiDownload className="h-5 w-5" aria-hidden="true" />
               Résumé
             </a>

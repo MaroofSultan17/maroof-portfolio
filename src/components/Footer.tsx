@@ -10,13 +10,13 @@ export default function Footer() {
         <div>
           <p className="text-xl font-bold text-fg">Maroof Sultan</p>
           <p className="mt-2 max-w-xs text-muted">
-            Software engineer building backends for video streaming, payments and eCommerce.
+            Full stack software engineer building video streaming, payments and eCommerce products.
           </p>
         </div>
         <nav aria-label="Footer">
           <p className="font-semibold text-fg">Explore</p>
           <ul className="mt-3 space-y-2 text-muted">
-            {["About", "Projects", "Experience", "Skills", "Contact"].map((label) => (
+            {["About", "Projects", "Experience", "Skills", "Education", "Contact"].map((label) => (
               <li key={label}>
                 <a href={`#${label.toLowerCase()}`} className="hover:text-fg transition-colors">
                   {label}

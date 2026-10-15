@@ -35,10 +35,10 @@ export default function Contact() {
       <div className="reveal card grid gap-12 p-6 sm:p-12 lg:grid-cols-2 lg:gap-16">
         <div>
           <h2 id="contact-title" className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-fg">
-            Need a backend that holds up?
+            Building something that needs to hold up?
           </h2>
           <p className="mt-4 text-xl leading-relaxed text-muted">
-            I'm open to backend and full-stack opportunities, remote or hybrid, from Pakistan (UTC+5). Send a message and I'll
+            I'm open to full stack and backend roles, based in Pakistan (UTC+5). Send a message and I'll
             reply within a day.
           </p>
           <a href={`mailto:${personal.email}`} className="btn-primary mt-8">

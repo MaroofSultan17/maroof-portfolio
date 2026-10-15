@@ -1,38 +1,88 @@
+// Single source of truth for all site content. Components only read from here.
+
+export type ProjectStatus = "Live" | "Pre launch" | "In progress" | "Completed";
+
+export interface Experience {
+  id: string;
+  role: string;
+  company: string;
+  companyUrl?: string;
+  type: string;
+  period: string;
+  description: string;
+  bullets: string[];
+}
+
+export interface CaseStudy {
+  problem: string;
+  contribution: string;
+  decisions: string;
+}
+
+export interface Project {
+  id: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  tech: string[];
+  status: ProjectStatus;
+  role: string;
+  period: string;
+  image?: string;
+  imageAlt?: string;
+  live?: string;
+  repo?: string;
+  privateNote?: string;
+  caseStudy?: CaseStudy;
+}
+
+export interface SkillGroup {
+  category: string;
+  skills: string[];
+}
+
+export interface Education {
+  degree: string;
+  institution: string;
+  period: string;
+  grade: string;
+  details: string[];
+}
+
+export interface Certification {
+  name: string;
+  issuer?: string;
+}
+
 export const siteData = {
   personal: {
     name: "Maroof Sultan",
     role: "Software Engineer",
-    bio: "Software Engineer with 2.5+ years of experience building SaaS, video streaming, and eCommerce platforms with Node.js, Laravel, and Symfony. Currently building backend systems for a video streaming platform, spanning video pipelines, background queue workers, and webhook-driven payments. Focused on clean architecture, reliable REST APIs, and high-throughput databases.",
+    tagline: "Full stack engineer for streaming, payments and eCommerce products.",
+    bio: "Full stack Software Engineer with 2.5+ years of experience building SaaS, streaming and eCommerce products with Node.js, React, Laravel and Symfony. Currently building a video streaming and crowdfunding platform end to end, from React interfaces to Mux video pipelines, queue workers and payments.",
     email: "maroofsultan.dev@gmail.com",
     phone: "+92 310 6510421",
     location: "Pakistan, PKT (UTC+5)",
     github: "https://github.com/MaroofSultan17",
     linkedin: "https://www.linkedin.com/in/maroofsultan",
-    cv: "/resume.pdf",
+    cv: "/Maroof_Sultan_Resume.pdf",
   },
 
   skills: [
+    { category: "Languages", skills: ["JavaScript", "TypeScript", "PHP", "SQL", "Python"] },
+    { category: "Backend", skills: ["Node.js", "Express.js", "NestJS", "Laravel", "Symfony", "REST APIs"] },
+    { category: "Frontend", skills: ["React", "Next.js", "Vue.js", "Livewire", "Blade", "Tailwind CSS"] },
     {
-      category: "Backend & Systems",
-      skills: ["Node.js", "Express.js", "NestJS", "Laravel", "Symfony", "RESTful APIs", "Microservices Architecture"],
+      category: "Databases & Search",
+      skills: ["MongoDB", "MySQL", "PostgreSQL", "Elasticsearch", "Mongoose", "Eloquent", "Doctrine"],
     },
+    { category: "Queues & Caching", skills: ["Redis", "BullMQ", "RabbitMQ", "WebSockets", "Laravel Reverb"] },
     {
-      category: "Streaming & APIs",
-      skills: ["Mux Video API", "HLS Adaptive Streaming", "Vonage API", "Webhooks", "Stripe", "Braintree", "PayPal"],
+      category: "Integrations",
+      skills: ["Mux Video API", "HLS Streaming", "Stripe", "Braintree", "PayPal", "Vonage", "OpenAI API", "Webhooks"],
     },
-    {
-      category: "Databases & Caching",
-      skills: ["MySQL", "PostgreSQL", "MongoDB", "Redis", "BullMQ", "RabbitMQ", "Prisma", "Eloquent", "Doctrine"],
-    },
-    {
-      category: "Frontend Engineering",
-      skills: ["TypeScript", "JavaScript", "React", "Next.js", "Vue.js", "Tailwind CSS", "SCSS Modules"],
-    },
-    {
-      category: "DevOps & Cloud",
-      skills: ["Docker", "GitLab CI/CD", "Git", "Linux VPS", "cPanel Deployment"],
-    },
-  ],
+    { category: "DevOps & Tools", skills: ["Docker", "GitLab CI/CD", "Git", "VPS", "cPanel"] },
+  ] satisfies SkillGroup[],
 
   experiences: [
     {
@@ -40,16 +90,16 @@ export const siteData = {
       role: "Software Engineer",
       company: "Buggcy",
       companyUrl: "https://buggcy.com",
-      type: "Full-Time",
+      type: "Full time",
       period: "Jul 2026 to Present",
-      location: "Hybrid",
       description:
-        "Building backend infrastructure for FilmLauncher (pre-launch), a MERN stack video streaming and crowdfunding platform for independent films.",
+        "Full stack work on client products across React, Node.js, Express and MongoDB. My main project is FilmLauncher, a video streaming and crowdfunding platform for independent films, currently in pre launch.",
       bullets: [
-        "Integrated the Mux Video API for uploads, encoding, HLS adaptive streaming, and signed playback, with webhooks syncing asset states to MongoDB.",
-        "Built BullMQ workers on Redis for video processing and notifications, and used RabbitMQ for event-driven messaging between services.",
-        "Optimized streaming APIs and MongoDB queries using indexes, aggregation pipelines, and Redis caching.",
-        "Built payment flows for crowdfunding contributions and paid content with webhook verification.",
+        "Build features across the stack, from React screens to REST APIs and database design.",
+        "Integrated Mux for uploads, encoding, HLS streaming and signed playback, synced to MongoDB through webhooks.",
+        "Set up BullMQ workers on Redis for video processing and notifications, and RabbitMQ for messaging between services.",
+        "Optimized APIs and MongoDB queries with indexes, aggregation pipelines and Redis caching.",
+        "Implemented payment flows for crowdfunding contributions and paid content, with webhook verification.",
       ],
     },
     {
@@ -57,124 +107,239 @@ export const siteData = {
       role: "Software Engineer",
       company: "AlphaSoft360",
       companyUrl: "https://www.alphasoft360.com/team/maroof-sultan",
-      type: "Full-Time",
+      type: "Full time",
       period: "Mar 2025 to Jul 2026",
-      location: "Hybrid",
       description:
-        "Contributed to Gempacked, a wholesale eCommerce platform serving 7K+ users with 40K+ catalog products across web, POS, and in-house orders.",
+        "Contributed to Gempacked, a wholesale eCommerce platform with 7K+ users and 40K+ products, built with Symfony and Next.js.",
       bullets: [
-        "Built order flows for online, POS, and in-house sales and optimized queries across the catalog.",
-        "Integrated Braintree (PayPal, Google Pay, Apple Pay, Venmo) with partial capture and over-capture support.",
-        "Developed RESTful APIs in Symfony for Next.js frontends and integrated the Zebra Printer API.",
-        "Migrated large legacy datasets to a new schema using optimized SQL views and Symfony CLI.",
-        "Customized Laravel and OpenCart stores with Stripe and PayPal, and implemented GitLab CI/CD pipelines.",
-        "Led and mentored 4 to 5 junior developers, assigning tasks, reviewing code, and guiding feature delivery.",
+        "Integrated Braintree with PayPal, Google Pay, Apple Pay and Venmo, including partial capture and capturing above the original authorization.",
+        "Developed order flows for online, POS and in house sales, and tuned queries across the product catalog.",
+        "Connected Zebra printers to print ZPL labels from EPC and LPN values for warehouse shipping.",
+        "Migrated large legacy datasets into a new schema using optimized SQL views and Symfony CLI commands.",
+        "Designed Symfony REST APIs for the Next.js frontend, with Elasticsearch search and Redis caching.",
+        "Customized Laravel and OpenCart stores with Stripe and PayPal, and set up GitLab CI/CD pipelines.",
+        "Led and mentored 4 to 5 junior developers through task planning and code reviews.",
       ],
     },
     {
       id: "hiddenlogics",
-      role: "Laravel Developer (Remote)",
+      role: "Senior Laravel Developer",
       company: "HiddenLogics",
       companyUrl: "https://hiddenlogics.com",
-      type: "Part-Time",
-      period: "Apr 2024 to Apr 2026",
-      location: "Remote",
+      type: "Part time",
+      period: "Feb 2024 to Apr 2026",
       description:
-        "Contributed to RoundHere, a live location-based scheduling platform with active users and events.",
+        "Joined as a Laravel intern in Feb 2024, became a Laravel Developer in Apr 2024 and was promoted to Senior in Oct 2025. Owned client projects from requirements to deployment and guided the junior developers on the team.",
       bullets: [
-        "Integrated Vonage communication APIs, Google OAuth, and Google Calendar sync, and optimized MySQL queries.",
-        "Built client applications with Laravel, Livewire, and Blade, including RESTful APIs and RBAC dashboards.",
-        "Integrated Stripe and PayPal payment gateways, and Microsoft Calendar APIs.",
-        "Implemented real-time chat with Laravel Reverb using Jobs, Queues, Events, and Listeners.",
-        "Deployed applications on VPS and cPanel servers and managed requirements and demos directly with clients.",
+        "Contributed to RoundHere, a live location based scheduling platform, with Vonage APIs, Google OAuth and Google Calendar sync.",
+        "Built RBAC admin dashboards and Stripe and PayPal checkout flows with Laravel, Livewire and Blade.",
+        "Added real time chat with Laravel Reverb, using Jobs, Queues, Events and Listeners for background work.",
+        "Integrated Google and Microsoft Calendar, including Google Cloud Console setup.",
+        "Built REST APIs for mobile apps and fixed checkout and payment bugs on live eCommerce stores.",
+        "Deployed to VPS and cPanel servers, ran code reviews and presented finished modules to clients.",
       ],
     },
-  ],
+    {
+      id: "upwork",
+      role: "Freelance Full Stack Developer",
+      company: "Upwork",
+      type: "Freelance",
+      period: "Dec 2024 to Oct 2025",
+      description:
+        "Freelance work for international clients alongside my main roles, mostly with Laravel, Next.js and OpenCart.",
+      bullets: [
+        "Fixed checkout and rendering bugs on eCommerce stores.",
+        "Built REST APIs and payment gateway integrations to automate client operations.",
+        "Improved page speed and query performance on existing Laravel sites.",
+        "Handled requirements, estimates and delivery directly with clients.",
+      ],
+    },
+  ] satisfies Experience[],
 
   projects: [
     {
       id: "filmlauncher",
       title: "FilmLauncher",
-      subtitle: "Independent Film Streaming & Crowdfunding",
+      subtitle: "Video streaming and crowdfunding for independent films",
       description:
-        "A video streaming and crowdfunding platform for independent films, featuring adaptive HLS video streaming, background encoding queues, and secure payment processing.",
-      tech: ["Node.js", "React", "MongoDB", "Mux Video API", "BullMQ", "Redis", "RabbitMQ"],
-      status: "Pre-launch",
-      role: "Backend Engineer",
+        "A MERN stack platform where independent filmmakers crowdfund their films and audiences stream them. I work across the React frontend, the Node.js APIs and the Mux video pipeline.",
+      tech: ["React", "Node.js", "Express.js", "MongoDB", "Mux", "BullMQ", "Redis", "RabbitMQ"],
+      status: "Pre launch",
+      role: "Full stack engineer at Buggcy",
+      period: "Jul 2026 to Present",
+      image: "/projects/filmlauncher.webp",
+      imageAlt: "FilmLauncher Fund Films page and creator dashboard",
       live: "https://filmlauncher.com",
       caseStudy: {
         problem:
-          "Independent filmmakers need a secure way to stream high-resolution video and raise crowdfunding contributions without running into costly streaming infrastructure bottlenecks.",
+          "Independent filmmakers need one place to raise money for a film and then stream it to the people who backed it.",
         contribution:
-          "Integrated Mux Video API for adaptive HLS playback, engineered background encoding queues using BullMQ on Redis, and built event-driven services with RabbitMQ.",
+          "Built features across React and Node.js, integrated Mux for uploads, HLS streaming and signed playback, set up BullMQ workers on Redis and RabbitMQ messaging, and implemented the payment flows.",
         decisions:
-          "Used Redis caching and compound database indexing to lower API latency, and implemented signed playback URLs to protect paid film assets against unauthorized sharing.",
+          "Video processing and notifications run in queue workers so API requests stay fast, Mux webhooks keep asset states in sync with MongoDB, and paid films use signed playback.",
       },
     },
     {
       id: "gempacked",
       title: "Gempacked",
-      subtitle: "Wholesale Multi-Channel eCommerce",
+      subtitle: "Wholesale eCommerce platform",
       description:
-        "A wholesale jewelry findings and components eCommerce platform handling 7K+ users and 40K+ products across online storefronts, in-store POS, and warehouse sales.",
-      tech: ["Symfony", "Next.js", "MySQL", "Braintree", "Stripe", "GitLab CI/CD"],
+        "A wholesale jewelry supplies store with 7K+ users and 40K+ products, selling online, through POS and in house. I contributed as part of the AlphaSoft360 team.",
+      tech: ["Symfony", "Next.js", "MySQL", "Elasticsearch", "Redis", "Braintree", "Stripe"],
       status: "Live",
-      role: "Contributor (Team of Engineers)",
+      role: "Contributor at AlphaSoft360",
+      period: "Mar 2025 to Jul 2026",
+      image: "/projects/gempacked.webp",
+      imageAlt: "Gempacked homepage and Findings and Components category page",
       live: "https://www.gempacked.com",
       caseStudy: {
         problem:
-          "Handling multi-payment methods across online checkouts, physical POS terminals, and wholesale order desks while keeping massive product catalogs responsive.",
+          "One catalog of 40K+ products has to serve online checkout, POS and in house orders, with several payment methods.",
         contribution:
-          "Developed high-throughput Symfony REST APIs for the Next.js frontend, integrated Braintree partial capture, and automated packing slips via Zebra Printer API.",
+          "Integrated Braintree with partial capture, built order flows for all three sales channels, connected Zebra printers for ZPL shipping labels and migrated legacy data into a new schema.",
         decisions:
-          "Migrated legacy relational tables using optimized SQL views and Symfony console commands, keeping order processing smooth during high-traffic peak hours.",
+          "Symfony REST APIs serve the Next.js frontend, with Elasticsearch for product search and Redis caching, and the data migration ran through SQL views and Symfony CLI commands.",
       },
     },
     {
       id: "roundhere",
       title: "RoundHere",
-      subtitle: "Live Location-Based Event Scheduling",
+      subtitle: "Events and scheduling platform",
       description:
-        "A location-based scheduling and event coordination platform syncing active user calendars and real-time alerts.",
-      tech: ["Laravel", "Livewire", "MySQL", "Google APIs", "Vonage", "Laravel Reverb"],
+        "A live platform where business communities run events, book experts and manage sessions. I contributed as part of the HiddenLogics team.",
+      tech: ["Laravel", "MySQL", "Vonage", "Google OAuth", "Google Calendar API"],
       status: "Live",
-      role: "Contributor",
+      role: "Contributor at HiddenLogics",
+      period: "2024 to 2026",
+      image: "/projects/roundhere.webp",
+      imageAlt: "RoundHere homepage and live sessions section",
       live: "https://roundhere.io",
       caseStudy: {
-        problem:
-          "Organizers needed a reliable scheduling workflow with automated calendar sync and real-time notifications across different attendee timezones.",
+        problem: "Members need to sign in quickly and keep sessions and events in sync with the calendars they already use.",
         contribution:
-          "Integrated Vonage messaging APIs, bidirectional Google/Microsoft Calendar sync, and real-time chat with Laravel Reverb events and queues.",
+          "Integrated Vonage communication APIs, Google OAuth login and Google Calendar sync, and optimized MySQL queries.",
+        decisions: "Used Google OAuth so members sign in with an account they already have, and tuned slow MySQL queries.",
+      },
+    },
+    {
+      id: "portfolio",
+      title: "Personal Portfolio",
+      subtitle: "This website",
+      description:
+        "Built with React, TypeScript, Vite and Tailwind CSS. All content lives in one typed data file, and design tokens drive the light and dark themes.",
+      tech: ["React", "TypeScript", "Vite", "Tailwind CSS", "SEO"],
+      status: "Live",
+      role: "Personal project",
+      period: "Oct 2026",
+      image: "/projects/portfolio.webp",
+      imageAlt: "Portfolio homepage in light and dark mode",
+      live: "https://maroof-portfolio-rose.vercel.app",
+      repo: "https://github.com/MaroofSultan17/maroof-portfolio",
+      caseStudy: {
+        problem: "Recruiters need to see my work, experience and resume quickly, on any device.",
+        contribution:
+          "Designed and built the site, wrote all content in one typed data file and set up the SEO, contact form and deployment.",
         decisions:
-          "Offloaded calendar syncing and notification dispatches to background queue workers, eliminating checkout lag during concurrent event registrations.",
+          "CSS variable design tokens for both themes, the saved theme applied before first paint, JSON LD structured data, and a sitemap for search engines.",
+      },
+    },
+    {
+      id: "cart-abandonment",
+      title: "Cart Abandonment Prediction",
+      subtitle: "Machine learning final year project",
+      description:
+        "Studied why online shoppers add products to their cart but leave without buying, and built a model to predict which sessions end without a purchase.",
+      tech: ["Python", "Machine Learning", "Data Analysis"],
+      status: "Completed",
+      role: "Final Year Project, COMSATS",
+      period: "2024 to 2025",
+      image: "/projects/cart-abandonment.webp",
+      imageAlt: "Cart Abandonment Prediction problem and four step approach",
+      privateNote: "Private repository, available on request",
+      caseStudy: {
+        problem: "Online stores lose sales when shoppers fill a cart and then leave without paying.",
+        contribution: "Analyzed shopping session data to find the patterns behind abandoned carts and built a prediction model.",
+        decisions: "The pipeline goes from session data, to cleaning and feature engineering, to a model that predicts purchase or abandonment.",
+      },
+    },
+    {
+      id: "weather",
+      title: "Weather Forecast and Alert System",
+      subtitle: "Java console app",
+      description:
+        "A Java app that pulls forecast data from the OpenWeatherMap API, shows temperature, humidity, wind and conditions in 3 hour steps, and raises alerts for storms and heavy rain.",
+      tech: ["Java", "Maven", "REST API", "JSON", "OpenWeatherMap"],
+      status: "Completed",
+      role: "University project",
+      period: "Apr 2023 to May 2023",
+      image: "/projects/weather.webp",
+      imageAlt: "Weather Forecast and Alert System source code and sample terminal run",
+      repo: "https://github.com/MaroofSultan17/WeatherForecastingAPI",
+      caseStudy: {
+        problem: "Get a short term forecast for any city and warn the user when severe weather is coming.",
+        contribution:
+          "Called the OpenWeatherMap forecast API over HTTP, parsed the JSON response and added a simple login and sign up flow.",
+        decisions: "Converted Kelvin to Celsius, showed results as a table in 3 hour steps, and flagged storms and heavy rain as alerts.",
       },
     },
     {
       id: "dhobbee",
       title: "Dhobbee",
-      subtitle: "Multi-Branch SaaS Laundry Management",
+      subtitle: "SaaS laundry management system",
       description:
-        "Multi-branch SaaS platform managing laundry workflows, POS order tracking, automated customer SMS notifications, and revenue analytics across retail locations.",
-      tech: ["Laravel", "Vue.js", "MySQL", "Tailwind CSS", "REST APIs"],
-      status: "Private",
-      role: "Full-Stack Engineer",
+        "A multi tenant SaaS platform to manage laundry operations, customers, orders and billing, with a Vue.js frontend on a Laravel backend.",
+      tech: ["Laravel", "Vue.js", "REST APIs", "RBAC"],
+      status: "In progress",
+      role: "Personal project",
+      period: "Ongoing",
+      image: "/projects/dhobbee.webp",
+      imageAlt: "Dhobbee overview with its core modules",
+      privateNote: "Private repository, available on request",
       caseStudy: {
-        problem:
-          "Dry cleaners and laundry chains struggled with lost order tickets, delayed customer handoffs, and disjointed branch-level accounting.",
-        contribution:
-          "Engineered the core multi-tenant Laravel backend, status workflow engine, automated SMS dispatch via Twilio, and real-time order dashboard.",
-        decisions:
-          "Designed normalized database schema with indexed order states, cutting branch ticket lookup times to under 50ms.",
+        problem: "Laundry businesses track customers, orders and billing in separate places, or on paper.",
+        contribution: "Building the multi tenant Laravel backend, its REST APIs, role based access control and the Vue.js frontend.",
+        decisions: "Each business gets its own tenant space, and roles control what each staff member can see and do.",
       },
     },
-  ],
+  ] satisfies Project[],
 
   education: [
     {
       degree: "BS Computer Science",
       institution: "COMSATS University Islamabad",
-      period: "Sep 2021 to Sep 2025",
-      cgpa: "3.80 / 4.00",
+      period: "Aug 2021 to Sep 2025",
+      grade: "CGPA 3.80 / 4.00",
+      details: [
+        "Final year project: Cart Abandonment Prediction, a machine learning project.",
+        "Vice President, COMSATS Health Awareness and Blood Donor Society.",
+        "Core team member, COMSATS Computer Science Society, helping run tech events, hackathons and workshops.",
+        "Member, COMSATS Dramatic Society.",
+      ],
     },
+    {
+      degree: "DAE Computer Information Technology",
+      institution: "Government College of Technology Kamalia",
+      period: "Jan 2018 to Jun 2021",
+      grade: "87% marks",
+      details: [
+        "Final year project: Home Automation System built with Arduino.",
+        "Class Representative for my batch, and presented my project at the college exhibition.",
+      ],
+    },
+  ] satisfies Education[],
+
+  certifications: [
+    { name: "Microsoft Certified: Azure AI Fundamentals", issuer: "Microsoft" },
+    { name: "PHP Laravel: Build Amazing Streaming Service", issuer: "Udemy" },
+    { name: "Laravel Essential Training", issuer: "LinkedIn Learning" },
+    { name: "Intermediate Python", issuer: "DataCamp" },
+    { name: "Introduction to Python", issuer: "DataCamp" },
+    { name: "Git from Scratch", issuer: "LinkedIn Learning" },
+    { name: "Microsoft Office Specialist: Master on Microsoft Office 2016", issuer: "Microsoft" },
+  ] satisfies Certification[],
+
+  honors: [
+    "Completed Round 1 at National Incubation Center Lahore.",
+    "Secured 2nd position in a skill competition and exhibition.",
   ],
 };

@@ -1,5 +1,4 @@
 import { useState, type FormEvent } from "react";
-import emailjs from "@emailjs/browser";
 import { FiMail, FiPhone, FiMapPin } from "react-icons/fi";
 import { siteData } from "@/data/site";
 
@@ -14,9 +13,13 @@ export default function Contact() {
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
+    if (new FormData(form).get("website")) {
+      setStatus("sent");
+      return;
+    }
     setStatus("sending");
     try {
-      // The EmailJS template reads the form fields by name: name, email, message.
+      const { default: emailjs } = await import("@emailjs/browser");
       await emailjs.sendForm(
         import.meta.env.VITE_EMAIL_SERVICE_ID,
         import.meta.env.VITE_EMAIL_TEMPLATE_ID,
@@ -66,6 +69,7 @@ export default function Contact() {
         </div>
 
         <form onSubmit={onSubmit} className="space-y-5">
+          <input name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="hidden" />
           <label className="block">
             <span className="mb-2 block font-semibold text-fg">Name</span>
             <input name="name" required minLength={2} autoComplete="name" placeholder="Your name" className={field} />

@@ -81,18 +81,16 @@
     </script>
 
     <script>
-      // Dark is the default look; apply a saved choice before first paint to avoid a flash.
       let theme = "dark";
       try {
         theme = localStorage.getItem("ms-theme") || "dark";
       } catch (e) {}
-      if (theme === "dark") document.documentElement.classList.add("dark");
+      if (theme === "dark") {
+        document.documentElement.classList.add("dark");
+      }
     </script>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400..800&display=swap" rel="stylesheet" />
-    <link rel="preload" href="/maroof-sultan.jpg" as="image" />
+    <link rel="preload" href="/maroof-sultan.webp" as="image" />
   </head>
   <body>
     <div id="root"></div>

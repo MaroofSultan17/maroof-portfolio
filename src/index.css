@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Palette inspired by kentcdodds.com: slate background, blue / yellow / red accents. */
 :root {
   --bg: #ffffff;
   --surface: #f3f4f6;
@@ -65,7 +64,6 @@
   }
 }
 
-/* Page-load entrance for the hero. */
 .rise {
   animation: rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
@@ -75,7 +73,6 @@
   to { opacity: 1; transform: none; }
 }
 
-/* Floating tech chips around the portrait. */
 .float {
   animation: float 6s ease-in-out infinite;
 }
@@ -85,7 +82,6 @@
   50% { transform: translateY(-14px); }
 }
 
-/* Slowly turning tri-colour ring behind the portrait. */
 .spin-slow {
   animation: spin 24s linear infinite;
 }
@@ -94,7 +90,6 @@
   to { transform: rotate(360deg); }
 }
 
-/* Sections fade up as they scroll into view; browsers without scroll timelines just show them. */
 @supports (animation-timeline: view()) {
   .reveal {
     animation: rise linear both;
@@ -103,7 +98,6 @@
   }
 }
 
-/* FilmLauncher pipeline: a pulse travels the track, each stage lights as it passes. */
 @keyframes pipelineTravel {
   from { left: 0%; }
   to { left: 100%; }

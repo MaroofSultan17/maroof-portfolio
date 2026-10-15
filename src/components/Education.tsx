@@ -1,12 +1,11 @@
 import { FiAward, FiBookOpen, FiStar } from "react-icons/fi";
-import { siteData, type Certification, type Education as EducationItem } from "@/data/site";
+import { siteData } from "@/data/site";
 import Section from "./Section";
 
 const accents = ["text-blue bg-blue/15", "text-yellow bg-yellow/15"];
 
 export default function Education() {
-  const education = siteData.education as EducationItem[];
-  const certifications = siteData.certifications as Certification[];
+  const { education, certifications } = siteData;
 
   return (
     <Section id="education" title="Education" subtitle="Degrees, certifications and the things I did around them.">

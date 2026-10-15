@@ -1,4 +1,3 @@
-// Lets CSS-variable colours take opacity modifiers like bg-blue/15.
 const mix = (name) => `color-mix(in srgb, var(--${name}) calc(<alpha-value> * 100%), transparent)`;
 
 /** @type {import('tailwindcss').Config} */
@@ -8,7 +7,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Figtree", "system-ui", "-apple-system", "sans-serif"],
+        sans: ["Figtree Variable", "system-ui", "-apple-system", "sans-serif"],
       },
       colors: {
         bg: mix("bg"),

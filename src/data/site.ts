@@ -1,5 +1,3 @@
-// Single source of truth for all site content. Components only read from here.
-
 export type ProjectStatus = "Live" | "Pre launch" | "In progress" | "Completed";
 
 export interface Experience {
@@ -127,7 +125,7 @@ export const siteData = {
       company: "HiddenLogics",
       companyUrl: "https://hiddenlogics.com",
       type: "Part time",
-      period: "Feb 2024 to Apr 2026",
+      period: "Apr 2024 to Apr 2026",
       description:
         "Joined as a Laravel intern in Feb 2024, became a Laravel Developer in Apr 2024 and was promoted to Senior in Oct 2025. Owned client projects from requirements to deployment and guided the junior developers on the team.",
       bullets: [

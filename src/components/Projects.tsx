@@ -3,13 +3,11 @@ import { FiArrowUpRight, FiChevronDown, FiGithub, FiLock, FiCalendar, FiDroplet,
 import { siteData, type Project } from "@/data/site";
 import Section from "./Section";
 
-// Fallback cover for projects without a screenshot.
 const covers: Record<string, { bg: string; icon: IconType }> = {
   roundhere: { bg: "bg-blue", icon: FiCalendar },
   dhobbee: { bg: "bg-red", icon: FiDroplet },
 };
 
-// What a film goes through in the FilmLauncher backend, in order.
 const stages = [
   { name: "Upload", tool: "Mux" },
   { name: "Encode", tool: "Mux" },
@@ -56,11 +54,13 @@ function Status({ project }: { project: Project }) {
   );
 }
 
-function Cover({ project, className = "" }: { project: Project; className?: string }) {
+function Cover({ project, sizes, className = "" }: { project: Project; sizes: string; className?: string }) {
   if (project.image) {
     const img = (
       <img
         src={project.image}
+        srcSet={`${project.image.replace(".webp", "-800.webp")} 800w, ${project.image} 1600w`}
+        sizes={sizes}
         alt={project.imageAlt ?? project.title}
         width={1600}
         height={900}
@@ -85,7 +85,9 @@ function Cover({ project, className = "" }: { project: Project; className?: stri
 }
 
 function CaseStudy({ project }: { project: Project }) {
-  if (!project.caseStudy) return null;
+  if (!project.caseStudy) {
+    return null;
+  }
   const rows: [string, string][] = [
     ["Problem", project.caseStudy.problem],
     ["What I did", project.caseStudy.contribution],
@@ -164,7 +166,7 @@ function Meta({ project }: { project: Project }) {
 }
 
 export default function Projects() {
-  const [featured, ...rest] = siteData.projects as Project[];
+  const [featured, ...rest] = siteData.projects;
 
   return (
     <Section id="projects" title="Projects" subtitle="Products I've built, contributed to and studied.">
@@ -185,7 +187,7 @@ export default function Projects() {
         </div>
         <div className="space-y-4">
           <div className="overflow-hidden rounded-2xl border border-line">
-            <Cover project={featured} />
+            <Cover project={featured} sizes="(min-width: 1024px) 560px, 100vw" />
           </div>
           <Pipeline />
         </div>
@@ -194,7 +196,7 @@ export default function Projects() {
       <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {rest.map((project) => (
           <article key={project.id} className="reveal card group flex flex-col overflow-hidden">
-            <Cover project={project} />
+            <Cover project={project} sizes="(min-width: 1024px) 400px, (min-width: 768px) 50vw, 100vw" />
             <div className="flex flex-1 flex-col p-5 sm:p-6">
               <div className="flex items-center justify-between gap-3">
                 <Status project={project} />
@@ -204,7 +206,6 @@ export default function Projects() {
               <p className="mt-0.5 text-sm font-medium text-blue">{project.subtitle}</p>
               <p className="mt-3 text-[15px] leading-relaxed text-muted line-clamp-3">{project.description}</p>
               <Tech items={project.tech} max={4} />
-              {/* Pinned to the bottom so links line up across cards in a row. */}
               <div className="mt-auto pt-5">
                 <div className="border-t border-line pt-4 text-sm">
                   <ProjectLinks project={project} />

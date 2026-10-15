@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { FiArrowDown, FiDownload, FiGithub, FiLinkedin, FiMenu, FiMoon, FiSun, FiX } from "react-icons/fi";
-import { SiNodedotjs, SiLaravel, SiRedis, SiMongodb, SiReact, SiSymfony } from "react-icons/si";
+import type { IconType } from "react-icons";
+import { SiElasticsearch, SiLaravel, SiMongodb, SiNodedotjs, SiRabbitmq, SiReact, SiRedis, SiSymfony } from "react-icons/si";
 import { siteData } from "@/data/site";
 
 const { personal } = siteData;
 
-const nav = [
+export const nav = [
   { href: "#about", label: "About" },
   { href: "#projects", label: "Projects" },
   { href: "#experience", label: "Experience" },
@@ -14,26 +15,26 @@ const nav = [
   { href: "#contact", label: "Contact" },
 ];
 
-// Tech chips orbiting the portrait; positions are % of the portrait box.
-const chips = [
-  { icon: SiNodedotjs, label: "Node.js", color: "#5fa04e", pos: "left-[2%] top-[14%]", delay: "0s" },
-  { icon: SiLaravel, label: "Laravel", color: "#ff2d20", pos: "left-[-4%] top-[58%]", delay: "1.2s" },
-  { icon: SiReact, label: "React", color: "#61dafb", pos: "right-[0%] top-[6%]", delay: "2.4s" },
-  { icon: SiRedis, label: "Redis", color: "#ff4438", pos: "right-[-5%] top-[46%]", delay: "0.6s" },
-  { icon: SiMongodb, label: "MongoDB", color: "#47a248", pos: "right-[14%] bottom-[0%]", delay: "1.8s" },
-  { icon: SiSymfony, label: "Symfony", color: "currentColor", pos: "left-[22%] bottom-[-2%]", delay: "3s" },
+const ORBIT = 48;
+const chips: { icon?: IconType; label: string; color: string; angle: number }[] = [
+  { icon: SiNodedotjs, label: "Node.js", color: "#5fa04e", angle: 232 },
+  { label: "BullMQ", color: "currentColor", angle: 270 },
+  { icon: SiReact, label: "React", color: "#61dafb", angle: 307 },
+  { icon: SiRedis, label: "Redis", color: "#ff4438", angle: 345 },
+  { icon: SiSymfony, label: "Symfony", color: "currentColor", angle: 18 },
+  { icon: SiRabbitmq, label: "RabbitMQ", color: "#ff6600", angle: 66 },
+  { icon: SiMongodb, label: "MongoDB", color: "#47a248", angle: 101 },
+  { icon: SiElasticsearch, label: "Elasticsearch", color: "#00bfb3", angle: 135 },
+  { icon: SiLaravel, label: "Laravel", color: "#ff2d20", angle: 166 },
 ];
 
 function ThemeToggle() {
-  // index.html sets the initial class before paint, so read it back here.
   const [dark, setDark] = useState(() => document.documentElement.classList.contains("dark"));
   const toggle = () => {
     document.documentElement.classList.toggle("dark", !dark);
     try {
       localStorage.setItem("ms-theme", dark ? "light" : "dark");
-    } catch {
-      /* private mode: theme just won't persist */
-    }
+    } catch {}
     setDark(!dark);
   };
   return (
@@ -50,13 +51,13 @@ function ThemeToggle() {
 
 function Portrait() {
   return (
-    <div className="relative mx-auto aspect-square w-full max-w-[300px] sm:max-w-[420px] lg:max-w-[500px]">
+    <div className="relative mx-auto aspect-square w-full max-w-[230px] sm:max-w-[400px] lg:max-w-[500px]">
       <div
         className="spin-slow absolute inset-[9%] rounded-full [background:conic-gradient(var(--blue)_0_33%,var(--yellow)_0_66%,var(--red)_0)]"
         aria-hidden="true"
       />
       <img
-        src="/maroof-sultan.jpg"
+        src="/maroof-sultan.webp"
         alt="Portrait of Maroof Sultan"
         width={480}
         height={480}
@@ -64,16 +65,38 @@ function Portrait() {
         className="absolute inset-[11%] h-[78%] w-[78%] rounded-full border-[6px] border-bg object-cover"
       />
 
-      {chips.map(({ icon: Icon, label, color, pos, delay }) => (
-        <div
-          key={label}
-          className={`float absolute ${pos} grid h-12 w-12 sm:h-16 sm:w-16 place-items-center rounded-2xl border border-line bg-surface shadow-xl shadow-black/20`}
-          style={{ animationDelay: delay }}
-          title={label}
-        >
-          <Icon className="h-6 w-6 sm:h-8 sm:w-8" style={{ color }} aria-label={label} />
-        </div>
-      ))}
+      {chips.map(({ icon: Icon, label, color, angle }, i) => {
+        const radians = (angle * Math.PI) / 180;
+        return (
+          <span
+            key={label}
+            className="group absolute -translate-x-1/2 -translate-y-1/2 hover:z-10 focus-within:z-10"
+            style={{ left: `${50 + ORBIT * Math.cos(radians)}%`, top: `${50 + ORBIT * Math.sin(radians)}%` }}
+          >
+            <span
+              role="img"
+              aria-label={label}
+              tabIndex={0}
+              className="float relative grid h-10 min-w-10 sm:h-14 sm:min-w-14 cursor-default place-items-center rounded-2xl border border-line bg-surface px-2 shadow-xl shadow-black/20 transition-colors hover:border-fg/40 focus:outline-none focus-visible:border-blue"
+              style={{ animationDelay: `${(i * 0.7) % 4}s` }}
+            >
+              <span
+                className="pointer-events-none absolute bottom-full left-1/2 mb-2 -translate-x-1/2 translate-y-1 whitespace-nowrap rounded-lg bg-fg px-2.5 py-1 text-xs font-semibold text-bg opacity-0 shadow-lg transition duration-200 group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:translate-y-0 group-focus-within:opacity-100"
+                aria-hidden="true"
+              >
+                {label}
+              </span>
+              {Icon ? (
+                <Icon className="h-5 w-5 sm:h-7 sm:w-7" style={{ color }} aria-hidden="true" />
+              ) : (
+                <span className="text-[11px] sm:text-sm font-bold" style={{ color }} aria-hidden="true">
+                  {label}
+                </span>
+              )}
+            </span>
+          </span>
+        );
+      })}
 
       <div
         className="float absolute left-[-6%] top-[34%] hidden sm:block rounded-2xl border border-line bg-surface px-4 py-3 shadow-xl shadow-black/20"
@@ -93,17 +116,23 @@ function Portrait() {
   );
 }
 
-// Highlights the nav link for the section currently in the middle of the screen.
 function useActiveSection() {
   const [active, setActive] = useState("");
   useEffect(() => {
     const observer = new IntersectionObserver(
-      (entries) => entries.forEach((e) => e.isIntersecting && setActive(`#${e.target.id}`)),
+      (entries) =>
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            setActive(`#${e.target.id}`);
+          }
+        }),
       { rootMargin: "-45% 0px -50% 0px" },
     );
     ["top", ...nav.map((n) => n.href.slice(1))].forEach((id) => {
       const el = document.getElementById(id);
-      if (el) observer.observe(el);
+      if (el) {
+        observer.observe(el);
+      }
     });
     return () => observer.disconnect();
   }, []);
@@ -113,6 +142,20 @@ function useActiveSection() {
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const active = useActiveSection();
+
+  useEffect(() => {
+    if (!open) {
+      return;
+    }
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setOpen(false);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
   return (
     <header className="sticky top-0 z-40 border-b border-line/60 bg-bg/80 backdrop-blur-lg">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-6 px-5 sm:px-8 lg:px-12">
@@ -176,7 +219,7 @@ export default function Hero() {
     <div className="flex min-h-[calc(100svh-5rem)] flex-col">
       <section
         id="top"
-        className="scroll-mt-20 flex flex-1 flex-col-reverse items-center gap-10 py-10 lg:flex-row lg:justify-between lg:gap-16"
+        className="scroll-mt-20 flex flex-1 flex-col-reverse items-center gap-8 py-8 sm:gap-10 sm:py-10 lg:flex-row lg:justify-between lg:gap-16"
       >
         <div className="rise max-w-2xl" style={{ animationDelay: "120ms" }}>
           <h1>
@@ -228,7 +271,7 @@ export default function Hero() {
 
       <a
         href="#about"
-        className="rise group mb-10 hidden sm:inline-flex items-center gap-5 self-start text-lg font-semibold text-fg"
+        className="rise group mb-10 hidden sm:inline-flex items-center gap-4 self-center text-lg font-semibold text-fg"
         style={{ animationDelay: "400ms" }}
       >
         <span className="grid h-14 w-14 place-items-center rounded-full border-2 border-line transition-colors group-hover:border-fg">
